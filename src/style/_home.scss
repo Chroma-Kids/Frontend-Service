@@ -1,0 +1,12 @@
+section.teachers{
+  display: flex;
+}
+
+section.teachersList{
+  margin-top: 2em;
+  flex: 3;
+}
+section.teachersForm{
+  flex: 1;
+  margin-top: 2em;
+}

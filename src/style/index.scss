@@ -1,0 +1,11 @@
+/* common: */
+
+@import "./common.scss";
+
+body{
+  background-color: $BACKGROUND-COLOR;
+}
+
+.nav{
+  display: block;
+}
