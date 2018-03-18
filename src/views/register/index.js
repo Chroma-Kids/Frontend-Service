@@ -6,12 +6,12 @@ import Register from './Register';
 import { reduxForm } from 'redux-form';
 // #endregion
 
-// #region Redux
-const mapStateToProps = state => {
-  return {
+// // #region Redux
+// const mapStateToProps = state => {
+//   return {
+//
+//   };
+// };
 
-  };
-};
 
-
-export default connect(mapStateToProps, null)(Register);
+export default connect(null, null)(Register);

@@ -34,7 +34,7 @@ const NavigationBar = ({
 }: Props) => {
   return (
     <nav className="navbar-default navbar-static-side" role="navigation">
-      <ul className="nav metismenu" id="side-menu" ref="menu">
+      <ul className="nav metismenu" id="side-menu">
           <li className="nav-header">
               <div className="dropdown profile-element"> <span>
                </span>
