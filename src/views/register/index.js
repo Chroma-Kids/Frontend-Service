@@ -13,9 +13,5 @@ const mapStateToProps = state => {
   };
 };
 
-// const mapDispatchToProps = dispatch => {
-//   return bindActionCreators({ ...viewsActions }, dispatch);
-// };
-// #endregion
 
 export default connect(mapStateToProps, null)(Register);

@@ -1,29 +1,37 @@
 // #region imports
-import React, { PureComponent } from 'react';
+import React, { Component } from 'react';
 import { type Match, type Location, type RouterHistory } from 'react-router';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import { Field, reset } from 'redux-form';
 // #region imports
+import { connect } from 'react-redux';
 
-class Home extends PureComponent<Props, State> {
+import compose from 'recompose/compose';
+import { getTeachers, saveTeacher, deleteTeacher } from '../../redux/actions/TeacherActions';
+import { getUser } from '../../redux/actions/UserActions';
+// import Home from './Home';
+import { reduxForm } from 'redux-form';
 
-  componentWillMount(){
-    console.log("nextProps");
 
-    // this.props.getTeachers();
-    // this.props.getUser();
-    // if(this.props.user.loading === false && this.props.user.email === undefined){
-    //   this.props.history.replace('/login');
-    // }
-  }
+class Home extends Component {
 
-  componentWillReceiveProps(nextProps){
-    console.log(nextProps);
-    // if(nextProps.user.loading === true && nextProps.user.email === undefined){
-    //   nextProps.history.replace('/login');
-    // }
-  }
+  // componentWillMount(){
+  //   // console.log("nextProps");
+  //
+  //   this.props.getTeachers();
+  //   this.props.getUser();
+  //   // if(this.props.user.loading === false && this.props.user.email === undefined){
+  //   //   this.props.history.replace('/login');
+  //   // }
+  // }
+  //
+  // componentWillReceiveProps(nextProps){
+  //   // console.log(nextProps);
+  //   // if(nextProps.user.loading === true && nextProps.user.email === undefined){
+  //   //   nextProps.history.replace('/login');
+  //   // }
+  // }
 
   renderTeachers(){
     return _.map(this.props.teachers, (teacher, key) => {
@@ -64,7 +72,7 @@ class Home extends PureComponent<Props, State> {
   }
 
   onSubmit(values){
-    this.props.createTeacher(values).then(this.props.dispatch(reset('NewTeacher')));
+    this.props.saveTeacher(values).then(this.props.dispatch(reset('NewTeacher')));
   }
 
   render() {
@@ -78,7 +86,7 @@ class Home extends PureComponent<Props, State> {
                 <h2>Chroma Kids Frontend</h2>
                 <ol className="breadcrumb">
                     <li>
-                      <Link to={'/home'}>
+                      <Link to={'/'}>
                         <i className="fa fa-info" />
                         Home
                       </Link>
@@ -135,4 +143,14 @@ class Home extends PureComponent<Props, State> {
   // #endregion
 }
 
-export default Home;
+let form = reduxForm({
+  form: 'NewTeacher'
+})(Home);
+
+form = connect((state, ownProps) => ({
+    teachers: state.teachers,
+    user: state.user
+  }), { saveTeacher, getTeachers, deleteTeacher, getUser }
+)(form);
+
+export default form;

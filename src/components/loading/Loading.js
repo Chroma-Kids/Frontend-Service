@@ -12,13 +12,13 @@ class LoadingComponent extends Component {
     }
 
     if(teachersLoading === undefined) {
-      // this.props.getTeachers();
+      this.props.getTeachers();
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.teachersLoading === -1 && nextProps.user !== null) {
-      // this.props.getTeachers();
+      this.props.getTeachers();
     }
   }
 
@@ -33,7 +33,10 @@ class LoadingComponent extends Component {
     }
     else {
       return (
-        <h1>Loading...</h1>
+        <div className="align-self-center">
+          <i className="fa fa-refresh fa-spin fa-3x fa-fw loading"/>
+          <span className="sr-only">Loading...</span>
+        </div>
       )
     }
   }
@@ -41,7 +44,8 @@ class LoadingComponent extends Component {
 
 function mapStateToProps(state) {
   return {
-    // teachersLoading: state.loading.teachers,
+    userLoading: state.loading.user,
+    teachersLoading: state.loading.posts,
     user: state.user
   };
 }

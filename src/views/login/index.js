@@ -1,14 +1,9 @@
-// #region imports
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import compose from 'recompose/compose';
-// import { getLogin } from '../../redux/actions/LoginActions';
-// import Login from './Login';
-import { reduxForm } from 'redux-form';
-import { login, getUser } from '../../redux/actions/UserActions';
 import InputField from '../../components/inputfield/InputField'
+import { login, getUser, googleLogin, twitterLogin } from '../../redux/actions/UserActions';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { reduxForm } from 'redux-form';
 
 // #endregion
 
@@ -20,25 +15,35 @@ const INITIAL_STATE = {
 
 class Login extends Component {
 
-    constructor(props) {
-      super(props);
-      this.state = { ...INITIAL_STATE };
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: '',
+      password: '',
+      error: ''
+    };
+  }
+
+  componentWillMount() {
+    if (this.props.user !== null) {
+      this.props.history.push('/');
     }
+  }
 
-    submitLogin(event) {
-      event.preventDefault();
-      this.props.login(this.state.email, this.state.password);
-
-      // this.props.login({ email, password }).then((data) => {
-      //     if (data.payload.errorCode) {
-      //         this.setState({ message: data.payload.errorMessage });
-      //     } else {
-      //         browserHistory.push('/profile');
-      //     }
-      // }
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.user !== null) {
+      nextProps.history.push('/');
     }
+  }
 
-
+  submitLogin(event) {
+    event.preventDefault();
+    this.props.login(this.state.email, this.state.password).catch(err => {
+      this.setState({
+        error: err
+      });
+    });
+  }
 
   render() {
 
@@ -92,19 +97,8 @@ class Login extends Component {
   }
 }
 
-// #region Redux
-const mapStateToProps = (state, ownProps) => {
-  return {
-    user: state.user
-  };
-};
+function mapStateToProps(state, ownProps) {
+  return { user: state.user };
+}
 
-function mapDispatchToProps(dispatch) {
-    return bindActionCreators({
-        login
-    }, dispatch);
-};
-
-// #endregion
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, { login, getUser, googleLogin, twitterLogin })(Login);

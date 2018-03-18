@@ -2,12 +2,13 @@ import { combineReducers } from 'redux'
 import { reducer as formReducer } from 'redux-form'
 import TeacherReducer from './TeacherReducer'
 import LoadingReducer from './LoadingReducer'
-import SessionReducer from './SessionReducer'
+import UserReducer from './UserReducer'
 
 const rootReducer = combineReducers({
   form: formReducer,
   teachers: TeacherReducer,
-  session: SessionReducer
+  user: UserReducer,
+  loading: LoadingReducer
 });
 
 export default rootReducer;
