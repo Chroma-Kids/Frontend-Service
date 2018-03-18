@@ -13,7 +13,7 @@ class App extends Component {
   componentDidUpdate() {
     const { userLoading, user } = this.props;
     if (userLoading === false && !user) {
-      // this.props.history.push('/login');
+      this.props.history.push('/login');
     }
   }
 
@@ -24,6 +24,7 @@ class App extends Component {
 
     let body = <div id="wrapper">
         <Progress />
+        
         <Navigation location={this.props.location}/>
 
         <div id="page-wrapper" className={wrapperClass}>
