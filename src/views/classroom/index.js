@@ -12,6 +12,7 @@ import { getClassrooms, createClassroom } from '../../redux/actions/ClassroomAct
 import { getUser } from '../../redux/actions/UserActions';
 import { reduxForm } from 'redux-form';
 import InputField from '../../components/inputfield/InputField'
+import Toolbar from '../../components/toolbar/Toolbar'
 
 class Classroom extends Component {
 
@@ -134,7 +135,6 @@ class Classroom extends Component {
 
 
   toggleMenu(){
-    console.log(this.state.showNewForm)
     this.setState({
       showNewForm: !this.state.showNewForm
     });
@@ -147,9 +147,6 @@ class Classroom extends Component {
   }
 
   onSubmit(values){
-
-    console.log(values)
-
     this.props.createClassroom(values).then(this.props.dispatch(reset('NewTeacher')));
   }
 
@@ -159,30 +156,17 @@ class Classroom extends Component {
 
     return (
       <div key="homeView">
-        <div className="row wrapper border-bottom white-bg page-heading">
-            <div className="col-sm-4">
-                <h2>Classrooms</h2>
-                <ol className="breadcrumb">
-                    <li>
-                      <Link to={'/'}>
-                        <i className="fa fa-info" />
-                        Home
-                      </Link>
-                    </li>
-                    <li className="active">
-                        <strong>Classrooms</strong>
-                    </li>
-                </ol>
-            </div>
-            <div className="col-sm-8">
-                <div className="title-action">
-                <button className="btn btn-primary " onClick={this.toggleMenu.bind(this)}>
-                  <i className="fa fa-info" />
-                  + New classroom
-                </button>
-                </div>
-            </div>
-        </div>
+
+        {/*this.state.showNewForm ?
+          <div>
+          ESCONDE
+          </div> :
+        <div>
+          MUESTRA
+        </div>*/}
+
+        <Toolbar title={"Classroom"} button={this.toggleMenu.bind(this)} buttonText={"New classroom"} />
+
         <div className="ibox">
           <div className="ibox-content">
               <div className="row m-b-sm m-t-sm">

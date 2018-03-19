@@ -2,15 +2,16 @@
 import React, { Component } from 'react';
 import { type Match, type Location, type RouterHistory } from 'react-router';
 import _ from 'lodash';
-import { Link } from 'react-router-dom';
 import { Field, reset } from 'redux-form';
 // #region imports
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import compose from 'recompose/compose';
 import { getTeachers, createTeacher, saveTeacher, deleteTeacher } from '../../redux/actions/TeacherActions';
 import { getUser } from '../../redux/actions/UserActions';
 import { reduxForm } from 'redux-form';
+import Toolbar from '../../components/toolbar/Toolbar'
 
 class Home extends Component {
 
@@ -53,9 +54,6 @@ class Home extends Component {
   }
 
   onSubmit(values){
-
-    console.log(values)
-
     this.props.createTeacher(values).then(this.props.dispatch(reset('NewTeacher')));
   }
 
@@ -65,30 +63,9 @@ class Home extends Component {
 
     return (
       <div key="homeView">
-        <div className="row wrapper border-bottom white-bg page-heading">
-            <div className="col-sm-4">
-                <h2>Teachers</h2>
-                <ol className="breadcrumb">
-                    <li>
-                      <Link to={'/'}>
-                        <i className="fa fa-info" />
-                        Home
-                      </Link>
-                    </li>
-                    <li className="active">
-                        <strong>Teachers</strong>
-                    </li>
-                </ol>
-            </div>
-            <div className="col-sm-8">
-                {/*<div className="title-action">
-                <Link className="btn btn-primary " to={'/about'}>
-                  <i className="fa fa-info" />
-                  go to about
-                </Link>
-                </div>*/}
-            </div>
-        </div>
+
+        <Toolbar title={"Teachers"} buttonText={"New teacher"} />
+
         <section className="teachers">
           <section className="teachersList">
             {this.renderTeachers()}
