@@ -26,13 +26,13 @@ class Login extends Component {
 
   componentWillMount() {
     if (this.props.user !== null) {
-      this.props.history.push('/');
+      this.props.history.push('/teachers');
     }
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.user !== null) {
-      nextProps.history.push('/');
+      nextProps.history.push('/teachers');
     }
   }
 
