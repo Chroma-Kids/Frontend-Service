@@ -10,26 +10,20 @@ const NavigationBar = ({
   handleLeftNavItemClick,
   handleRightNavItemClick,
   userIsAuthenticated,
-  user
+  user,
+  location
 }: Props) => {
 
-
-var displayName = user.displayName;
-var email = user.email;
-var emailVerified = user.emailVerified;
-var photoURL = user.photoURL;
-var isAnonymous = user.isAnonymous;
-var uid = user.uid;
-var providerData = user.providerData;
-
-console.log(photoURL)
+  function activeRoute(location, routeName) {
+      return location.pathname.indexOf(routeName) > -1 ? "active" : "";
+  }
 
   return (
     <nav className="navbar-default navbar-static-side" role="navigation">
       <ul className="nav metismenu" id="side-menu">
           <li className="nav-header">
               <div className="dropdown profile-element"> <span>
-                  <img alt="image" className="img-circle img-nav-profile" src={photoURL} />
+                  <img alt="image" className="img-circle img-nav-profile" src={user.photoURL} />
                </span>
                   <a data-toggle="dropdown" className="dropdown-toggle" href="#">
               <span className="clear"> <span className="block m-t-xs"> <strong className="font-bold">{(user.displayName ? user.displayName : "-" )}</strong>
@@ -39,11 +33,11 @@ console.log(photoURL)
                   IN+
               </div>
           </li>
-          <li className="active">
-            <Link to="/classes"><i className="fa fa-th-large"></i> <span className="nav-label">Classes</span></Link>
+          <li className={activeRoute(location, "class")}>
+            <Link to="/classrooms"><i className="fa fa-th-large"></i> <span className="nav-label">Classrooms</span></Link>
           </li>
-          <li >
-              <Link to="/"><i className="fa fa-th-large"></i> <span className="nav-label">Teachers</span></Link>
+          <li className={activeRoute(location, "teacher")} >
+              <Link to="/teachers"><i className="fa fa-th-large"></i> <span className="nav-label">Teachers</span></Link>
           </li>
       </ul>
     </nav>
