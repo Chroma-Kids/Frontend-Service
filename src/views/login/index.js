@@ -47,6 +47,9 @@ class Login extends Component {
 
   render() {
 
+    const { googleLogin, twitterLogin } = this.props;
+
+
     const {
       email,
       password,
@@ -86,7 +89,10 @@ class Login extends Component {
 
               <p className="text-muted text-center"><small>Do not have an account?</small></p>
               <Link to={'/register'} className="btn btn-sm btn-white btn-block">Create an account</Link>
+              <br />
+              <p className="text-muted text-center"><small>Do have social media account?</small></p>
             </form>
+            <button type="button" className="btn btn-danger block full-width m-b" onClick={googleLogin}>Google</button>
 
             <p className="m-t"> <small>Crafted with love at Chroma Kids © 2018</small> </p>
           </div>
