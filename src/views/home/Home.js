@@ -13,10 +13,7 @@ import { getUser } from '../../redux/actions/UserActions';
 import { reduxForm } from 'redux-form';
 import Toolbar from '../../components/toolbar/Toolbar'
 import Popup from '../../components/popup/Popup'
-
-function jsUcfirst(string){
-    return string.charAt(0).toUpperCase() + string.slice(1);
-  }
+import { capitalize } from '../../helpers/Helpers'
 
 class Home extends Component {
 
@@ -26,6 +23,7 @@ class Home extends Component {
     this.state = { showPopup: false }
   }
 
+  // Rendering html
   renderTeachers(){
     return _.map(this.props.teachers, (teacher, key) => {
       return (
@@ -61,7 +59,7 @@ class Home extends Component {
   renderField(field){
     return (
       <div>
-        <label htmlFor={field.id} className="col-sm-3 col-form-label">{jsUcfirst(field.label)}</label>
+        <label htmlFor={field.id} className="col-sm-3 col-form-label">{capitalize(field.label)}</label>
         <input className="form-control" type="text" placeholder={`Enter a ${field.label}...`} {...field.input} />
       </div>
     )
