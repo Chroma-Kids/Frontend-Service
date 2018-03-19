@@ -1,6 +1,6 @@
 import { database } from '../../firebase'
 
-export const FETCH_CLASSROOM = 'fetch_classrooms';
+export const FETCH_CLASSROOMS = 'fetch_classrooms';
 export const CLASSROOM_STATUS = 'classroom_status';
 
 export function getClassrooms() {
@@ -9,9 +9,9 @@ export function getClassrooms() {
       type: CLASSROOM_STATUS,
       payload: true
     });
-    database.on('value', snapshot => {
+    database.ref('classrooms/').on('value', snapshot => {
       dispatch({
-        type: FETCH_CLASSROOM,
+        type: FETCH_CLASSROOMS,
         payload: snapshot.val()
       });
       dispatch({
@@ -28,13 +28,13 @@ export function getClassrooms() {
 }
 
 export function createClassroom(classroom, uid) {
-  return dispatch => database.push({ ...classroom });
+  return dispatch => database.ref('classrooms/').push({ ...classroom });
 }
 
 export function saveClassroom(classroom, uid) {
-  return dispatch => database.push({ ...classroom, uid });
+  return dispatch => database.ref('classrooms/').push({ ...classroom, uid });
 }
 
 export function deleteClassroom(id) {
-  return dispatch => database.child(id).remove();
+  return dispatch => database.ref('classrooms/').child(id).remove();
 }

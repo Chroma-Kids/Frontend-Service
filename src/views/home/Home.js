@@ -23,6 +23,10 @@ class Home extends Component {
     this.state = { showPopup: false }
   }
 
+  componentDidMount(){
+    this.props.getTeachers();
+  }
+
   renderTeachers(){
     return _.map(this.props.teachers, (teacher, key) => {
       return (

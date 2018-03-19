@@ -8,7 +8,7 @@ import { Field, reset } from 'redux-form';
 import { connect } from 'react-redux';
 
 import compose from 'recompose/compose';
-import { getClassrooms, createClassroom } from '../../redux/actions/ClassroomActions';
+import { getClassrooms, createClassroom, deleteClassroom } from '../../redux/actions/ClassroomActions';
 import { getUser } from '../../redux/actions/UserActions';
 import { reduxForm } from 'redux-form';
 import InputField from '../../components/inputfield/InputField'
@@ -24,17 +24,24 @@ class Classroom extends Component {
     this.state = { showPopup: false }
   }
 
+  componentDidMount(){
+    this.props.getClassrooms();
+  }
+
   renderClassrooms(){
-    return _.map(this.props.teachers, (teacher, key) => {
+
+    console.log(this.props)
+
+    return _.map(this.props.classrooms, (classroom, key) => {
       return (
         <tr key={key}>
             <td className="project-status">
                 <span className="label label-primary">Active</span>
             </td>
             <td className="project-title">
-                <Link to={`/teacher/${key}`}>{teacher.name} {teacher.surname}</Link>
+                <Link to={`/classroom/${key}`}>{classroom.name}</Link>
                 <br />
-                <small>Created 11.08.2014</small>
+                <small>{classroom.description}</small>
             </td>
             <td className="project-completion">
                 <small>Completion with: 28%</small>
@@ -49,7 +56,7 @@ class Classroom extends Component {
             </td>
             <td className="project-actions">
                 <button onClick={() => {
-                  this.props.deleteTeacher(key)
+                  this.props.deleteClassroom(key)
                 }} className="btn btn-white btn-sm"><i className="fa fa-cross"></i> Delete </button>
             </td>
         </tr>
@@ -74,6 +81,9 @@ class Classroom extends Component {
 
   onSubmit(values){
     this.props.createClassroom(values).then(this.props.dispatch(reset('NewClassroom')));
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
   }
 
   render() {
@@ -98,8 +108,8 @@ class Classroom extends Component {
             </div>
             <div className="form-group">
               <Field
-                name="surname"
-                label="surname"
+                name="description"
+                label="description"
                 component={this.renderField}
                 className="form-control"/>
             </div>
@@ -140,7 +150,7 @@ let form = reduxForm({
 form = connect((state, ownProps) => ({
     classrooms: state.classrooms,
     user: state.user
-  }), { getUser, getClassrooms }
+  }), { getUser, getClassrooms, createClassroom, deleteClassroom }
 )(form);
 
 export default form;
