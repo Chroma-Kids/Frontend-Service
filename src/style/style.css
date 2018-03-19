@@ -6694,6 +6694,14 @@ section.classroomList {
 .ibox-title input:hover, .ibox-title input:focus {
   outline: none; }
 
+.show {
+  display: block;
+  background-color: rgba(52, 52, 52, 0.8); }
+
+.hide {
+  display: none;
+  background-color: none; }
+
 body.rtls {
   /* Theme config */ }
   body.rtls #page-wrapper {
