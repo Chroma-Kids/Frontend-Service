@@ -115,7 +115,7 @@ class Classroom extends Component {
             </div>
         </Popup>
 
-        <Toolbar title={"Classroom"} button={this.toggleMenu.bind(this)} buttonText={"New classroom"} />
+        <Toolbar title={"Classrooms"} button={this.toggleMenu.bind(this)} buttonText={"New classroom"} />
 
         <div className="ibox">
           <div className="ibox-content">
