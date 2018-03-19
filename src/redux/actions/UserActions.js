@@ -1,4 +1,4 @@
-import { auth, googleProvider, twitterProvider } from '../../firebase'
+import { database, auth, googleProvider, twitterProvider } from '../../firebase'
 
 export const GET_USER = 'get_user';
 export const USER_STATUS = 'user_status';
@@ -19,6 +19,15 @@ export function getUser() {
       });
     });
   };
+}
+
+export function createUser(uid, email, name){
+  return dispatch => {
+    database.ref(`users/${uid}`).set({
+      name,
+      email,
+    })
+  }
 }
 
 export function login(email, password) {

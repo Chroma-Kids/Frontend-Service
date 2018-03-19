@@ -1,7 +1,7 @@
 import { database } from '../../firebase'
 
 export const FETCH_TEACHERS = 'fetch_teachers';
-export const TEACHER_STATUS = 'post_status';
+export const TEACHER_STATUS = 'teacher_status';
 
 export function getTeachers() {
   return dispatch => {
@@ -27,8 +27,12 @@ export function getTeachers() {
   };
 }
 
-export function saveTeacher(post, uid) {
-  return dispatch => database.push({ ...post, uid });
+export function createTeacher(teacher, uid) {
+  return dispatch => database.push({ ...teacher });
+}
+
+export function saveTeacher(teacher, uid) {
+  return dispatch => database.push({ ...teacher, uid });
 }
 
 export function deleteTeacher(id) {
@@ -39,6 +43,6 @@ export function deleteTeacher(id) {
 //   return dispatch => database.child(id).child('comments').push({ content: comment.content, uid })
 // }
 //
-// export function deleteComment(postId, commentId) {
-//   return dispatch => database.child(postId).child('comments').child(commentId).remove();
+// export function deleteComment(teacherId, commentId) {
+//   return dispatch => database.child(teacherId).child('comments').child(commentId).remove();
 // }

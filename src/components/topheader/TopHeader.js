@@ -28,9 +28,9 @@ class TopHeader extends Component {
                 </div>
                 <ul className="nav navbar-top-links navbar-right">
                     <li>
-                        <button className="btn btn-sm btn-white btn-block" onClick={() => {this.props.logout()}}>
+                        <a onClick={() => {this.props.logout()}}>
                             <i className="fa fa-sign-out"></i> Log out
-                        </button>
+                        </a>
                     </li>
                 </ul>
             </nav>

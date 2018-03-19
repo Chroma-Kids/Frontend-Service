@@ -8,30 +8,11 @@ import { Field, reset } from 'redux-form';
 import { connect } from 'react-redux';
 
 import compose from 'recompose/compose';
-import { getTeachers, saveTeacher, deleteTeacher } from '../../redux/actions/TeacherActions';
+import { getTeachers, createTeacher, saveTeacher, deleteTeacher } from '../../redux/actions/TeacherActions';
 import { getUser } from '../../redux/actions/UserActions';
-// import Home from './Home';
 import { reduxForm } from 'redux-form';
 
-
 class Home extends Component {
-
-  // componentWillMount(){
-  //   // console.log("nextProps");
-  //
-  //   this.props.getTeachers();
-  //   this.props.getUser();
-  //   // if(this.props.user.loading === false && this.props.user.email === undefined){
-  //   //   this.props.history.replace('/login');
-  //   // }
-  // }
-  //
-  // componentWillReceiveProps(nextProps){
-  //   // console.log(nextProps);
-  //   // if(nextProps.user.loading === true && nextProps.user.email === undefined){
-  //   //   nextProps.history.replace('/login');
-  //   // }
-  // }
 
   renderTeachers(){
     return _.map(this.props.teachers, (teacher, key) => {
@@ -72,7 +53,10 @@ class Home extends Component {
   }
 
   onSubmit(values){
-    this.props.saveTeacher(values).then(this.props.dispatch(reset('NewTeacher')));
+
+    console.log(values)
+
+    this.props.createTeacher(values).then(this.props.dispatch(reset('NewTeacher')));
   }
 
   render() {
@@ -97,12 +81,12 @@ class Home extends Component {
                 </ol>
             </div>
             <div className="col-sm-8">
-                <div className="title-action">
+                {/*<div className="title-action">
                 <Link className="btn btn-primary " to={'/about'}>
                   <i className="fa fa-info" />
                   go to about
                 </Link>
-                </div>
+                </div>*/}
             </div>
         </div>
         <section className="teachers">
@@ -150,7 +134,7 @@ let form = reduxForm({
 form = connect((state, ownProps) => ({
     teachers: state.teachers,
     user: state.user
-  }), { saveTeacher, getTeachers, deleteTeacher, getUser }
+  }), { saveTeacher, createTeacher, getTeachers, deleteTeacher, getUser }
 )(form);
 
 export default form;

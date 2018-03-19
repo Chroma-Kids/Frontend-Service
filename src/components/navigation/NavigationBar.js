@@ -1,29 +1,8 @@
 // #region imports
 import React, { type SyntheticEvent } from 'react';
 import PropTypes from 'prop-types';
-// import Humburger from './humburger/Humburger';
-// import LeftNav from './leftNav/LeftNav';
-// import RightNav from './rightNav/RightNav';
-// #endregion
-
-// #region flow types
-// export type Props = {
-//   brand?: string,
-//   userIsAuthenticated?: boolean,
-//   handleLeftNavItemClick: (event: SyntheticEvent<>, viewName: string) => any,
-//   handleRightNavItemClick: (event: SyntheticEvent<>, viewName: string) => any,
-//   navModel: {
-//     leftLinks: Array<{
-//       label: string,
-//       link: string,
-//     }>,
-//     rightLinks: Array<{
-//       label: string,
-//       link: string,
-//     }>,
-//   },
-// };
-// #endregion
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 const NavigationBar = ({
   brand,
@@ -31,7 +10,18 @@ const NavigationBar = ({
   handleLeftNavItemClick,
   handleRightNavItemClick,
   userIsAuthenticated,
+  user
 }: Props) => {
+
+
+var displayName = user.displayName;
+var email = user.email;
+var emailVerified = user.emailVerified;
+var photoURL = user.photoURL;
+var isAnonymous = user.isAnonymous;
+var uid = user.uid;
+var providerData = user.providerData;
+
   return (
     <nav className="navbar-default navbar-static-side" role="navigation">
       <ul className="nav metismenu" id="side-menu">
@@ -39,54 +29,26 @@ const NavigationBar = ({
               <div className="dropdown profile-element"> <span>
                </span>
                   <a data-toggle="dropdown" className="dropdown-toggle" href="#">
-              <span className="clear"> <span className="block m-t-xs"> <strong className="font-bold">Example user</strong>
-               </span> <span className="text-muted text-xs block">Example position<b className="caret"></b></span> </span> </a>
-                  <ul className="dropdown-menu animated fadeInRight m-t-xs">
-                      <li><a href="#"> Logout</a></li>
-                  </ul>
+              <span className="clear"> <span className="block m-t-xs"> <strong className="font-bold">{(user.displayName ? user.displayName : "-" )}</strong>
+               </span> <span className="text-muted text-xs block">{user.email}</span> </span> </a>
               </div>
               <div className="logo-element">
                   IN+
               </div>
           </li>
           <li className="active">
-              <a><i className="fa fa-th-large"></i> <span className="nav-label">Minor view</span></a>
+            <Link to="/classes"><i className="fa fa-th-large"></i> <span className="nav-label">Classes</span></Link>
           </li>
-          {/*<li className={this.activeRoute("/minor")}>
-              <Link to="/minor"><i className="fa fa-th-large"></i> <span className="nav-label">Minor view</span></Link>
-          </li>*/}
+          <li >
+              <Link to="/"><i className="fa fa-th-large"></i> <span className="nav-label">Teachers</span></Link>
+          </li>
       </ul>
     </nav>
   );
 };
 
-// #region static props
-// NavigationBar.propTypes = {
-//   brand: PropTypes.string,
-//   userIsAuthenticated: PropTypes.bool.isRequired,
-//   handleLeftNavItemClick: PropTypes.func,
-//   handleRightNavItemClick: PropTypes.func,
-//   navModel: PropTypes.shape({
-//     leftLinks: PropTypes.arrayOf(
-//       PropTypes.shape({
-//         label: PropTypes.string.isRequired,
-//         link: PropTypes.string.isRequired,
-//       }),
-//     ).isRequired,
-//     rightLinks: PropTypes.arrayOf(
-//       PropTypes.shape({
-//         label: PropTypes.string.isRequired,
-//         link: PropTypes.string.isRequired,
-//       }),
-//     ).isRequired,
-//   }),
-// };
+function mapStateToProps(state, ownProps) {
+  return { user: state.user };
+}
 
-// NavigationBar.defaultProps = {
-//   brand: 'brand',
-// };
-//
-// NavigationBar.displayName = 'NavigationBar';
-// #endregion
-
-export default NavigationBar;
+export default connect(mapStateToProps, null)(NavigationBar);
