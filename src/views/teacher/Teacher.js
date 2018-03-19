@@ -14,14 +14,17 @@ class Teacher extends PureComponent<Props, State> {
 
     const { handleSubmit, teacher } = this.props;
 
-    console.log(teacher)
-
     return (
       (!teacher ?
-        <h1>Loading...</h1>
+        <div className="spiner-example">
+            <div className="sk-spinner sk-spinner-double-bounce">
+                <div className="sk-double-bounce1"></div>
+                <div className="sk-double-bounce2"></div>
+            </div>
+        </div>
         :
         <div key="teacherView">
-          <Toolbar title={`Teacher ${teacher.name}`} />
+          <Toolbar title={`${teacher.name+" "+teacher.surname}`} />
 
           <div className="wrapper wrapper-content animated fadeInRight">
 
@@ -36,7 +39,7 @@ class Teacher extends PureComponent<Props, State> {
                           <div className="">
                               <div>
                                   <h2 className="no-margins">
-                                      Alex Smith
+                                      {teacher.name} {teacher.surname}
                                   </h2>
                                   <h4>Founder of Groupeq</h4>
                                   <small>
