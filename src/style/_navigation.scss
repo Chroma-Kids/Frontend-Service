@@ -431,6 +431,10 @@ body.canvas-menu .profile-element {
   display: block;
 }
 
+.profile-element .img-nav-profile {
+  width: 5em;
+}
+
 body:not(.fixed-sidebar):not(.canvas-menu).mini-navbar .nav-second-level {
   display: none;
 }
