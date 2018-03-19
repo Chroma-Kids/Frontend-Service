@@ -9,7 +9,7 @@ export function getTeachers() {
       type: TEACHER_STATUS,
       payload: true
     });
-    database.on('value', snapshot => {
+    database.ref('teachers/').on('value', snapshot => {
       dispatch({
         type: FETCH_TEACHERS,
         payload: snapshot.val()
@@ -28,15 +28,15 @@ export function getTeachers() {
 }
 
 export function createTeacher(teacher, uid) {
-  return dispatch => database.push({ ...teacher });
+  return dispatch => database.ref('teachers/').push({ ...teacher });
 }
 
 export function saveTeacher(teacher, uid) {
-  return dispatch => database.push({ ...teacher, uid });
+  return dispatch => database.ref('teachers/').push({ ...teacher, uid });
 }
 
 export function deleteTeacher(id) {
-  return dispatch => database.child(id).remove();
+  return dispatch => database.ref('teachers/').child(id).remove();
 }
 
 // export function saveComment(comment, id, uid) {
