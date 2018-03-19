@@ -10,17 +10,8 @@ import { reduxForm } from 'redux-form';
 // #region Redux
 const mapStateToProps = state => {
   return {
-    // currentView: state.views.currentView,
-    // userAuth: state.userAuth,
-
-    // teachers
     teacher: state.teacher
   };
 };
-
-// const mapDispatchToProps = dispatch => {
-//   return bindActionCreators({ ...viewsActions }, dispatch);
-// };
-// #endregion
 
 export default connect(mapStateToProps, { getTeacher })(Teacher);

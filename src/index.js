@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ListTeachers from './views/home';
+import ListClassrooms from './views/classroom';
 import registerServiceWorker from './registerServiceWorker';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
@@ -25,7 +26,8 @@ ReactDOM.render(
           <Route path="/login" component={Login}/>
           <Route path="/register" component={Register}/>
           <App>
-            <Route exact path="/" component={ListTeachers}/>
+            <Route exact path="/teachers" component={ListTeachers}/>
+            <Route exact path="/classrooms" component={ListClassrooms}/>
           </App>
         </Switch>
       </LoadingComponent>

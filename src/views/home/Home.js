@@ -67,7 +67,7 @@ class Home extends Component {
       <div key="homeView">
         <div className="row wrapper border-bottom white-bg page-heading">
             <div className="col-sm-4">
-                <h2>Chroma Kids Frontend</h2>
+                <h2>Teachers</h2>
                 <ol className="breadcrumb">
                     <li>
                       <Link to={'/'}>

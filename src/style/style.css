@@ -3441,8 +3441,7 @@ code {
 
 .ibox {
   clear: both;
-  margin-bottom: 25px;
-  margin-top: 0;
+  margin-top: 1em;
   padding: 0; }
 
 .ibox.collapsed .ibox-content {
@@ -6685,6 +6684,15 @@ section.teachersList {
 section.teachersForm {
   flex: 1;
   margin-top: 2em; }
+
+section.classroomList {
+  margin-top: 2em; }
+
+.ibox-title h5.new-title, .ibox-title h5.new-title input {
+  width: 100%; }
+
+.ibox-title input:hover, .ibox-title input:focus {
+  outline: none; }
 
 body.rtls {
   /* Theme config */ }
