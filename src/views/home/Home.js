@@ -12,8 +12,21 @@ import { getTeachers, createTeacher, saveTeacher, deleteTeacher } from '../../re
 import { getUser } from '../../redux/actions/UserActions';
 import { reduxForm } from 'redux-form';
 import Toolbar from '../../components/toolbar/Toolbar'
+import Popup from '../../components/popup/Popup'
+
+function jsUcfirst(string){
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
 
 class Home extends Component {
+
+  constructor() {
+    super();
+
+    this.state = { showPopup: false }
+  }
+
+
 
   renderTeachers(){
     return _.map(this.props.teachers, (teacher, key) => {
@@ -49,12 +62,25 @@ class Home extends Component {
 
   renderField(field){
     return (
-      <input type="text" placeholder={`Enter a ${field.label}...`} {...field.input} />
+      <div>
+        <label htmlFor={field.id} className="col-sm-3 col-form-label">{jsUcfirst(field.label)}</label>
+        <input className="form-control" type="text" placeholder={`Enter a ${field.label}...`} {...field.input} />
+      </div>
+
     )
+  }
+
+  toggleMenu(){
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
   }
 
   onSubmit(values){
     this.props.createTeacher(values).then(this.props.dispatch(reset('NewTeacher')));
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
   }
 
   render() {
@@ -63,39 +89,37 @@ class Home extends Component {
 
     return (
       <div key="homeView">
+        <Popup
+          showhide={this.state.showPopup}
+          title={"Create a new teacher"}
+          description={"Provide the information about the new teacher."}
+          onSubmit={handleSubmit(this.onSubmit.bind(this))}
+          buttonClose={this.toggleMenu.bind(this)}
+          >
+            <div className="form-group">
+              <Field
+              name="name"
+              label="name"
+              component={this.renderField}
+              className="form-control"/>
+            </div>
+            <div className="form-group">
+              <Field
+                name="surname"
+                label="surname"
+                component={this.renderField}
+                className="form-control"/>
+            </div>
+        </Popup>
 
-        <Toolbar title={"Teachers"} buttonText={"New teacher"} />
+        <Toolbar
+            title={"Teachers"}
+            button={this.toggleMenu.bind(this)}
+            buttonText={"New teacher"} />
 
         <section className="teachers">
           <section className="teachersList">
             {this.renderTeachers()}
-          </section>
-          <section className="teachersForm">
-            <h2>Teachers Form </h2>
-            <form className="form-horizontal ibox-content" onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-                <div className="form-group">
-
-                    <div className="col-lg-12">
-                      <Field
-                      name="name"
-                      component={this.renderField}
-                      className="form-control"/>
-                    </div>
-                </div>
-                <div className="form-group">
-                    <div className="col-lg-12">
-                      <Field
-                        name="surname"
-                        component={this.renderField}
-                        className="form-control"/>
-                    </div>
-                </div>
-                <div className="form-group">
-                    <div className="col-lg-offset-2 col-lg-12">
-                        <button className="btn btn-sm btn-white" type="submit">Create teacher</button>
-                    </div>
-                </div>
-            </form>
           </section>
         </section>
       </div>
