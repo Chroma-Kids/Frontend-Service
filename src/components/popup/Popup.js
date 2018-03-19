@@ -37,16 +37,4 @@ const Popup = ({title, description, showhide, buttonClose, children, onSubmit}: 
   )
 };
 
-
-// const ClearButton = props => {
-//
-//
-//
-//    let button = <button onClick={handleClearMessages} >Clear</button>;
-//    if ( props.isDisabled ) {
-//        button = <button disabled="disabled">Clear</button>;
-//    }
-//    return <div>{button}</div>;
-// }
-
 export default Popup;
