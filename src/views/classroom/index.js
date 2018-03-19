@@ -24,116 +24,38 @@ class Classroom extends Component {
     this.state = { showPopup: false }
   }
 
-  // renderClassrooms(){
-  //   return _.map(this.props.classrooms, (teacher, key) => {
-  //     return (
-  //       <div key={key} className="col-lg-4">
-  //         <div className="ibox">
-  //           <div className="ibox-title">
-  //               <span className="label label-primary pull-right">NEW</span>
-  //               <h5>IT-01 - Design Team</h5>
-  //           </div>
-  //           <div className="ibox-content">
-  //             <div className="team-members">
-  //                 <a href="#"><img alt="member" className="img-circle" src="img/a1.jpg"/></a>
-  //                 <a href="#"><img alt="member" className="img-circle" src="img/a2.jpg"/></a>
-  //                 <a href="#"><img alt="member" className="img-circle" src="img/a3.jpg"/></a>
-  //                 <a href="#"><img alt="member" className="img-circle" src="img/a5.jpg"/></a>
-  //                 <a href="#"><img alt="member" className="img-circle" src="img/a6.jpg"/></a>
-  //             </div>
-  //             <h4>Info about Design Team</h4>
-  //             <p>
-  //                 It is a long established fact that a reader will be distracted by the readable content
-  //                 of a page when looking at its layout. The point of using Lorem Ipsum is that it has.
-  //             </p>
-  //             <div>
-  //                 <span>Status of current project:</span>
-  //                 <div className="stat-percent">48%</div>
-  //                 <div className="progress progress-mini">
-  //                     <div className="progress-bar"></div>
-  //                 </div>
-  //             </div>
-  //             <div className="row  m-t-sm">
-  //                 <div className="col-sm-4">
-  //                     <div className="font-bold">PROJECTS</div>
-  //                     12
-  //                 </div>
-  //                 <div className="col-sm-4">
-  //                     <div className="font-bold">RANKING</div>
-  //                     4th
-  //                 </div>
-  //                 <div className="col-sm-4 text-right">
-  //                     <div className="font-bold">BUDGET</div>
-  //                     $200,913 <i className="fa fa-level-up text-navy"></i>
-  //                 </div>
-  //             </div>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     );
-  //   });
-  // }
-  //
-  // renderNewClassroom(){
-  //     return (
-  //       <div className="col-lg-4">
-  //         <div className="ibox">
-  //           <div className="ibox-title">
-  //               <h5 className="new-title"><input id="email"
-  //                 type="text"
-  //                 label="name"
-  //                 placeholder="Enter a name"
-  //                 onChange={(event) => this.setState({
-  //                   name: event.target.value
-  //                 }) } />
-  //               </h5>
-  //           </div>
-  //           <div className="ibox-content">
-  //             <div className="team-members">
-  //                 <a href="#"><img alt="member" className="img-circle" src="img/a1.jpg"/></a>
-  //                 <a href="#"><img alt="member" className="img-circle" src="img/a2.jpg"/></a>
-  //                 <a href="#"><img alt="member" className="img-circle" src="img/a3.jpg"/></a>
-  //                 <a href="#"><img alt="member" className="img-circle" src="img/a5.jpg"/></a>
-  //                 <a href="#"><img alt="member" className="img-circle" src="img/a6.jpg"/></a>
-  //             </div>
-  //             <h4>Info about Design Team</h4>
-  //             <p>
-  //                 It is a long established fact that a reader will be distracted by the readable content
-  //                 of a page when looking at its layout. The point of using Lorem Ipsum is that it has.
-  //             </p>
-  //             <div>
-  //                 <span>Status of current project:</span>
-  //                 <div className="stat-percent">48%</div>
-  //                 <div className="progress progress-mini">
-  //                     <div className="progress-bar"></div>
-  //                 </div>
-  //             </div>
-  //             <div className="row  m-t-sm">
-  //                 <div className="col-sm-4">
-  //                     <div className="font-bold">PROJECTS</div>
-  //                     12
-  //                 </div>
-  //                 <div className="col-sm-4">
-  //                     <div className="font-bold">RANKING</div>
-  //                     4th
-  //                 </div>
-  //                 <div className="col-sm-4 text-right">
-  //                     <div className="font-bold">BUDGET</div>
-  //                     $200,913 <i className="fa fa-level-up text-navy"></i>
-  //                 </div>
-  //             </div>
-  //             <div className="vertical-timeline-content  m-t-sm">
-  //               <button className="btn btn-primary " onClick={this.toggleMenu.bind(this)}>
-  //                 <i className="fa fa-info" />
-  //                 Add Classroom
-  //               </button>
-  //             </div>
-  //           </div>
-  //         </div>
-  //       </div>
-  //     );
-  //
-  // }
+  renderClassrooms(){
+    return _.map(this.props.teachers, (teacher, key) => {
+      return (
+        <tr key={key}>
+            <td className="project-status">
+                <span className="label label-primary">Active</span>
+            </td>
+            <td className="project-title">
+                <Link to={`/teacher/${key}`}>{teacher.name} {teacher.surname}</Link>
+                <br />
+                <small>Created 11.08.2014</small>
+            </td>
+            <td className="project-completion">
+                <small>Completion with: 28%</small>
+                <div className="progress progress-mini">
+                    <div  className="progress-bar"></div>
+                </div>
+            </td>
+            <td className="project-people">
+                <a href=""><img alt="image" className="img-circle" src="img/a7.jpg"/></a>
+                <a href=""><img alt="image" className="img-circle" src="img/a6.jpg"/></a>
+                <a href=""><img alt="image" className="img-circle" src="img/a3.jpg"/></a>
+            </td>
+            <td className="project-actions">
+                <button onClick={() => {
+                  this.props.deleteTeacher(key)
+                }} className="btn btn-white btn-sm"><i className="fa fa-cross"></i> Delete </button>
+            </td>
+        </tr>
+      );
+    });
+  }
 
   toggleMenu(){
     this.setState({
@@ -151,7 +73,7 @@ class Classroom extends Component {
   }
 
   onSubmit(values){
-    this.props.createClassroom(values).then(this.props.dispatch(reset('NewTeacher')));
+    this.props.createClassroom(values).then(this.props.dispatch(reset('NewClassroom')));
   }
 
   render() {
@@ -200,58 +122,7 @@ class Classroom extends Component {
             <div className="project-list">
               <table className="table table-hover">
                 <tbody>
-                <tr>
-                  <td className="project-status">
-                    <span className="label label-primary">Active</span>
-                  </td>
-                  <td className="project-title">
-                    <a href="project_detail.html">Contract with Zender Company</a>
-                    <br />
-                    <small>Created 14.08.2014</small>
-                  </td>
-                  <td className="project-completion">
-                    <small>Completion with: 48%</small>
-                    <div className="progress progress-mini">
-                        <div className="progress-bar"></div>
-                    </div>
-                  </td>
-                  <td className="project-people">
-                    <a href=""><img alt="image" className="img-circle" src="img/a3.jpg"/></a>
-                    <a href=""><img alt="image" className="img-circle" src="img/a1.jpg"/></a>
-                    <a href=""><img alt="image" className="img-circle" src="img/a2.jpg"/></a>
-                    <a href=""><img alt="image" className="img-circle" src="img/a4.jpg"/></a>
-                    <a href=""><img alt="image" className="img-circle" src="img/a5.jpg"/></a>
-                  </td>
-                  <td className="project-actions">
-                    <a href="#" className="btn btn-white btn-sm"><i className="fa fa-folder"></i> View </a>
-                    <a href="#" className="btn btn-white btn-sm"><i className="fa fa-pencil"></i> Edit </a>
-                  </td>
-                </tr>
-                <tr>
-                    <td className="project-status">
-                        <span className="label label-primary">Active</span>
-                    </td>
-                    <td className="project-title">
-                        <a href="project_detail.html">There are many variations of passages</a>
-                        <br />
-                        <small>Created 11.08.2014</small>
-                    </td>
-                    <td className="project-completion">
-                        <small>Completion with: 28%</small>
-                        <div className="progress progress-mini">
-                            <div  className="progress-bar"></div>
-                        </div>
-                    </td>
-                    <td className="project-people">
-                        <a href=""><img alt="image" className="img-circle" src="img/a7.jpg"/></a>
-                        <a href=""><img alt="image" className="img-circle" src="img/a6.jpg"/></a>
-                        <a href=""><img alt="image" className="img-circle" src="img/a3.jpg"/></a>
-                    </td>
-                    <td className="project-actions">
-                        <a href="#" className="btn btn-white btn-sm"><i className="fa fa-folder"></i> View </a>
-                        <a href="#" className="btn btn-white btn-sm"><i className="fa fa-pencil"></i> Edit </a>
-                    </td>
-                </tr>
+                  { this.renderClassrooms() }
                 </tbody>
               </table>
             </div>

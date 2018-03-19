@@ -23,35 +23,35 @@ class Home extends Component {
     this.state = { showPopup: false }
   }
 
-  // Rendering html
   renderTeachers(){
     return _.map(this.props.teachers, (teacher, key) => {
       return (
-        <div key={key} className="col-lg-4">
-            <div className="contact-box center-version">
-              <Link to={`/teacher/${key}`}>
-                <img alt="image" className="img-circle" src="img/a2.jpg"/>
-
-                <h3 className="m-b-xs"><strong>{teacher.name} {teacher.surname}</strong></h3>
-
-                <div className="font-bold">Graphics designer</div>
-                <address className="m-t-md">
-                    <strong>Twitter, Inc.</strong><br/>
-                    795 Folsom Ave, Suite 600<br/>
-                    San Francisco, CA 94107<br/>
-                    <abbr title="Phone">P:</abbr> (123) 456-7890
-                </address>
-              </Link>
-                <div className="contact-box-footer">
-                    <div className="m-t-xs btn-group">
-                        <button onClick={() => {
-                          this.props.deleteTeacher(key)
-                        }} className="btn btn-xs btn-white"><i className="fa fa-cross"></i> Delete </button>
-                    </div>
+        <tr key={key}>
+            <td className="project-status">
+                <span className="label label-primary">Active</span>
+            </td>
+            <td className="project-title">
+                <Link to={`/teacher/${key}`}>{teacher.name} {teacher.surname}</Link>
+                <br />
+                <small>Created 11.08.2014</small>
+            </td>
+            <td className="project-completion">
+                <small>Completion with: 28%</small>
+                <div className="progress progress-mini">
+                    <div  className="progress-bar"></div>
                 </div>
-
-            </div>
-        </div>
+            </td>
+            <td className="project-people">
+                <a href=""><img alt="image" className="img-circle" src="img/a7.jpg"/></a>
+                <a href=""><img alt="image" className="img-circle" src="img/a6.jpg"/></a>
+                <a href=""><img alt="image" className="img-circle" src="img/a3.jpg"/></a>
+            </td>
+            <td className="project-actions">
+                <button onClick={() => {
+                  this.props.deleteTeacher(key)
+                }} className="btn btn-white btn-sm"><i className="fa fa-cross"></i> Delete </button>
+            </td>
+        </tr>
       );
     });
   }
@@ -113,9 +113,27 @@ class Home extends Component {
             buttonText={"New teacher"} />
 
         <section className="teachers">
-          <section className="teachersList">
-            {this.renderTeachers()}
-          </section>
+          <div className="ibox">
+            <div className="ibox-content">
+              <div className="row m-b-sm m-t-sm">
+                  <div className="col-md-1">
+                      <button type="button" id="loading-example-btn" className="btn btn-white btn-sm"><i className="fa fa-refresh"></i> Refresh</button>
+                  </div>
+                  <div className="col-md-11">
+                      <div className="input-group"><input type="text" placeholder="Search" className="input-sm form-control"/> <span className="input-group-btn">
+                          <button type="button" className="btn btn-sm btn-primary"> Go!</button> </span></div>
+                  </div>
+              </div>
+
+              <div className="project-list">
+                <table className="table table-hover">
+                  <tbody>
+                  { this.renderTeachers() }
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
         </section>
       </div>
     );
