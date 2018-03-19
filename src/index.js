@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ListTeachers from './views/home';
-import ListClassrooms from './views/classroom';
+
 import registerServiceWorker from './registerServiceWorker';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
@@ -12,6 +11,10 @@ import Login from './views/login';
 import Register from './views/register';
 import App from './components/app/App';
 import LoadingComponent from './components/loading/Loading';
+
+import ListTeachers from './views/teachers';
+import ListClassrooms from './views/classrooms';
+import Teacher from './views/teacher';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style/style.css';
@@ -27,6 +30,7 @@ ReactDOM.render(
           <Route path="/register" component={Register}/>
           <App>
             <Route exact path="/teachers" component={ListTeachers}/>
+            <Route exact path="/teacher/:teacherId" component={Teacher}/>
             <Route exact path="/classrooms" component={ListClassrooms}/>
           </App>
         </Switch>
