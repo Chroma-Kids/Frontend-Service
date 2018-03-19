@@ -16,7 +16,7 @@ const Popup = ({title, description, showhide, buttonClose, children, onSubmit}: 
     <div className={"modal inmodal " + ( showhide ? 'show' : 'hide') }
          tabIndex="-1" role="dialog" aria-hidden="true" onKeyDown={this.handleKeyDown}>
         <div className="modal-dialog">
-          <form onSubmit={(event) => onSubmit}>
+          <form onSubmit={onSubmit}>
             <div className="modal-content animated flipInY">
                 <div className="modal-header">
                     <button type="button" className="close" data-dismiss="modal" onClick={buttonClose}><span aria-hidden="true">&times;</span><span className="sr-only">Close</span></button>

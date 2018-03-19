@@ -26,8 +26,6 @@ class Home extends Component {
     this.state = { showPopup: false }
   }
 
-
-
   renderTeachers(){
     return _.map(this.props.teachers, (teacher, key) => {
       return (
@@ -66,7 +64,6 @@ class Home extends Component {
         <label htmlFor={field.id} className="col-sm-3 col-form-label">{jsUcfirst(field.label)}</label>
         <input className="form-control" type="text" placeholder={`Enter a ${field.label}...`} {...field.input} />
       </div>
-
     )
   }
 
