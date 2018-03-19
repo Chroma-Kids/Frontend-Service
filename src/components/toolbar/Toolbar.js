@@ -18,12 +18,16 @@ const Toolbar = ({title, button, buttonText}) => (
       </ol>
     </div>
     <div className="col-sm-8">
-      <div className="title-action">
-      <button className="btn btn-primary " onClick={button}>
-        <i className="fa fa-info" />
-        + {buttonText}
-      </button>
-      </div>
+      { (!buttonText ?
+        null
+        :
+        <div className="title-action">
+          <button className="btn btn-primary " onClick={button}>
+            <i className="fa fa-info" />
+            + {buttonText}
+          </button>
+        </div>
+      )}
     </div>
   </div>
 );
