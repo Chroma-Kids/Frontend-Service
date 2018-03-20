@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DragSource } from 'react-dnd';
+import { Link } from 'react-router-dom';
 
 const Types = {
   TEACHER: 'teacher'
@@ -43,9 +44,9 @@ class TeacherDrag extends Component {
     const { isDragging, connectDragSource, text, key, teacherid, classroomid } = this.props;
     return connectDragSource(
       <li style={{ opacity: isDragging ? 0.5 : 1 }} key={key} teacherid={teacherid} className="warning-element" >
-          {text}
+          <Link to={`/teacher/${teacherid}`}>{text}</Link>
           <div className="agile-detail">
-              <a href="#" className="pull-right btn btn-xs btn-white">First break</a>
+              <a  className="pull-right btn btn-xs btn-white">First break</a>
               <i className="fa fa-clock-o"></i> 12.10.2015
           </div>
       </li>
