@@ -13,8 +13,9 @@ import App from './components/app/App';
 import LoadingComponent from './components/loading/Loading';
 
 import ListTeachers from './views/teachers';
-import ListClassrooms from './views/classrooms';
 import Teacher from './views/teacher';
+import ListClassrooms from './views/classrooms';
+import Classroom from './views/classroom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style/style.css';
@@ -32,6 +33,7 @@ ReactDOM.render(
             <Route exact path="/teachers" component={ListTeachers}/>
             <Route exact path="/teacher/:teacherId" component={Teacher}/>
             <Route exact path="/classrooms" component={ListClassrooms}/>
+            <Route exact path="/classroom/:classroomId" component={Classroom}/>
           </App>
         </Switch>
       </LoadingComponent>

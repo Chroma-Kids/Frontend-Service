@@ -30,8 +30,6 @@ class Classroom extends Component {
 
   renderClassrooms(){
 
-    console.log(this.props)
-
     return _.map(this.props.classrooms, (classroom, key) => {
       return (
         <tr key={key}>

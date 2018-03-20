@@ -12,7 +12,7 @@ class Teacher extends PureComponent<Props, State> {
 
   render() {
 
-    const { handleSubmit, teacher } = this.props;
+    const { teacher } = this.props;
 
     return (
       (!teacher ?
