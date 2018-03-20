@@ -12,8 +12,8 @@ class Classroom extends PureComponent<Props, State> {
 
   render() {
 
-    const { classroom } = this.props;
-
+    const { classroom, teachers } = this.props;
+    
     return (
       (!classroom ?
         <div className="spiner-example">
@@ -29,134 +29,88 @@ class Classroom extends PureComponent<Props, State> {
           <div className="row">
             <div className="col-lg-9">
                 <div className="wrapper wrapper-content animated fadeInUp">
-                    <div className="ibox">
-                        <div className="ibox-content">
-                            <div className="row">
-                                <div className="col-lg-12">
-                                    <div className="m-b-md">
-                                        <a href="#" className="btn btn-white btn-xs pull-right">Edit project</a>
-                                        <h2>Contract with Zender Company</h2>
-                                    </div>
-                                    <dl className="dl-horizontal">
-                                        <dt>Status:</dt> <dd><span className="label label-primary">Active</span></dd>
-                                    </dl>
+                    <div className="ibox-content">
+                        <div className="row">
+                            <div className="col-lg-12">
+                                <div className="m-b-md">
+                                    <a href="#" className="btn btn-white btn-xs pull-right">Edit project</a>
+                                    <h2>{classroom.name} class</h2>
                                 </div>
+                                <dl className="dl-horizontal">
+                                    <dt>Status:</dt> <dd><span className="label label-primary">Active</span></dd>
+                                </dl>
                             </div>
-                            <div className="row">
-                                <div className="col-lg-5">
-                                    <dl className="dl-horizontal">
+                        </div>
+                        <div className="row">
+                            <div className="col-lg-5">
+                                <dl className="dl-horizontal">
 
-                                        <dt>Created by:</dt> <dd>Alex Smith</dd>
-                                        <dt>Messages:</dt> <dd>  162</dd>
-                                        <dt>Client:</dt> <dd><a href="#" className="text-navy"> Zender Company</a> </dd>
-                                        <dt>Version:</dt> <dd> 	v1.4.2 </dd>
-                                    </dl>
-                                </div>
-                                <div className="col-lg-7" id="cluster_info">
-                                    <dl className="dl-horizontal">
-
-                                        <dt>Last Updated:</dt> <dd>16.08.2014 12:15:57</dd>
-                                        <dt>Created:</dt> <dd> 	10.07.2014 23:36:57 </dd>
-                                        <dt>Participants:</dt>
-                                        <dd className="project-people">
-                                        <a href=""><img alt="image" className="img-circle" src="img/a3.jpg"/></a>
-                                        <a href=""><img alt="image" className="img-circle" src="img/a1.jpg"/></a>
-                                        <a href=""><img alt="image" className="img-circle" src="img/a2.jpg"/></a>
-                                        <a href=""><img alt="image" className="img-circle" src="img/a4.jpg"/></a>
-                                        <a href=""><img alt="image" className="img-circle" src="img/a5.jpg"/></a>
-                                        </dd>
-                                    </dl>
-                                </div>
+                                    <dt>Created by:</dt> <dd>Alex Smith</dd>
+                                    <dt>Messages:</dt> <dd>  162</dd>
+                                    <dt>Client:</dt> <dd><a href="#" className="text-navy"> Zender Company</a> </dd>
+                                    <dt>Version:</dt> <dd> 	v1.4.2 </dd>
+                                </dl>
                             </div>
-                            <div className="row">
-                                <div className="col-lg-12">
-                                    <dl className="dl-horizontal">
-                                        <dt>Completed:</dt>
-                                        <dd>
-                                            <div className="progress progress-striped active m-b-sm">
-                                                <div style={{width: '60%'}} className="progress-bar"></div>
-                                            </div>
-                                            <small>Project completed in <strong>60%</strong>. Remaining close the project, sign a contract and invoice.</small>
-                                        </dd>
-                                    </dl>
-                                </div>
-                            </div>
-                            <div className="row m-t-sm">
-                                <div className="col-lg-12">
-                                <div className="panel blank-panel">
-                                <div className="panel-heading">
-                                    <div className="panel-options">
-                                        <ul className="nav nav-tabs">
-                                            <li className="active"><a href="#tab-1" data-toggle="tab">Users messages</a></li>
-                                            <li className=""><a href="#tab-2" data-toggle="tab">Last activity</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
+                            <div className="col-lg-7" id="cluster_info">
+                                <dl className="dl-horizontal">
+                                    <dt>Teachers:</dt>
 
-                                <div className="panel-body">
+                                    <dd className="project-people">
+
+                                    {(typeof classroom.teachers !== "undefined" ?
+                                      Object.keys(classroom.teachers).map(key => {
+                                        return <Link to={`/teacher/${key}`} key={key} ><img alt={teachers[key].name} className="img-circle" src={teachers[key].photoURL} /></Link>;
+                                      })
+                                      :
+                                      <div className="alert alert-warning">
+                                          No teachers assigned to this classroom.
+                                      </div>
+                                    )}
+
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-lg-12">
+                                <dl className="dl-horizontal">
+                                    <dt>Ratio:</dt>
+                                    <dd>
+                                        <div className="progress progress-striped active m-b-sm">
+                                            <div style={{width: '60%'}} className="progress-bar"></div>
+                                        </div>
+                                        <small>The ratio for this classroom is <strong>{classroom.ratio}</strong>. Based on the ratio, there should X teachers for the Y kids in this classroom.</small>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div className="row m-t-sm">
+                          <div className="col-lg-12">
+                            <div className="panel blank-panel">
+                              <div className="panel-heading">
+                                  <div className="panel-options">
+                                      <ul className="nav nav-tabs">
+                                          <li className="active"><a href="#tab-1" data-toggle="tab">Kids</a></li>
+                                          <li className=""><a href="#tab-2" data-toggle="tab">Teachers</a></li>
+                                      </ul>
+                                  </div>
+                              </div>
+
+                              <div className="panel-body">
 
                                 <div className="tab-content">
-                                <div className="tab-pane active" id="tab-1">
-                                    <div className="feed-activity-list">
-                                        <div className="feed-element">
-                                            <a href="#" className="pull-left">
-                                                <img alt="image" className="img-circle" src="img/profile.jpg"/>
-                                            </a>
-                                            <div className="media-body ">
-                                                <small className="pull-right">23h ago</small>
-                                                <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br/>
-                                                <small className="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
-                                            </div>
-                                        </div>
+                                  <div className="tab-pane active" id="tab-1">
 
-                                    </div>
+                                  </div>
+                                  <div className="tab-pane" id="tab-2">
 
-                                </div>
-                                <div className="tab-pane" id="tab-2">
-
-                                    <table className="table table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>Status</th>
-                                            <th>Title</th>
-                                            <th>Start Time</th>
-                                            <th>End Time</th>
-                                            <th>Comments</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <span className="label label-primary"><i className="fa fa-check"></i> Sent</span>
-                                            </td>
-                                            <td>
-                                                Contrary to popular
-                                            </td>
-                                            <td>
-                                                12.07.2014 10:10:1
-                                            </td>
-                                            <td>
-                                                14.07.2014 10:16:36
-                                            </td>
-                                            <td>
-                                                <p className="small">
-                                                    Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical
-                                                </p>
-                                            </td>
-
-                                        </tr>
-
-                                        </tbody>
-                                    </table>
-
-                                </div>
+                                  </div>
                                 </div>
 
-                                </div>
+                              </div>
 
-                                </div>
-                                </div>
                             </div>
+                          </div>
                         </div>
                     </div>
                 </div>
