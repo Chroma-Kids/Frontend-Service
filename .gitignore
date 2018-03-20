@@ -27,3 +27,6 @@ yarn.lock
 src/firebase/firebase.js
 
 package-lock.json
+
+# IntelliJ
+.idea/
