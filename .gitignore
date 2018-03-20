@@ -24,6 +24,5 @@ yarn.lock
 
 *.map
 
-src/firebase/firebase.js
 
 package-lock.json
