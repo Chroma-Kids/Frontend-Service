@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DropTarget } from 'react-dnd';
 import { connect } from 'react-redux';
+import flow from 'lodash/flow'
 
 import { moveTeacherToClassroom } from '../../redux/actions/TeacherActions';
 
@@ -16,7 +17,7 @@ const Types = {
  */
  const listTarget = {
    drop(props, source) {
-      moveTeacherToClassroom(source.getItem().teacherid, props.classroomId)
+      props.moveTeacherToClassroom(source.getItem().teacherid, source.getItem().classroomid, props.classroomId)
    }
  };
 
@@ -51,9 +52,7 @@ class ClassroomDrop extends Component {
 ClassroomDrop.propTypes = propTypes;
 
 
-ClassroomDrop = connect((state, ownProps) => ({
-  }), { moveTeacherToClassroom }
+export default flow(
+  DropTarget(Types.TEACHER, listTarget, collect),
+  connect(null, { moveTeacherToClassroom })
 )(ClassroomDrop);
-
-// Export the wrapped component:
-export default DropTarget(Types.TEACHER, listTarget, collect)(ClassroomDrop);

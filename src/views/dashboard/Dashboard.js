@@ -21,13 +21,14 @@ import { capitalize } from '../../helpers/Helpers'
 
 class Dashboard extends Component {
 
-  renderTeachersClassroom(teachersKey){
+  renderTeachersClassroom(teachersKey, classroomKey){
     return _.map(Object.keys(teachersKey), key => {
       return (
         <TeacherDrag
           text={this.props.teachers[key].name}
           key={key}
           teacherid={key}
+          classroomid={classroomKey}
         />
       )
     })
@@ -51,7 +52,7 @@ class Dashboard extends Component {
 
                   <ClassroomDrop classroomId={key}>
                     {(typeof classroom.teachers !== "undefined" ?
-                      this.renderTeachersClassroom(classroom.teachers)
+                      this.renderTeachersClassroom(classroom.teachers, key)
                       :
                       <div className="alert alert-warning">
                           No teachers assigned to this classroom.
