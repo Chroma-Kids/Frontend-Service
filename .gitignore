@@ -28,4 +28,5 @@ src/firebase/firebase.js
 
 package-lock.json
 
-src/firebase/firebase.js
+# IntelliJ
+.idea/
