@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getUser } from '../../redux/actions/UserActions';
 import { getTeachers } from '../../redux/actions/TeacherActions';
+import { getClassrooms } from '../../redux/actions/ClassroomActions';
 
 class LoadingComponent extends Component {
   componentWillMount() {
-    const { userLoading, teachersLoading } = this.props;
+    const { userLoading, teachersLoading, classroomsLoading } = this.props;
     if(userLoading === undefined) {
       this.props.getUser();
     }
@@ -14,17 +15,24 @@ class LoadingComponent extends Component {
     if(teachersLoading === undefined) {
       this.props.getTeachers();
     }
+
+    if(classroomsLoading === undefined) {
+      this.props.getClassrooms();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     if(nextProps.teachersLoading === -1 && nextProps.user !== null) {
       this.props.getTeachers();
     }
+    if(nextProps.classroomsLoading === -1 && nextProps.user !== null) {
+      this.props.getClassrooms();
+    }
   }
 
   render() {
-    const { userLoading, teachersLoading, children } = this.props;
-    if((!userLoading && !teachersLoading) || (this.props.user === null)) {
+    const { userLoading, teachersLoading, classroomsLoading, children } = this.props;
+    if((!userLoading && !teachersLoading && !classroomsLoading) || (this.props.user === null)) {
       return (
         <div>
           {children}
@@ -33,9 +41,11 @@ class LoadingComponent extends Component {
     }
     else {
       return (
-        <div className="align-self-center">
-          <i className="fa fa-refresh fa-spin fa-3x fa-fw loading"/>
-          <span className="sr-only">Loading...</span>
+        <div className="spiner-example">
+            <div className="sk-spinner sk-spinner-double-bounce">
+                <div className="sk-double-bounce1"></div>
+                <div className="sk-double-bounce2"></div>
+            </div>
         </div>
       )
     }
@@ -45,9 +55,10 @@ class LoadingComponent extends Component {
 function mapStateToProps(state) {
   return {
     userLoading: state.loading.user,
-    teachersLoading: state.loading.posts,
+    teachersLoading: state.loading.teachers,
+    classroomsLoading: state.loading.classroom,
     user: state.user
   };
 }
 
-export default withRouter(connect(mapStateToProps, { getUser, getTeachers })(LoadingComponent))
+export default withRouter(connect(mapStateToProps, { getUser, getTeachers, getClassrooms })(LoadingComponent))
