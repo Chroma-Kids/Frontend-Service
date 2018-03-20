@@ -33,7 +33,7 @@ class Teacher extends PureComponent<Props, State> {
                   <div className="col-md-6">
 
                       <div className="profile-image">
-                          <img src="img/a4.jpg" className="img-circle circle-border m-b-md" alt="profile" />
+                          <img src={teacher.photoURL} className="img-circle circle-border m-b-md" alt="profile" />
                       </div>
                       <div className="profile-info">
                           <div className="">
