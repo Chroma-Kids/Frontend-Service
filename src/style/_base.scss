@@ -1164,6 +1164,12 @@ a.close-canvas-menu:hover {
 .m-r-none {
   margin-right: 0;
 }
+.p-r-none {
+  padding-right: 0;
+}
+.p-r-none:last-child {
+  padding-right: 15px;
+}
 
 .m-r-xxs {
   margin-right: 1px;
