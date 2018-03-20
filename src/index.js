@@ -16,6 +16,7 @@ import ListTeachers from './views/teachers';
 import Teacher from './views/teacher';
 import ListClassrooms from './views/classrooms';
 import Classroom from './views/classroom';
+import Dashboard from './views/dashboard';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style/style.css';
@@ -30,6 +31,7 @@ ReactDOM.render(
           <Route path="/login" component={Login}/>
           <Route path="/register" component={Register}/>
           <App>
+            <Route exact path="/dashboard" component={Dashboard}/>
             <Route exact path="/teachers" component={ListTeachers}/>
             <Route exact path="/teacher/:teacherId" component={Teacher}/>
             <Route exact path="/classrooms" component={ListClassrooms}/>
