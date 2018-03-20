@@ -111,6 +111,13 @@ class Classroom extends Component {
                 component={this.renderField}
                 className="form-control"/>
             </div>
+            <div className="form-group">
+              <Field
+                name="ratio"
+                label="ratio"
+                component={this.renderField}
+                className="form-control"/>
+            </div>
         </Popup>
 
         <Toolbar title={"Classrooms"} button={this.toggleMenu.bind(this)} buttonText={"New classroom"} />
