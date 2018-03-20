@@ -43,12 +43,12 @@ class Dashboard extends Component {
                   <h3>{ classroom.name }</h3>
                   <p className="small"><i className="fa fa-hand-o-up"></i> Drag teachers between classrooms</p>
 
-                  <div className="input-group">
+                  {/*<div className="input-group">
                       <input type="text" placeholder="Add new teacher " className="input input-sm form-control"/>
                       <span className="input-group-btn">
                               <button type="button" className="btn btn-sm btn-white"> <i className="fa fa-plus"></i> Add teacher</button>
                       </span>
-                  </div>
+                  </div>*/}
 
                   <ClassroomDrop classroomId={key}>
                     {(typeof classroom.teachers !== "undefined" ?
@@ -76,6 +76,16 @@ class Dashboard extends Component {
         <Toolbar
             title={"Dashboard"} />
 
+        <div className="row">
+          <div className="col-lg-12 m-t">
+            <div className="ibox-content">
+              <h3>Teachers having a break</h3>
+              <ClassroomDrop className="alert alert-info m-n">
+                  How quickly daft jumping zebras vex.
+              </ClassroomDrop>
+            </div>
+          </div>
+        </div>
         <div className="row">
           {this.renderClassrooms()}
         </div>

@@ -76,10 +76,11 @@ class Home extends Component {
   }
 
   onSubmit(values){
-    this.props.createTeacher(values).then(this.props.dispatch(reset('NewTeacher')));
+    this.props.createTeacher(values);
     this.setState({
       showPopup: !this.state.showPopup
     });
+    this.props.dispatch(reset('NewTeacher'))
   }
 
   render() {

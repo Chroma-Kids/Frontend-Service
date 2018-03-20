@@ -28,7 +28,10 @@ export function getTeachers() {
 }
 
 export function createTeacher(teacher, uid) {
-  return dispatch => database.ref('teachers/').push({ ...teacher });
+  return dispatch => {
+    var ref = database.ref('teachers/').push({ ...teacher });
+    database.ref('teachers-non-assigned/').child(ref.key).set(true);
+  };
 }
 
 export function saveTeacher(teacher, uid) {
@@ -36,7 +39,11 @@ export function saveTeacher(teacher, uid) {
 }
 
 export function deleteTeacher(id) {
-  return dispatch => database.ref('teachers/').child(id).remove();
+  return dispatch => {
+    database.ref('teachers/').child(id).remove();
+    database.ref('teachers-non-assigned/').child(id).remove();
+
+  };
 }
 
 export function moveTeacherToClassroom(teacher, from, to) {
@@ -44,7 +51,13 @@ export function moveTeacherToClassroom(teacher, from, to) {
     database.ref('classrooms/').child(from).child('teachers').child(teacher).remove();
     database.ref('classrooms/').child(to).child('teachers').child(teacher).set(true);
   };
-  // return dispatch => database.ref(`teachers/${teacher}`).push();
+}
+
+export function releaseTeacher(teacher, from) {
+  return dispatch => {
+    (!from ? database.ref('classrooms/').child(from).child('teachers').child(teacher).remove() : null)
+    database.ref('teachers-non-assigned/').child(teacher).set(true);
+  };
 }
 
 // export function saveComment(comment, id, uid) {

@@ -3777,6 +3777,9 @@ a.close-canvas-menu:hover {
   padding-top: 70px; }
 
 /* MARGINS & PADDINGS */
+.no-paddings {
+  padding: 0px !important; }
+
 .p-xxs {
   padding: 5px; }
 
