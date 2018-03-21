@@ -81,7 +81,7 @@ class Dashboard extends Component {
             <div className="ibox-content">
               <h3>Teachers having a break</h3>
               <ClassroomDrop className="alert alert-info m-n">
-                  How quickly daft jumping zebras vex.
+                  <div class="alert alert-warning m-n">No teachers having a break.</div>
               </ClassroomDrop>
             </div>
           </div>
