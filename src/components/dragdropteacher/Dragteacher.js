@@ -46,8 +46,8 @@ class TeacherDrag extends Component {
       <li style={{ opacity: isDragging ? 0.5 : 1 }} key={key} teacherid={teacherid} className="warning-element" >
           <Link to={`/teacher/${teacherid}`}>{text}</Link>
           <div className="agile-detail">
-              <a  className="pull-right btn btn-xs btn-white">First break</a>
-              <i className="fa fa-clock-o"></i> 12.10.2015
+              <a  className="pull-right btn btn-xs btn-white">show breaks done</a>
+              <i className="fa fa-clock-o"></i> show Hours (minutes) completed
           </div>
       </li>
     );

@@ -17,9 +17,26 @@ import TeacherDrag from '../../components/dragdropteacher/Dragteacher'
 import ClassroomDrop from '../../components/dragdropteacher/Dropclassroom'
 import Popup from '../../components/popup/Popup'
 import { capitalize } from '../../helpers/Helpers'
+import { getTeachersNotAssigned } from '../../redux/actions/TeacherNotAssignedActions';
 // #region imports
 
 class Dashboard extends Component {
+
+  componentDidMount(){
+    this.props.getTeachersNotAssigned();
+  }
+
+  renderTeachersNotAssigned(teachersNotAssigned){
+    return _.map(Object.keys(teachersNotAssigned), key => {
+      return (
+        <TeacherDrag
+          text={this.props.teachers[key].name}
+          key={key}
+          teacherid={key}
+        />
+      )
+    })
+  }
 
   renderTeachersClassroom(teachersKey, classroomKey){
     return _.map(Object.keys(teachersKey), key => {
@@ -40,7 +57,7 @@ class Dashboard extends Component {
         <div className="col-lg-3 p-r-none" key={key}>
           <div className="ibox">
               <div className="ibox-content">
-                  <h3>{ classroom.name }</h3>
+                  <h3>{ classroom.name } (show ratio classroom)</h3>
                   <p className="small"><i className="fa fa-hand-o-up"></i> Drag teachers between classrooms</p>
 
                   {/*<div className="input-group">
@@ -70,6 +87,8 @@ class Dashboard extends Component {
 
     const { handleSubmit } = this.props;
 
+    console.log(this.props)
+
     return (
       <div key="homeView">
 
@@ -81,7 +100,12 @@ class Dashboard extends Component {
             <div className="ibox-content">
               <h3>Teachers having a break</h3>
               <ClassroomDrop className="alert alert-info m-n">
-                  How quickly daft jumping zebras vex.
+                {
+                  (typeof this.props.teachersnotassigned !== "undefined" && this.props.teachersnotassigned != null ?
+                  this.renderTeachersNotAssigned(this.props.teachersnotassigned)
+                  :
+                  <div className="alert alert-warning m-n">No teachers having a break.</div>
+                )}
               </ClassroomDrop>
             </div>
           </div>
@@ -102,7 +126,7 @@ let form = reduxForm({
 form = connect((state, ownProps) => ({
     teachers: state.teachers,
     user: state.user
-  }), { saveTeacher, createTeacher, getTeachers, deleteTeacher, getUser }
+  }), { getTeachersNotAssigned }
 )(form);
 
 export default DragDropContext(HTML5Backend)(form);
