@@ -57,7 +57,7 @@ class Dashboard extends Component {
         <div className="col-lg-3 p-r-none" key={key}>
           <div className="ibox">
               <div className="ibox-content">
-                  <h3>{ classroom.name }</h3>
+                  <h3>{ classroom.name } (show ratio classroom)</h3>
                   <p className="small"><i className="fa fa-hand-o-up"></i> Drag teachers between classrooms</p>
 
                   {/*<div className="input-group">
