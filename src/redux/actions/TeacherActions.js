@@ -1,41 +1,45 @@
-import { database } from '../../firebase'
-
-export const FETCH_TEACHERS = 'fetch_teachers';
-export const TEACHER_STATUS = 'teacher_status';
+import { database } from '../../firebase';
+import * as types from './ActionTypes';
 
 export function getTeachers() {
   return dispatch => {
     dispatch({
-      type: TEACHER_STATUS,
-      payload: true
-    });
+               type: types.TEACHER_STATUS,
+               payload: true,
+             });
     database.ref('teachers/').on('value', snapshot => {
       dispatch({
-        type: FETCH_TEACHERS,
-        payload: snapshot.val()
-      });
+                 type: types.FETCH_TEACHERS,
+                 payload: snapshot.val(),
+               });
       dispatch({
-        type: TEACHER_STATUS,
-        payload: false
-      });
+                 type: types.TEACHER_STATUS,
+                 payload: false,
+               });
     }, () => {
       dispatch({
-        type: TEACHER_STATUS,
-        payload: -1
-      });
+                 type: types.TEACHER_STATUS,
+                 payload: -1,
+               });
     });
   };
 }
 
-export function createTeacher(teacher, uid) {
-  return dispatch => {
-    var ref = database.ref('teachers/').push({ ...teacher });
-    database.ref('teachers-non-assigned/').child(ref.key).set(true);
+export function createTeacher(teacher) {
+  return {
+    type: types.CREATE_TEACHER,
+    payload: (() => {
+      const ref = database.ref('teachers/').push({ ...teacher });
+      database.ref('teachers-non-assigned/').child(ref.key).set(true);
+    })(),
   };
 }
 
 export function saveTeacher(teacher, uid) {
-  return dispatch => database.ref('teachers/').push({ ...teacher, uid });
+  return {
+    type: types.SAVE_TEACHER,
+    payload: database.ref('teachers/').push({ ...teacher, uid }),
+  };
 }
 
 /*
@@ -45,9 +49,12 @@ export function saveTeacher(teacher, uid) {
 *   teachers/{teacherid}
 **/
 export function deleteTeacher(id) {
-  return dispatch => {
-    database.ref('teachers/').child(id).remove();
-    database.ref('teachers-non-assigned/').child(id).remove();
+  return {
+    type: types.DELETE_TEACHER,
+    payload: (() => {
+      database.ref('teachers/').child(id).remove();
+      database.ref('teachers-non-assigned/').child(id).remove();
+    })(),
   };
 }
 
@@ -63,21 +70,24 @@ export function deleteTeacher(id) {
 *    Remove teacher from from-classroom and add it to break-time area.
 **/
 export function moveTeacherToClassroom(teacher, from, to) {
-  return dispatch => {
-    if (typeof from !== "undefined" && typeof to !== "undefined") {
-      // 1) from a classroom to another classroom
-      database.ref('classrooms/').child(from).child('teachers').child(teacher).remove();
-      database.ref('classrooms/').child(to).child('teachers').child(teacher).set(true);
-    }
-    else if(typeof to !== "undefined") {
-      // 2) from the break-time area to a classroom
-      database.ref('teachers-non-assigned/').child(teacher).remove();
-      database.ref('classrooms/').child(to).child('teachers').child(teacher).set(true);
-    }
-    else {
-      // 3) from a classroom to the break-time area
-      database.ref('classrooms/').child(from).child('teachers').child(teacher).remove();
-      database.ref('teachers-non-assigned/').child(teacher).set(true);
-    }
-  }
+  return {
+    type: types.MOVE_TEACHER_TO_CLASSROOM,
+    payload: (() => {
+      if (typeof from !== "undefined" && typeof to !== "undefined") {
+        // 1) from a classroom to another classroom
+        database.ref('classrooms/').child(from).child('teachers').child(teacher).remove();
+        database.ref('classrooms/').child(to).child('teachers').child(teacher).set(true);
+      }
+      else if (typeof to !== "undefined") {
+        // 2) from the break-time area to a classroom
+        database.ref('teachers-non-assigned/').child(teacher).remove();
+        database.ref('classrooms/').child(to).child('teachers').child(teacher).set(true);
+      }
+      else {
+        // 3) from a classroom to the break-time area
+        database.ref('classrooms/').child(from).child('teachers').child(teacher).remove();
+        database.ref('teachers-non-assigned/').child(teacher).set(true);
+      }
+    })(),
+  };
 }
