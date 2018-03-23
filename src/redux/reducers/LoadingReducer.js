@@ -1,14 +1,12 @@
-import { CLASSROOM_STATUS } from '../actions/ClassroomActions';
-import { TEACHER_STATUS } from '../actions/TeacherActions';
-import { USER_STATUS } from '../actions/UserActions';
+import * as types from '../actions/ActionTypes';
 
 export default function (state = {}, action) {
   switch (action.type) {
-    case CLASSROOM_STATUS:
+    case types.CLASSROOM_STATUS:
       return { ...state, classrooms: action.payload };
-    case TEACHER_STATUS:
+    case types.TEACHER_STATUS:
       return { ...state, teachers: action.payload };
-    case USER_STATUS:
+    case types.USER_STATUS:
       return { ...state, user: action.payload };
     default:
       return state;

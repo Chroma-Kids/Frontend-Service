@@ -1,20 +1,20 @@
 import { database, auth, googleProvider, twitterProvider } from '../../firebase'
+import * as types from './ActionTypes';
 
-export const GET_USER = 'get_user';
-export const USER_STATUS = 'user_status';
+
 export function getUser() {
   return dispatch => {
     dispatch({
-      type: USER_STATUS,
+      type: types.USER_STATUS,
       payload: true
     });
     auth.onAuthStateChanged(user => {
       dispatch({
-        type: GET_USER,
+        type: types.GET_USER,
         payload: user
       });
       dispatch({
-        type: USER_STATUS,
+        type: types.USER_STATUS,
         payload: false
       });
     });
@@ -22,30 +22,43 @@ export function getUser() {
 }
 
 export function createUser(uid, email, name){
-  return dispatch => {
-    database.ref(`users/${uid}`).set({
-      name,
-      email,
-    })
-  }
+  return {
+    type: types.CREATE_USER,
+    payload: database.ref(`users/${uid}`).set({ name, email }),
+  };
 }
 
 export function login(email, password) {
-  return dispatch => auth.signInWithEmailAndPassword(email, password);
+  return {
+    type: types.LOGIN,
+    payload: auth.signInWithEmailAndPassword(email, password),
+  };
 }
 
 export function logout() {
-  return dispatch => auth.signOut();
+  return {
+    type: types.LOGOUT,
+    payload: auth.signOut(),
+  };
 }
 
 export function createAccount(email, password) {
-  return dispatch => auth.createUserWithEmailAndPassword(email, password);
+  return {
+    type: types.CREATE_ACCOUNT,
+    payload: auth.createUserWithEmailAndPassword(email, password),
+  };
 }
 
 export function googleLogin() {
-  return dispatch => auth.signInWithPopup(googleProvider);
+  return {
+    type: types.GOOGLE_LOGIN,
+    payload: auth.signInWithPopup(googleProvider),
+  };
 }
 
 export function twitterLogin() {
-  return dispatch => auth.signInWithPopup(twitterProvider);
+  return {
+    type: types.TWITTER_LOGIN,
+    payload: auth.signInWithPopup(twitterProvider),
+  };
 }

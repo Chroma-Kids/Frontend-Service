@@ -1,4 +1,4 @@
-import { FETCH_TEACHERS, FETCH_TEACHER } from '../actions/TeacherActions'
+import { FETCH_TEACHERS } from '../actions/ActionTypes';
 
 export default function (state = {}, action) {
   switch (action.type) {
