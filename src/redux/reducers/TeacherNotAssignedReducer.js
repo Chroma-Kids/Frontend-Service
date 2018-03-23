@@ -1,4 +1,4 @@
-import { FETCH_TEACHERS_NOT_ASSIGNED } from '../actions/ActionTypes';
+import { FETCH_TEACHERS_NOT_ASSIGNED } from '../actions/TeacherNotAssignedActions'
 
 export default function (state = {}, action) {
   switch (action.type) {

@@ -1,4 +1,4 @@
-import { GET_USER } from '../actions/ActionTypes';
+import { GET_USER } from '../actions/UserActions';
 
 export default function (state = {}, action) {
   switch (action.type) {
