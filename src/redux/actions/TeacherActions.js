@@ -16,11 +16,6 @@ export function getTeachers() {
                  type: types.TEACHER_STATUS,
                  payload: false,
                });
-    }, () => {
-      dispatch({
-                 type: types.TEACHER_STATUS,
-                 payload: -1,
-               });
     });
   };
 }

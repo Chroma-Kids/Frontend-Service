@@ -17,9 +17,8 @@ import { capitalize } from '../../helpers/Helpers'
 
 class Home extends Component {
 
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
     this.state = { showPopup: false }
   }
 

@@ -1,6 +1,5 @@
-import { database, auth, googleProvider, twitterProvider } from '../../firebase'
+import { database, auth, googleProvider } from '../../firebase'
 import * as types from './ActionTypes';
-
 
 export function getUser() {
   return dispatch => {
@@ -53,12 +52,5 @@ export function googleLogin() {
   return {
     type: types.GOOGLE_LOGIN,
     payload: auth.signInWithPopup(googleProvider),
-  };
-}
-
-export function twitterLogin() {
-  return {
-    type: types.TWITTER_LOGIN,
-    payload: auth.signInWithPopup(twitterProvider),
   };
 }
