@@ -40,7 +40,7 @@ function mapStateToProps(state) {
     userLoading: state.loading.user,
     teachersLoading: state.loading.teachers,
     classroomsLoading: state.loading.classroom,
-    user: state.user,
+    user: state.user.user,
   };
 }
 

@@ -154,7 +154,7 @@ let form = reduxForm({
 
 form = connect((state, ownProps) => ({
     classrooms: state.classrooms,
-    user: state.user
+    user: state.user.user,
   }), { getUser, getClassrooms, createClassroom, deleteClassroom }
 )(form);
 

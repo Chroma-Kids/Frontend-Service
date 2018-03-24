@@ -2,7 +2,6 @@ import { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import * as React from 'react';
-
 import Progress from '../progress/Progress';
 import Navigation from '../navigation/NavigationBar';
 import TopHeader from '../topheader/TopHeader';
