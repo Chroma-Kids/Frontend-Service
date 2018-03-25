@@ -12,7 +12,7 @@ const rootReducer = combineReducers({
   teachers: TeacherReducer,
   teachersNotAssigned: TeacherNotAssignedReducer,
   user: UserReducer,
-  loading: LoadingReducer
+  loading: LoadingReducer,
 });
 
 export default rootReducer;

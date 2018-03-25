@@ -1,21 +1,12 @@
 import React, { Component } from 'react';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { getUser } from '../../redux/actions/UserActions';
-import { getTeachers } from '../../redux/actions/TeacherActions';
-import { getClassrooms } from '../../redux/actions/ClassroomActions';
 
 class LoadingComponent extends Component {
 
-  componentDidMount() {
-    // TODO extract to a component in charge of authentification that wraps the rest
-    this.props.getUser();
-  }
-
   render() {
     const { userLoading, teachersLoading, classroomsLoading, children } = this.props;
-    if ((!userLoading && !teachersLoading && !classroomsLoading) || (this.props.user === null)) {
+    if (!userLoading && !teachersLoading && !classroomsLoading) {
       return (
         <div>
           {children}
@@ -40,17 +31,7 @@ function mapStateToProps(state) {
     userLoading: state.loading.user,
     teachersLoading: state.loading.teachers,
     classroomsLoading: state.loading.classroom,
-    user: state.user.user,
   };
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(
-    {
-      getUser,
-      getTeachers,
-      getClassrooms,
-    }, dispatch);
-}
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoadingComponent))
+export default withRouter(connect(mapStateToProps)(LoadingComponent))

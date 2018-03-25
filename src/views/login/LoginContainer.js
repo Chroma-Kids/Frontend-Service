@@ -15,20 +15,6 @@ class Login extends Component {
     };
   }
 
-  componentWillMount() {
-    const { user } = this.props;
-    if (user !== undefined) {
-      this.props.history.push('/teachers');
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    const { user } = nextProps;
-    if (user !== undefined) {
-      this.props.history.push('/teachers');
-    }
-  }
-
   submitLogin(event) {
     event.preventDefault();
     this.props.login(this.state.email, this.state.password).catch(err => {
@@ -39,7 +25,6 @@ class Login extends Component {
   }
 
   render() {
-
     const { googleLogin } = this.props;
 
     return (

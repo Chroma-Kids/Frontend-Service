@@ -1,22 +1,16 @@
-// #region imports
-import React, { Component } from 'react';
-import { type Match, type Location, type RouterHistory } from 'react-router';
+import React from 'react';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import { Field, reset } from 'redux-form';
-// #region imports
 import { connect } from 'react-redux';
-
-import compose from 'recompose/compose';
 import { getClassrooms, createClassroom, deleteClassroom } from '../../redux/actions/ClassroomActions';
 import { getUser } from '../../redux/actions/UserActions';
 import { reduxForm } from 'redux-form';
-import InputField from '../../components/inputfield/InputField'
 import Toolbar from '../../components/toolbar/Toolbar'
 import Popup from '../../components/popup/Popup'
 import { capitalize } from '../../helpers/Helpers'
 
-class Classroom extends Component {
+class Classroom extends React.Component {
 
   constructor() {
     super();
@@ -152,9 +146,8 @@ let form = reduxForm({
   form: 'NewClassroom'
 })(Classroom);
 
-form = connect((state, ownProps) => ({
+form = connect((state) => ({
     classrooms: state.classrooms,
-    user: state.user.user,
   }), { getUser, getClassrooms, createClassroom, deleteClassroom }
 )(form);
 

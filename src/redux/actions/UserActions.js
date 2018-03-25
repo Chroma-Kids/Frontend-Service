@@ -1,7 +1,7 @@
 import { database, auth, googleProvider } from '../../firebase'
 import * as types from './ActionTypes';
 
-export function getUser() {
+export function getUser(redirect) {
   return dispatch => {
     dispatch({
       type: types.USER_STATUS,
@@ -16,6 +16,7 @@ export function getUser() {
         type: types.USER_STATUS,
         payload: false
       });
+      redirect();
     });
   };
 }

@@ -1,26 +1,15 @@
-// #region imports
-import React, { Component } from 'react';
-import { type Match, type Location, type RouterHistory } from 'react-router';
+import React from 'react';
 import _ from 'lodash';
-import { Field, reset } from 'redux-form';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 import { DragDropContext } from 'react-dnd';
-
-import compose from 'recompose/compose';
-import { getTeachers, createTeacher, saveTeacher, deleteTeacher } from '../../redux/actions/TeacherActions';
-import { getUser } from '../../redux/actions/UserActions';
 import { reduxForm } from 'redux-form';
 import Toolbar from '../../components/toolbar/Toolbar'
 import TeacherDrag from '../../components/dragdropteacher/Dragteacher'
 import ClassroomDrop from '../../components/dragdropteacher/Dropclassroom'
-import Popup from '../../components/popup/Popup'
-import { capitalize } from '../../helpers/Helpers'
 import { getTeachersNotAssigned } from '../../redux/actions/TeacherNotAssignedActions';
-// #region imports
 
-class Dashboard extends Component {
+class Dashboard extends React.Component {
 
   componentDidMount(){
     this.props.getTeachersNotAssigned();
@@ -84,11 +73,6 @@ class Dashboard extends Component {
   }
 
   render() {
-
-    const { handleSubmit } = this.props;
-
-    console.log(this.props)
-
     return (
       <div key="homeView">
 
@@ -116,16 +100,14 @@ class Dashboard extends Component {
       </div>
     );
   }
-  // #endregion
 }
 
 let form = reduxForm({
   form: 'NewTeacher'
 })(Dashboard);
 
-form = connect((state, ownProps) => ({
-    teachers: state.teachers,
-    user: state.user.user,
+form = connect((state) => ({
+    teachers: state.teachers || [],
   }), { getTeachersNotAssigned }
 )(form);
 
