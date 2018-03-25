@@ -1,26 +1,24 @@
 import { database } from '../../firebase'
-
-export const FETCH_STUDENTS = 'fetch_students';
-export const STUDENT_STATUS = 'student_status';
+import * as types from './ActionTypes';
 
 export function getStudents() {
   return dispatch => {
     dispatch({
-      type: STUDENT_STATUS,
+      type: types.STUDENT_STATUS,
       payload: true
     });
     database.ref('students/').on('value', snapshot => {
       dispatch({
-        type: FETCH_STUDENTS,
+        type: types.FETCH_STUDENTS,
         payload: snapshot.val()
       });
       dispatch({
-        type: STUDENT_STATUS,
+        type: types.STUDENT_STATUS,
         payload: false
       });
     }, () => {
       dispatch({
-        type: STUDENT_STATUS,
+        type: types.STUDENT_STATUS,
         payload: -1
       });
     });
@@ -28,17 +26,22 @@ export function getStudents() {
 }
 
 export function createStudent(student, uid) {
-  return dispatch => {
-    var ref = database.ref('students/').push({ ...student });
+  return {
+    type: types.CREATE_STUDENT,
+    payload: database.ref('students/').push({ ...student })
   };
 }
 
 export function saveStudent(student, uid) {
-  return dispatch => database.ref('students/').push({ ...student, uid });
+  return {
+    type: types.SAVE_STUDENT,
+    payload: database.ref('students/').push({...student, uid})
+  }
 }
 
 export function deleteStudent(id) {
-  return dispatch => {
-    database.ref('students/').child(id).remove();
+  return {
+    type: types.DELETE_STUDENT,
+    payload: database.ref('students/').child(id).remove()
   };
 }

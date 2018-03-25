@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import registerServiceWorker from './registerServiceWorker';
-import Login from './views/login';
+import LoginContainer from './views/login/LoginContainer';
 import Register from './views/register';
 import App from './components/app/App';
 import LoadingComponent from './components/loading/Loading';
-import ListTeachers from './views/teachers';
+import TeachersContainer from './views/teachers/TeachersContainer';
 import Teacher from './views/teacher';
 import ListClassrooms from './views/classrooms';
 import ListStudents from './views/students';
@@ -23,11 +23,11 @@ ReactDOM.render(
     <BrowserRouter>
       <LoadingComponent>
         <Switch>
-          <Route path="/login" component={Login}/>
+          <Route path="/login" component={LoginContainer}/>
           <Route path="/register" component={Register}/>
           <App>
             <Route exact path="/dashboard" component={Dashboard}/>
-            <Route exact path="/teachers" component={ListTeachers}/>
+            <Route exact path="/teachers" component={TeachersContainer}/>
             <Route exact path="/teacher/:teacherId" component={Teacher}/>
             <Route exact path="/classrooms" component={ListClassrooms}/>
             <Route exact path="/classroom/:classroomId" component={Classroom}/>

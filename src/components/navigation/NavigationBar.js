@@ -51,7 +51,7 @@ const NavigationBar = ({
 };
 
 function mapStateToProps(state, ownProps) {
-  return { user: state.user };
+  return { user: state.user.user };
 }
 
 export default connect(mapStateToProps, null)(NavigationBar);

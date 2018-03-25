@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getUser } from '../../redux/actions/UserActions';
@@ -7,40 +8,15 @@ import { getClassrooms } from '../../redux/actions/ClassroomActions';
 import { getStudents } from '../../redux/actions/StudentActions';
 
 class LoadingComponent extends Component {
-  componentWillMount() {
-    const { userLoading, teachersLoading, classroomsLoading, studentsLoading } = this.props;
-    if(userLoading === undefined) {
-      this.props.getUser();
-    }
 
-    if(teachersLoading === undefined) {
-      this.props.getTeachers();
-    }
-
-    if(classroomsLoading === undefined) {
-      this.props.getClassrooms();
-    }
-
-    if(studentsLoading === undefined) {
-      this.props.getStudents();
-    }
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.teachersLoading === -1 && nextProps.user !== null) {
-      this.props.getTeachers();
-    }
-    if(nextProps.classroomsLoading === -1 && nextProps.user !== null) {
-      this.props.getClassrooms();
-    }
-    if(nextProps.studentsLoading === -1 && nextProps.user !== null) {
-      this.props.getStudents();
-    }
+  componentDidMount() {
+    // TODO extract to a component in charge of authentification that wraps the rest
+    this.props.getUser();
   }
 
   render() {
-    const { userLoading, teachersLoading, classroomsLoading, studentsLoading, children } = this.props;
-    if((!userLoading && !teachersLoading && !classroomsLoading && !studentsLoading) || (this.props.user === null)) {
+    const { userLoading, teachersLoading, classroomsLoading, children } = this.props;
+    if ((!userLoading && !teachersLoading && !classroomsLoading) || (this.props.user === null)) {
       return (
         <div>
           {children}
@@ -50,10 +26,10 @@ class LoadingComponent extends Component {
     else {
       return (
         <div className="spiner-example">
-            <div className="sk-spinner sk-spinner-double-bounce">
-                <div className="sk-double-bounce1"></div>
-                <div className="sk-double-bounce2"></div>
-            </div>
+          <div className="sk-spinner sk-spinner-double-bounce">
+            <div className="sk-double-bounce1"/>
+            <div className="sk-double-bounce2"/>
+          </div>
         </div>
       )
     }
@@ -66,8 +42,17 @@ function mapStateToProps(state) {
     teachersLoading: state.loading.teachers,
     studentsLoading: state.loading.students,
     classroomsLoading: state.loading.classroom,
-    user: state.user
+    user: state.user.user,
   };
 }
 
-export default withRouter(connect(mapStateToProps, { getUser, getTeachers, getClassrooms, getStudents })(LoadingComponent))
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(
+    {
+      getUser,
+      getTeachers,
+      getClassrooms,
+    }, dispatch);
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(LoadingComponent))

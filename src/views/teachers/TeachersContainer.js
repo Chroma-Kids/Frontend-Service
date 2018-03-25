@@ -17,9 +17,8 @@ import { capitalize } from '../../helpers/Helpers'
 
 class Home extends Component {
 
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
     this.state = { showPopup: false }
   }
 
@@ -152,7 +151,7 @@ let form = reduxForm({
 
 form = connect((state, ownProps) => ({
     teachers: state.teachers,
-    user: state.user
+    user: state.user.user,
   }), { saveTeacher, createTeacher, getTeachers, deleteTeacher, getUser }
 )(form);
 

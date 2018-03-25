@@ -1,4 +1,4 @@
-import { FETCH_STUDENTS } from '../actions/StudentActions'
+import { FETCH_STUDENTS } from '../actions/ActionTypes';
 
 export default function (state = {}, action) {
   switch (action.type) {
