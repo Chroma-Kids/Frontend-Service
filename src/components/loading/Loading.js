@@ -4,10 +4,11 @@ import { withRouter } from 'react-router-dom';
 import { getUser } from '../../redux/actions/UserActions';
 import { getTeachers } from '../../redux/actions/TeacherActions';
 import { getClassrooms } from '../../redux/actions/ClassroomActions';
+import { getStudents } from '../../redux/actions/StudentActions';
 
 class LoadingComponent extends Component {
   componentWillMount() {
-    const { userLoading, teachersLoading, classroomsLoading } = this.props;
+    const { userLoading, teachersLoading, classroomsLoading, studentsLoading } = this.props;
     if(userLoading === undefined) {
       this.props.getUser();
     }
@@ -19,6 +20,10 @@ class LoadingComponent extends Component {
     if(classroomsLoading === undefined) {
       this.props.getClassrooms();
     }
+
+    if(studentsLoading === undefined) {
+      this.props.getStudents();
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -28,11 +33,14 @@ class LoadingComponent extends Component {
     if(nextProps.classroomsLoading === -1 && nextProps.user !== null) {
       this.props.getClassrooms();
     }
+    if(nextProps.studentsLoading === -1 && nextProps.user !== null) {
+      this.props.getStudents();
+    }
   }
 
   render() {
-    const { userLoading, teachersLoading, classroomsLoading, children } = this.props;
-    if((!userLoading && !teachersLoading && !classroomsLoading) || (this.props.user === null)) {
+    const { userLoading, teachersLoading, classroomsLoading, studentsLoading, children } = this.props;
+    if((!userLoading && !teachersLoading && !classroomsLoading && !studentsLoading) || (this.props.user === null)) {
       return (
         <div>
           {children}
@@ -56,9 +64,10 @@ function mapStateToProps(state) {
   return {
     userLoading: state.loading.user,
     teachersLoading: state.loading.teachers,
+    studentsLoading: state.loading.students,
     classroomsLoading: state.loading.classroom,
     user: state.user
   };
 }
 
-export default withRouter(connect(mapStateToProps, { getUser, getTeachers, getClassrooms })(LoadingComponent))
+export default withRouter(connect(mapStateToProps, { getUser, getTeachers, getClassrooms, getStudents })(LoadingComponent))

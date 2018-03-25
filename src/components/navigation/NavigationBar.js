@@ -42,6 +42,9 @@ const NavigationBar = ({
           <li className={activeRoute(location, "teacher")} >
               <Link to="/teachers"><i className="fa fa-th-large"></i> <span className="nav-label">Teachers</span></Link>
           </li>
+          <li className={activeRoute(location, "student")} >
+              <Link to="/students"><i className="fa fa-th-large"></i> <span className="nav-label">Students</span></Link>
+          </li>
       </ul>
     </nav>
   );

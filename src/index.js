@@ -10,6 +10,7 @@ import LoadingComponent from './components/loading/Loading';
 import ListTeachers from './views/teachers';
 import Teacher from './views/teacher';
 import ListClassrooms from './views/classrooms';
+import ListStudents from './views/students';
 import Classroom from './views/classroom';
 import Dashboard from './views/dashboard';
 import configureStore from './redux/store/configureStore';
@@ -30,6 +31,7 @@ ReactDOM.render(
             <Route exact path="/teacher/:teacherId" component={Teacher}/>
             <Route exact path="/classrooms" component={ListClassrooms}/>
             <Route exact path="/classroom/:classroomId" component={Classroom}/>
+            <Route exact path="/students" component={ListStudents}/>
           </App>
         </Switch>
       </LoadingComponent>
