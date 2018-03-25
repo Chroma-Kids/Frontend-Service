@@ -1,19 +1,20 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect, withRouter } from 'react-router-dom';
+import { ROUTES } from '../../index';
 
 class AuthenticatedRoutes extends React.Component {
 
   render() {
     const { user, children, location } = this.props;
 
-    if(user) {
+    const defaultRoute = ROUTES.NO_AUTHENTICATED.LOGIN;
+
+    if (user) {
       return children;
-      // TODO Extract route strings
-    } else if(location.pathname !== '/login') {
-      return <Redirect to="/login"/>;
     } else {
-      return null;
+      return location.pathname !== defaultRoute ?
+             <Redirect to={defaultRoute}/> : null
     }
   }
 

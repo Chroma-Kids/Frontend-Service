@@ -13,12 +13,26 @@ import ListClassrooms from './views/classrooms';
 import Classroom from './views/classroom';
 import Dashboard from './views/dashboard';
 import configureStore from './redux/store/configureStore';
-import AuthenticatedRoutes from './components/AuthenticatedRoutes';
-import UnauthenticatedRoutes from './components/UnauthenticatedRoutes';
-import Session from './components/Session';
+import AuthenticatedRoutes from './components/Router/AuthenticatedRoutes';
+import UnauthenticatedRoutes from './components/Router/UnauthenticatedRoutes';
+import Session from './components/Router/Session';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style/style.css';
+
+export const ROUTES = {
+  NO_AUTHENTICATED: {
+    LOGIN: '/login',
+    REGISTER: '/register',
+  },
+  AUTHENTICATED: {
+    DASHBOARD: '/dashboard',
+    TEACHERS: '/teachers',
+    TEACHER: (teacherId) => `${ROUTES.AUTHENTICATED.TEACHERS}/${teacherId}`,
+    CLASSROOMS: '/classrooms',
+    CLASSROOM: (classroomId) => `${ROUTES.AUTHENTICATED.CLASSROOMS}/${classroomId}`,
+  },
+};
 
 ReactDOM.render(
   <Provider store={configureStore()}>
@@ -26,16 +40,16 @@ ReactDOM.render(
       <Session>
         <LoadingComponent>
           <UnauthenticatedRoutes>
-            <Route path="/login" component={LoginContainer}/>
-            <Route path="/register" component={Register}/>
+            <Route path={ROUTES.NO_AUTHENTICATED.LOGIN} component={LoginContainer}/>
+            <Route path={ROUTES.NO_AUTHENTICATED.REGISTER} component={Register}/>
           </UnauthenticatedRoutes>
           <AuthenticatedRoutes>
             <App>
-              <Route exact path="/dashboard" component={Dashboard}/>
-              <Route exact path="/teachers" component={TeachersContainer}/>
-              <Route exact path="/teacher/:teacherId" component={Teacher}/>
-              <Route exact path="/classrooms" component={ListClassrooms}/>
-              <Route exact path="/classroom/:classroomId" component={Classroom}/>
+              <Route exact path={ROUTES.AUTHENTICATED.DASHBOARD} component={Dashboard}/>
+              <Route exact path={ROUTES.AUTHENTICATED.TEACHERS} component={TeachersContainer}/>
+              <Route exact path={ROUTES.AUTHENTICATED.TEACHER(':teacherId')} component={Teacher}/>
+              <Route exact path={ROUTES.AUTHENTICATED.CLASSROOMS} component={ListClassrooms}/>
+              <Route exact path={ROUTES.AUTHENTICATED.CLASSROOM(':classroomId')} component={Classroom}/>
             </App>
           </AuthenticatedRoutes>
         </LoadingComponent>

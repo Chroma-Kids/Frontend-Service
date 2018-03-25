@@ -2,15 +2,15 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import { getUser } from '../redux/actions/UserActions';
+import { getUser } from '../../redux/actions/UserActions';
+import { ROUTES } from '../../index';
 
 class Session extends React.Component {
 
   componentDidMount() {
     const { user, location } = this.props;
     if (!user) {
-      // TODO Extract route string
-      this.props.getUser(() => this.props.history.push(location.pathname || '/teachers'));
+      this.props.getUser(() => this.props.history.push(location.pathname || ROUTES.AUTHENTICATED.TEACHERS));
     }
   }
 
