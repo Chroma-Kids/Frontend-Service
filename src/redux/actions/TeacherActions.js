@@ -38,10 +38,11 @@ export function saveTeacher(teacher, uid) {
 }
 
 /*
-* Whenever we delete we must update
-*   classrooms/XXXX/teachers/{teacherid}
-*   teachers-not-assigned/{teacherid}
-*   teachers/{teacherid}
+* Whenever we delete we must be sure that the teacher is removed from:
+* 1) the list of teachers-non-assigned
+* 2) the list of teachers in a classroom. For that we look at the classrooms that the
+*    teacher is in and the we iterate over them removing the teacher from it
+* 3) the list of teachers itself. But only when the other deletes are done.
 **/
 export function deleteTeacher(id) {
   return {

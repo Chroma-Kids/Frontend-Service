@@ -39,7 +39,6 @@ export function saveClassroom(classroom, uid) {
   };
 }
 
-
 /*
 * To delete a classroom we need to:
 * 1) move the teachers of the classroom to break
