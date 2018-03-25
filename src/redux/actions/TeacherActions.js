@@ -47,14 +47,21 @@ export function deleteTeacher(id) {
   return {
     type: types.DELETE_TEACHER,
     payload: (() => {
-      database.ref('teachers/').child(id).remove();
       database.ref('teachers-non-assigned/').child(id).remove();
+      database.ref(`teachers/${id}/classrooms`).once('value', (snapshot) => {
+        const classrooms = Object.keys(snapshot.val() || {});
+        classrooms.forEach((key) => {
+          database.ref('classrooms/').child(key).child('teachers').child(id).remove();
+        });
+      }).then(() => {
+        database.ref('teachers/').child(id).remove();
+      });
     })(),
   };
 }
 
 /*
-* There are three alternatives to move a teacher within the nursery 
+* There are three alternatives to move a teacher within the nursery
 * 1) From a classroom to another classroom: there is a from-classroom and also a to-classroom.
 *    Remove teacher from from-classroom and add it to to-classroom.
 *
@@ -68,21 +75,30 @@ export function moveTeacherToClassroom(teacher, from, to) {
   return {
     type: types.MOVE_TEACHER_TO_CLASSROOM,
     payload: (() => {
+
       if (typeof from !== "undefined" && typeof to !== "undefined") {
         // 1) from a classroom to another classroom
         database.ref('classrooms/').child(from).child('teachers').child(teacher).remove();
         database.ref('classrooms/').child(to).child('teachers').child(teacher).set(true);
+
+        database.ref('teachers/').child(teacher).child('classrooms').child(from).remove();
+        database.ref('teachers/').child(teacher).child('classrooms').child(to).set(true);
       }
-      else if (typeof to !== "undefined") {
+      else if(typeof to !== "undefined") {
         // 2) from the break-time area to a classroom
         database.ref('teachers-non-assigned/').child(teacher).remove();
         database.ref('classrooms/').child(to).child('teachers').child(teacher).set(true);
+
+        database.ref('teachers/').child(teacher).child('classrooms').child(to).set(true);
       }
       else {
         // 3) from a classroom to the break-time area
         database.ref('classrooms/').child(from).child('teachers').child(teacher).remove();
         database.ref('teachers-non-assigned/').child(teacher).set(true);
+
+        database.ref('teachers/').child(teacher).child('classrooms').child(from).remove();
       }
+
     })(),
   };
 }
