@@ -1,14 +1,8 @@
-// #region imports
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { type Match, type Location, type RouterHistory } from 'react-router';
-import _ from 'lodash';
 import { Link } from 'react-router-dom';
-import { Field, reset } from 'redux-form';
 import InputField from '../../components/inputfield/InputField'
 import { createAccount, createUser } from '../../redux/actions/UserActions';
-
-// #region imports
 
 const INITIAL_STATE = {
   name: '',
@@ -72,9 +66,6 @@ class Register extends PureComponent<Props, State> {
   }
 
   render() {
-
-    // const { handleSubmit } = this.props;
-
     return (
       <div className="registerView">
         <div className="middle-box text-center loginscreen   animated fadeInDown">
@@ -129,7 +120,6 @@ class Register extends PureComponent<Props, State> {
       </div>
     );
   }
-  // #endregion
 }
 
 export default connect(null, { createAccount, createUser })(Register);

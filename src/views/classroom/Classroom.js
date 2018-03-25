@@ -1,12 +1,6 @@
-// #region imports
 import React, { PureComponent } from 'react';
-import { type Match, type Location, type RouterHistory } from 'react-router';
-import _ from 'lodash';
 import { Link } from 'react-router-dom';
-import { Field, reset } from 'redux-form';
-
 import Toolbar from '../../components/toolbar/Toolbar'
-// #region imports
 
 class Classroom extends PureComponent<Props, State> {
 
@@ -152,7 +146,6 @@ class Classroom extends PureComponent<Props, State> {
       )
     );
   }
-  // #endregion
 }
 
 export default Classroom;
