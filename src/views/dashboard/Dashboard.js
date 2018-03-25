@@ -125,7 +125,7 @@ let form = reduxForm({
 
 form = connect((state, ownProps) => ({
     teachers: state.teachers,
-    user: state.user
+    user: state.user.user,
   }), { getTeachersNotAssigned }
 )(form);
 

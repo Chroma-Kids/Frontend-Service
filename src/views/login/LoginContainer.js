@@ -1,17 +1,8 @@
 import React, { Component } from 'react';
 import InputField from '../../components/inputfield/InputField'
-import { login, getUser, googleLogin, twitterLogin } from '../../redux/actions/UserActions';
+import { login, googleLogin } from '../../redux/actions/UserActions';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { reduxForm } from 'redux-form';
-
-// #endregion
-
-const INITIAL_STATE = {
-  email: '',
-  password: '',
-  error: null,
-};
 
 class Login extends Component {
 
@@ -25,14 +16,16 @@ class Login extends Component {
   }
 
   componentWillMount() {
-    if (this.props.user !== null) {
+    const { user } = this.props;
+    if (user !== undefined) {
       this.props.history.push('/teachers');
     }
   }
 
   componentWillReceiveProps(nextProps) {
-    if (nextProps.user !== null) {
-      nextProps.history.push('/teachers');
+    const { user } = nextProps;
+    if (user !== undefined) {
+      this.props.history.push('/teachers');
     }
   }
 
@@ -47,18 +40,7 @@ class Login extends Component {
 
   render() {
 
-    const { googleLogin, twitterLogin } = this.props;
-
-
-    const {
-      email,
-      password,
-      error,
-    } = this.state;
-
-    const isInvalid =
-      password === '' ||
-      email === '';
+    const { googleLogin } = this.props;
 
     return (
       <div className="loginView">
@@ -103,8 +85,8 @@ class Login extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
-  return { user: state.user };
+function mapStateToProps(state) {
+  return { user: state.user.user };
 }
 
-export default connect(mapStateToProps, { login, getUser, googleLogin, twitterLogin })(Login);
+export default connect(mapStateToProps, { login, googleLogin })(Login);

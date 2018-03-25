@@ -1,4 +1,4 @@
-import { FETCH_CLASSROOMS } from '../actions/ClassroomActions'
+import { FETCH_CLASSROOMS } from '../actions/ActionTypes';
 
 export default function (state = {}, action) {
 

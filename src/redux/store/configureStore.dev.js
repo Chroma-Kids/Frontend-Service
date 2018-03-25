@@ -1,17 +1,11 @@
-// @flow
-
-// #region imports
 import { createStore, applyMiddleware } from 'redux';
 import { createLogger } from 'redux-logger';
-import { routerMiddleware } from 'react-router-redux';
-// #region import createHistory from hashHistory or BrowserHistory:
-import createHistory from 'history/createHashHistory';
-// import createHistory            from 'history/createBrowserHistory';
-// #endregion
 import thunkMiddleware from 'redux-thunk';
-import rootReducer from '../reducers/RootReducer';
+import { routerMiddleware } from 'react-router-redux';
+import promiseMiddleware from 'redux-promise-middleware'
 import { composeWithDevTools } from 'redux-devtools-extension';
-// #endregion
+import createHistory from 'history/createHashHistory';
+import rootReducer from '../reducers/RootReducer';
 
 const loggerMiddleware = createLogger(
   {
@@ -24,7 +18,7 @@ const history = createHistory();
 // createStore : enhancer
 // NOTE: use now https://github.com/zalmoxisus/redux-devtools-extension#redux-devtools-extension
 const enhancer = composeWithDevTools(
-  applyMiddleware(thunkMiddleware, routerMiddleware(history), loggerMiddleware),
+  applyMiddleware(promiseMiddleware(), thunkMiddleware, routerMiddleware(history), loggerMiddleware),
 );
 
 export default function configureStore(initialState) {
