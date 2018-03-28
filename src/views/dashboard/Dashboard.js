@@ -10,6 +10,7 @@ import { DragDropContext } from 'react-dnd';
 
 import compose from 'recompose/compose';
 import { getTeachers, createTeacher, saveTeacher, deleteTeacher } from '../../redux/actions/TeacherActions';
+import { getClassrooms } from '../../redux/actions/ClassroomActions';
 import { getUser } from '../../redux/actions/UserActions';
 import { reduxForm } from 'redux-form';
 import Toolbar from '../../components/toolbar/Toolbar'
@@ -24,6 +25,8 @@ class Dashboard extends Component {
 
   componentDidMount(){
     this.props.getTeachersNotAssigned();
+    this.props.getTeachers();
+    this.props.getClassrooms();
   }
 
   renderTeachersNotAssigned(teachersNotAssigned){
@@ -87,7 +90,7 @@ class Dashboard extends Component {
 
     const { handleSubmit } = this.props;
 
-    console.log(this.props)
+    console.log(this.props.teac)
 
     return (
       <div key="homeView">
@@ -111,7 +114,12 @@ class Dashboard extends Component {
           </div>
         </div>
         <div className="row">
-          {this.renderClassrooms()}
+        {
+          (typeof this.props.classrooms !== "undefined" && this.props.classrooms != null ?
+          this.renderClassrooms()
+          :
+          <div className="alert alert-warning m-n">No classrooms.</div>
+        )}
         </div>
       </div>
     );
@@ -126,7 +134,7 @@ let form = reduxForm({
 form = connect((state, ownProps) => ({
     teachers: state.teachers,
     user: state.user.user,
-  }), { getTeachersNotAssigned }
+  }), { getTeachersNotAssigned, getTeachers, getClassrooms}
 )(form);
 
 export default DragDropContext(HTML5Backend)(form);
