@@ -2,32 +2,17 @@
 import React, { Component } from 'react';
 import { type Match, type Location, type RouterHistory } from 'react-router';
 import _ from 'lodash';
-import { Field, reset } from 'redux-form';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+
 import { DragDropContext } from 'react-dnd';
 
 import compose from 'recompose/compose';
-import { getTeachers, createTeacher, saveTeacher, deleteTeacher } from '../../redux/actions/TeacherActions';
-import { getClassrooms } from '../../redux/actions/ClassroomActions';
-import { getUser } from '../../redux/actions/UserActions';
-import { reduxForm } from 'redux-form';
+
 import Toolbar from '../../components/toolbar/Toolbar'
 import TeacherDrag from '../../components/dragdropteacher/Dragteacher'
 import ClassroomDrop from '../../components/dragdropteacher/Dropclassroom'
-import Popup from '../../components/popup/Popup'
-import { capitalize } from '../../helpers/Helpers'
-import { getTeachersNotAssigned } from '../../redux/actions/TeacherNotAssignedActions';
-// #region imports
 
 class Dashboard extends Component {
-
-  componentDidMount(){
-    this.props.getTeachersNotAssigned();
-    this.props.getTeachers();
-    this.props.getClassrooms();
-  }
 
   renderTeachersNotAssigned(teachersNotAssigned){
     return _.map(Object.keys(teachersNotAssigned), key => {
@@ -116,23 +101,16 @@ class Dashboard extends Component {
           (typeof this.props.classrooms !== "undefined" && this.props.classrooms != null ?
           this.renderClassrooms()
           :
-          <div className="alert alert-warning m-n">No classrooms.</div>
+          <div className="col-lg-12 m-t">
+            <div className="ibox-content">
+              <div className="alert alert-warning m">You must create some classrooms first</div>
+            </div>
+          </div>
         )}
         </div>
       </div>
     );
   }
-  // #endregion
 }
 
-let form = reduxForm({
-  form: 'NewTeacher'
-})(Dashboard);
-
-form = connect((state, ownProps) => ({
-    teachers: state.teachers.teachers,
-    user: state.user.user,
-  }), { getTeachersNotAssigned, getTeachers, getClassrooms}
-)(form);
-
-export default DragDropContext(HTML5Backend)(form);
+export default DragDropContext(HTML5Backend)(Dashboard);

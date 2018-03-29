@@ -8,11 +8,11 @@ import Register from './views/register';
 import App from './components/app/App';
 import LoadingComponent from './components/loading/Loading';
 
+import { DashboardViewContainer } from './redux/containers/dashboard/index';
 import { ClassroomsListContainer, ClassroomViewContainer, ClassroomEditContainer } from './redux/containers/classrooms/index';
 import { TeachersListContainer, TeacherViewContainer, TeacherEditContainer } from './redux/containers/teachers/index';
 import { StudentsListContainer, StudentViewContainer, StudentEditContainer } from './redux/containers/students/index';
 
-import Dashboard from './views/dashboard';
 import configureStore from './redux/store/configureStore';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -26,7 +26,7 @@ ReactDOM.render(
           <Route path="/login" component={LoginContainer}/>
           <Route path="/register" component={Register}/>
           <App>
-            <Route exact path="/dashboard" component={Dashboard}/>
+            <Route exact path="/dashboard" component={DashboardViewContainer}/>
 
             <Route exact path="/teachers" component={TeachersListContainer}/>
             <Route exact path="/teacher/:id" component={TeacherViewContainer}/>
