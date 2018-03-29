@@ -113,6 +113,7 @@ class Home extends Component {
 
         <Toolbar
             title={"Teachers"}
+            breadcrumb={['Dashboard']}
             button={this.toggleMenu.bind(this)}
             buttonText={"New teacher"} />
 

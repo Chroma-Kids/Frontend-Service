@@ -1,17 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import _ from 'lodash';
 
-const Toolbar = ({title, button, buttonText}) => (
+function makeItLower(char){
+  return char.toLowerCase();
+}
+
+const Toolbar = ({title, breadcrumb, button, buttonText}) => (
   <div className="row wrapper border-bottom white-bg page-heading">
     <div className="col-sm-4">
       <h2>{title}</h2>
       <ol className="breadcrumb">
-          <li>
-            <Link to={'/'}>
-              <i className="fa fa-info" />
-              Home
-            </Link>
-          </li>
+          {_.map(breadcrumb, (key, val) => {
+            return (
+              <li key={val}>
+                <Link to={`/${makeItLower(key)}`}>
+                  <i className="fa fa-info" />
+                  {key}
+                </Link>
+              </li>
+            )
+          })}
           <li className="active">
               <strong>{title}</strong>
           </li>
