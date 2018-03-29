@@ -130,7 +130,7 @@ let form = reduxForm({
 })(Dashboard);
 
 form = connect((state, ownProps) => ({
-    teachers: state.teachers,
+    teachers: state.teachers.teachers,
     user: state.user.user,
   }), { getTeachersNotAssigned, getTeachers, getClassrooms}
 )(form);
