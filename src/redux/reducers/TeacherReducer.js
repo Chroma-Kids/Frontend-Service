@@ -1,4 +1,4 @@
-import { FETCH_TEACHERS, FETCH_TEACHER_FULFILLED } from '../actions/ActionTypes';
+import * as types from '../actions/ActionTypes';
 
 const initialState = {
   currentTeacher: undefined,
@@ -7,11 +7,11 @@ const initialState = {
 export default function (state = {}, action) {
   const { payload } = action;
   switch (action.type) {
-    case FETCH_TEACHERS:
+    case types.FETCH_TEACHERS:
       return {
         teachers: payload
       }
-    case FETCH_TEACHER_FULFILLED:
+    case types.FETCH_TEACHER_FULFILLED:
       return {
         ...state,
         currentTeacher: payload ? payload : initialState.currentTeacher,

@@ -7,11 +7,11 @@ import LoginContainer from './views/login/LoginContainer';
 import Register from './views/register';
 import App from './components/app/App';
 import LoadingComponent from './components/loading/Loading';
-// import Teacher from './views/teacher';
-import ListClassrooms from './views/classrooms';
+
+import { ClassroomsListContainer, ClassroomViewContainer, ClassroomEditContainer } from './redux/containers/classrooms/index';
 import { TeachersListContainer, TeacherViewContainer, TeacherEditContainer } from './redux/containers/teachers/index';
 import { StudentsListContainer, StudentViewContainer, StudentEditContainer } from './redux/containers/students/index';
-import Classroom from './views/classroom';
+
 import Dashboard from './views/dashboard';
 import configureStore from './redux/store/configureStore';
 
@@ -27,12 +27,14 @@ ReactDOM.render(
           <Route path="/register" component={Register}/>
           <App>
             <Route exact path="/dashboard" component={Dashboard}/>
+
             <Route exact path="/teachers" component={TeachersListContainer}/>
             <Route exact path="/teacher/:id" component={TeacherViewContainer}/>
             <Route exact path="/teacher/:id/edit" component={TeacherEditContainer}/>
 
-            <Route exact path="/classrooms" component={ListClassrooms}/>
-            <Route exact path="/classroom/:classroomId" component={Classroom}/>
+            <Route exact path="/classrooms" component={ClassroomsListContainer}/>
+            <Route exact path="/classroom/:id" component={ClassroomViewContainer}/>
+            <Route exact path="/classroom/:id/edit" component={ClassroomEditContainer}/>
 
             <Route exact path="/students" component={StudentsListContainer}/>
             <Route exact path="/student/:id" component={StudentViewContainer}/>

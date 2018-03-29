@@ -25,17 +25,49 @@ export function getClassrooms() {
   };
 }
 
+export function fetchClassroom(uid) {
+  return {
+    type: types.FETCH_CLASSROOM,
+    payload: new Promise((resolve, reject) => {
+          try {
+              database.ref('classrooms/').child(uid).on('value', function (snapshot) {
+                  resolve(snapshot.val());
+              });
+          }
+          catch (e) {
+              reject(e.message);
+          }
+      })
+  };
+}
+
+
 export function createClassroom(classroom) {
+
+  classroom.created_at = new Date().getTime()/1000;
+
   return {
     type: types.CREATE_CLASSROOM,
     payload: database.ref('classrooms/').push({ ...classroom }),
   };
 }
 
-export function saveClassroom(classroom, uid) {
+export function updateClassroom(classroom, uid) {
+
+  classroom.updated_at = new Date().getTime()/1000;
+
   return {
     type: types.SAVE_CLASSROOM,
-    payload: database.ref('classrooms/').push({ ...classroom, uid }),
+    payload: new Promise((resolve, reject) => {
+      try{
+        database.ref(`classrooms/${uid}`).set({...classroom}, function () {
+            resolve(classroom);
+        });
+      }
+      catch(e){
+        reject(e.message);
+      }
+    })
   };
 }
 
