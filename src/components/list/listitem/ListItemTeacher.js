@@ -5,7 +5,7 @@ import Timestamp from 'react-timestamp'
 
 const ListItemTeacher = (props) => {
 
-  const { element, itemKey, deleteTeacher } = props;
+  const { teacher, itemKey, deleteTeacher } = props;
 
   return (
     <tr key={itemKey}>
@@ -13,12 +13,12 @@ const ListItemTeacher = (props) => {
             <span className="label label-primary">Active</span>
         </td>
         <td className="project-title">
-            <Link to={`/teacher/${itemKey}`}>{element.name} {element.surname}</Link>
+            <Link to={`/teacher/${itemKey}`}>{teacher.name} {teacher.surname}</Link>
             <br />
-            <small>Created <Timestamp time={element.created_at} format='ago' actualSeconds autoUpdate /></small>
+            <small>Created <Timestamp time={teacher.created_at} format='ago' actualSeconds autoUpdate /></small>
             <br />
-            {( element.updated_at != null ?
-              <small>Updated <Timestamp time={element.updated_at} format='ago' actualSeconds autoUpdate /></small> : null  )}
+            {( teacher.updated_at != null ?
+              <small>Updated <Timestamp time={teacher.updated_at} format='ago' actualSeconds autoUpdate /></small> : null  )}
         </td>
         <td className="project-completion">
             <small>Completion with: 28%</small>

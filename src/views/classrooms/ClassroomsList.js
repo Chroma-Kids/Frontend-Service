@@ -48,7 +48,7 @@ export default class ClassroomsList extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, classrooms } = this.props;
 
     return (
       <div key="homeView">
@@ -88,13 +88,20 @@ export default class ClassroomsList extends Component {
             button={this.toggleMenu.bind(this)}
             buttonText={"New classroom"} />
 
-        <List {...this.props}
-          className={ "classrooms" } >
-           { _.map(this.props.classrooms, (classroom, key) =>
+        {(!classrooms ?
+          <div className="spiner-example">
+              <div className="sk-spinner sk-spinner-double-bounce">
+                  <div className="sk-double-bounce1"></div>
+                  <div className="sk-double-bounce2"></div>
+              </div>
+          </div>
+          :
+          <List {...this.props} className={ "classrooms" } >
+           {_.map(classrooms, (classroom, key) =>
                <ListItemClassroom {...this.props} key={key} itemKey={key} classroom={classroom} />
-             )
-           }
-        </List>
+            )}
+          </List>
+        )}
       </div>
     );
   }
