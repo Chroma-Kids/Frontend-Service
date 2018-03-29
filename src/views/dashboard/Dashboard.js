@@ -90,8 +90,6 @@ class Dashboard extends Component {
 
     const { handleSubmit } = this.props;
 
-    console.log(this.props.teac)
-
     return (
       <div key="homeView">
 

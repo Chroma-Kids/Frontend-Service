@@ -1,41 +1,27 @@
 // #region imports
 import React, { Component } from 'react';
 import { type Match, type Location, type RouterHistory } from 'react-router';
-import { Field, reset } from 'redux-form';
 import _ from 'lodash';
+import { Field, reset } from 'redux-form';
+// #region imports
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import compose from 'recompose/compose';
-import { getStudents, createStudent, updateStudent, deleteStudent } from '../../redux/actions/StudentActions';
+import { getTeachers, createTeacher, saveTeacher, deleteTeacher } from '../../redux/actions/TeacherActions';
 import { getUser } from '../../redux/actions/UserActions';
 import { reduxForm } from 'redux-form';
 import Toolbar from '../../components/toolbar/Toolbar'
-import List from '../../components/list/List'
-import ListItemStudent from '../../components/list/listitem/ListItemStudent'
 import Popup from '../../components/popup/Popup'
 import { capitalize } from '../../helpers/Helpers'
+import List from '../../components/list/List'
+import ListItemTeacher from '../../components/list/listitem/ListItemTeacher'
 
-export default class StudentsList extends Component {
+export default class Home extends Component {
 
-  constructor() {
-    super();
-
+  constructor(props) {
+    super(props);
     this.state = { showPopup: false }
-  }
-
-  onSubmit(values){
-    this.props.createStudent(values);
-    this.setState({
-      showPopup: !this.state.showPopup
-    });
-    this.props.dispatch(reset('NewStudent'))
-  }
-
-  toggleMenu(){
-    this.setState({
-      showPopup: !this.state.showPopup
-    });
   }
 
   renderField(field){
@@ -47,15 +33,30 @@ export default class StudentsList extends Component {
     )
   }
 
+  toggleMenu(){
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
+  }
+
+  onSubmit(values){
+    this.props.createTeacher(values);
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
+    this.props.dispatch(reset('NewTeacher'))
+  }
+
   render() {
+
     const { handleSubmit } = this.props;
 
     return (
       <div key="homeView">
         <Popup
           showhide={this.state.showPopup}
-          title={"Create a new student"}
-          description={"Provide the information about the new student."}
+          title={"Create a new teacher"}
+          description={"Provide the information about the new teacher."}
           onSubmit={handleSubmit(this.onSubmit.bind(this))}
           buttonClose={this.toggleMenu.bind(this)}
           >
@@ -76,18 +77,18 @@ export default class StudentsList extends Component {
         </Popup>
 
         <Toolbar
-            title={"Students"}
+            title={"Teachers"}
             breadcrumb={['Dashboard']}
             button={this.toggleMenu.bind(this)}
-            buttonText={"New student"} />
+            buttonText={"New teacher"} />
 
         <List {...this.props}
-          className={ "students" } >
-           { _.map(this.props.students, (student, key) =>
-               <ListItemStudent {...this.props} key={key} itemKey={key} element={student} />
+          className={ "teachers" } >
+           { _.map(this.props.teachers, (teacher, key) =>
+               <ListItemTeacher {...this.props} key={key} itemKey={key} element={teacher} />
              )
            }
-        </List>
+         </List>
       </div>
     );
   }

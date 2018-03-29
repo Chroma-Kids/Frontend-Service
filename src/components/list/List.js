@@ -1,13 +1,12 @@
 import React from 'react';
 import _ from 'lodash';
-import ListItem from './listitem/ListItem'
 
 const List = (props) => {
 
-  const { elements } = props;
+  const { elements, children, className } = props;
 
   return (
-    <section className="students">
+    <section className={className}>
       <div className="ibox">
         <div className="ibox-content">
           <div className="row m-b-sm m-t-sm">
@@ -23,10 +22,7 @@ const List = (props) => {
           <div className="project-list">
             <table className="table table-hover">
               <tbody>
-              { _.map(elements, (student, key) =>
-                  <ListItem {...props} key={key} itemKey={key} element={student} />
-                )
-              }
+                {children}
               </tbody>
             </table>
           </div>

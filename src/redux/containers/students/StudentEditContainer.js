@@ -21,7 +21,6 @@ export class StudentEditContainer extends Component {
 
     render() {
         return (
-
             <div>
                 <StudentForm {...this.props} onSubmit={this.onSubmit.bind(this)} onDelete={this.onDelete.bind(this)}/>
             </div>

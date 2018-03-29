@@ -25,25 +25,6 @@ export function getStudents() {
   };
 }
 
-
-export function updateStudent(student, uid) {
-  student.updated_at = new Date().getTime()/1000;
-
-  return {
-    type: types.SAVE_STUDENT,
-    payload: new Promise((resolve, reject) => {
-      try{
-        database.ref(`students/${uid}`).set({...student}, function () {
-            resolve(student);
-        });
-      }
-      catch(e){
-        reject(e.message);
-      }
-    })
-  }
-}
-
 export function fetchStudent(uid) {
   return {
     type: types.FETCH_STUDENT,
@@ -75,4 +56,23 @@ export function deleteStudent(id) {
     type: types.DELETE_STUDENT,
     payload: database.ref('students/').child(id).remove()
   };
+}
+
+
+export function updateStudent(student, uid) {
+  student.updated_at = new Date().getTime()/1000;
+
+  return {
+    type: types.SAVE_STUDENT,
+    payload: new Promise((resolve, reject) => {
+      try{
+        database.ref(`students/${uid}`).set({...student}, function () {
+            resolve(student);
+        });
+      }
+      catch(e){
+        reject(e.message);
+      }
+    })
+  }
 }

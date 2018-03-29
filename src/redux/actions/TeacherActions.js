@@ -20,7 +20,26 @@ export function getTeachers() {
   };
 }
 
+export function fetchTeacher(uid) {
+  return {
+    type: types.FETCH_TEACHER,
+    payload: new Promise((resolve, reject) => {
+          try {
+              database.ref('teachers/').child(uid).on('value', function (snapshot) {
+                  resolve(snapshot.val());
+              });
+          }
+          catch (e) {
+              reject(e.message);
+          }
+      })
+  };
+}
+
 export function createTeacher(teacher) {
+
+  teacher.created_at = new Date().getTime()/1000;
+
   return {
     type: types.CREATE_TEACHER,
     payload: (() => {
@@ -30,10 +49,22 @@ export function createTeacher(teacher) {
   };
 }
 
-export function saveTeacher(teacher, uid) {
+export function updateTeacher(teacher, uid) {
+
+  teacher.updated_at = new Date().getTime()/1000;
+
   return {
     type: types.SAVE_TEACHER,
-    payload: database.ref('teachers/').push({ ...teacher, uid }),
+    payload: new Promise((resolve, reject) => {
+      try{
+        database.ref(`teachers/${uid}`).set({...teacher}, function () {
+            resolve(teacher);
+        });
+      }
+      catch(e){
+        reject(e.message);
+      }
+    })
   };
 }
 

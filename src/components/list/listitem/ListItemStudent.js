@@ -3,7 +3,7 @@ import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import Timestamp from 'react-timestamp'
 
-const List = (props) => {
+const ListItemStudent = (props) => {
 
   const { element, itemKey, deleteStudent } = props;
 
@@ -41,4 +41,4 @@ const List = (props) => {
   )
 }
 
-export default List;
+export default ListItemStudent;
