@@ -1,22 +1,24 @@
-import { FETCH_STUDENTS, FETCH_STUDENT_FULFILLED, SAVE_STUDENT_FULFILLED } from '../actions/ActionTypes';
+import * as types from '../actions/ActionTypes';
 
 const initialState = {
   currentStudent: undefined,
 };
 
 export default function (state = {}, action) {
+
   const { payload } = action;
+
   switch (action.type) {
-    case FETCH_STUDENTS:
+    case types.FETCH_STUDENTS:
       return {
         students: action.payload
       };
-    case FETCH_STUDENT_FULFILLED:
+    case types.FETCH_STUDENT_FULFILLED:
       return {
         ...state,
         currentStudent: payload ? payload : initialState.currentStudent,
       };
-    case SAVE_STUDENT_FULFILLED:
+    case types.SAVE_STUDENT_FULFILLED:
       return {
         ...state,
         currentStudent: payload ? payload : initialState.currentStudent,
