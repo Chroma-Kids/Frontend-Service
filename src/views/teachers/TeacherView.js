@@ -24,7 +24,9 @@ class Teacher extends PureComponent<Props, State> {
         </div>
         :
         <div key="teacherView">
-          <Toolbar title={`${teacher.name+" "+teacher.surname}`} />
+          <Toolbar
+            title={`${teacher.name+" "+teacher.surname}`}
+            breadcrumb={['Dashboard', 'Teachers']} />
 
           <div className="wrapper wrapper-content animated fadeInRight">
 
