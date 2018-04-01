@@ -17,6 +17,7 @@ import configureStore from './redux/store/configureStore';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style/style.css';
+import 'react-select/dist/react-select.css';
 
 ReactDOM.render(
   <Provider store={configureStore()}>

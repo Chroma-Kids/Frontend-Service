@@ -7,12 +7,46 @@ import { Field, reset } from 'redux-form';
 import Toolbar from '../../components/toolbar/Toolbar'
 import TableResponsive from '../../components/tableresponsive/TableResponsive'
 import TableRowStudent from '../../components/tableresponsive/TableRowStudent'
+import Popup from '../../components/popup/Popup'
+import { capitalize } from '../../helpers/Helpers'
+import Select from 'react-select';
 
 class Classroom extends PureComponent<Props, State> {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      showPopup: false,
+      selectedOption: ''
+    }
+  }
+
+  toggleMenu(){
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
+  }
+
+  onSubmit(values){
+    this.props.createTeacher(values);
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
+    this.props.dispatch(reset('NewTeacher'))
+  }
+
+  // To handle the select from the popup
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption });
+    console.log(`Selected: ${selectedOption.label}`);
+  }
+
   render() {
 
-    const { classroom, teachers, tabs, students } = this.props;
+    const { classroom, teachers, tabs, students, handleSubmit } = this.props;
+    const { selectedOption } = this.state;
+
+    const value = selectedOption && selectedOption.value;
 
     return (
       (!classroom ?
@@ -24,12 +58,32 @@ class Classroom extends PureComponent<Props, State> {
         </div>
         :
         <div key="classroomView">
-        <Toolbar
+          <Popup
+            showhide={this.state.showPopup}
+            title={"Add a new student"}
+            description={"Select a student to be added to this classroom."}
+            onSubmit={handleSubmit(this.onSubmit.bind(this))}
+            buttonClose={this.toggleMenu.bind(this)}
+            >
+              <Select
+                name="form-field-name"
+                value={value}
+                onChange={this.handleChange}
+                options={[
+                  { value: 'one', label: 'One' },
+                  { value: 'two', label: 'Two' },
+                ]}
+              />
+          </Popup>
+
+          <Toolbar
             title={`${classroom.name}`}
+            button={this.toggleMenu.bind(this)}
+            buttonText={"Add student"}
             breadcrumb={['Dashboard', 'Classrooms']} />
 
           <div className="row">
-            <div className="col-lg-9">
+            <div className="col-lg-12">
                 <div className="wrapper wrapper-content animated fadeInUp">
                     <div className="ibox-content">
                         <div className="row">
@@ -89,6 +143,7 @@ class Classroom extends PureComponent<Props, State> {
                         <div className="row m-t-sm">
                           <div className="col-lg-12">
                             <div className="panel blank-panel">
+
                               {(typeof classroom.students !== "undefined" ?
                                 <TableResponsive
                                   fields={["#", "Full Name", "-", "-", "Updated", "Created", ""]} >
@@ -109,7 +164,7 @@ class Classroom extends PureComponent<Props, State> {
                     </div>
                 </div>
             </div>
-            <div className="col-lg-3">
+            {/*<div className="col-lg-3">
                 <div className="wrapper wrapper-content project-manager">
                     <h4>Project description</h4>
                     <img src="img/zender_logo.png" className="img-responsive"/>
@@ -140,7 +195,7 @@ class Classroom extends PureComponent<Props, State> {
 
                     </div>
                 </div>
-            </div>
+            </div>*/}
           </div>
         </div>
       )

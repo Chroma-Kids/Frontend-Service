@@ -38,4 +38,8 @@ const mapDispatchToProps = (dispatch, state)=> {
     return bindActionCreators({ fetchClassroom, getTeachers, getStudents }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ClassroomViewContainer);
+let addStudentForm = reduxForm({
+    form: 'AddTeacher'
+})(ClassroomViewContainer);
+
+export default connect(mapStateToProps, mapDispatchToProps)(addStudentForm);
