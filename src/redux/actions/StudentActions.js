@@ -26,18 +26,31 @@ export function getStudents() {
 }
 
 export function fetchStudent(uid) {
-  return {
-    type: types.FETCH_STUDENT,
-    payload: new Promise((resolve, reject) => {
-          try {
-              database.ref('students/').child(uid).on('value', function (snapshot) {
-                  resolve(snapshot.val());
-              });
-          }
-          catch (e) {
-              reject(e.message);
-          }
-      })
+  return dispatch => {
+    dispatch({
+      type: types.FETCH_STUDENT_PENDING,
+      payload: true
+    });
+    new Promise((resolve, reject) => {
+        try {
+            database.ref('students/').child(uid).on('value', function (snapshot) {
+                dispatch({
+                  type: types.FETCH_STUDENT_FULFILLED,
+                  payload: snapshot.val()
+                });
+                dispatch({
+                  type: types.FETCH_STUDENT_PENDING,
+                  payload: false
+                });
+            });
+        }
+        catch (e) {
+            dispatch({
+              type: types.FETCH_STUDENT_REJECTED,
+              payload: reject(e.message)
+            });
+        }
+    })
   };
 }
 
@@ -76,3 +89,11 @@ export function updateStudent(student, uid) {
     })
   }
 }
+
+// export function resetCurrentStudent(){
+//     return (dispatch) => {
+//         dispatch({
+//             type: types.STUDENT_RESET
+//         })
+//     }
+// }

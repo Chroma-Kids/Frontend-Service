@@ -4,16 +4,16 @@ import { type Match, type Location, type RouterHistory } from 'react-router';
 import _ from 'lodash';
 import { Link } from 'react-router-dom';
 import { Field, reset } from 'redux-form';
-
 import Toolbar from '../../components/toolbar/Toolbar'
-// #region imports
+import TableResponsive from '../../components/tableresponsive/TableResponsive'
+import TableRowStudent from '../../components/tableresponsive/TableRowStudent'
 
 class Classroom extends PureComponent<Props, State> {
 
   render() {
 
-    const { classroom, teachers } = this.props;
-    
+    const { classroom, teachers, tabs, students } = this.props;
+
     return (
       (!classroom ?
         <div className="spiner-example">
@@ -24,7 +24,9 @@ class Classroom extends PureComponent<Props, State> {
         </div>
         :
         <div key="classroomView">
-          <Toolbar title={`${classroom.name}`} />
+        <Toolbar
+            title={`${classroom.name}`}
+            breadcrumb={['Dashboard', 'Classrooms']} />
 
           <div className="row">
             <div className="col-lg-9">
@@ -87,28 +89,20 @@ class Classroom extends PureComponent<Props, State> {
                         <div className="row m-t-sm">
                           <div className="col-lg-12">
                             <div className="panel blank-panel">
-                              <div className="panel-heading">
-                                  <div className="panel-options">
-                                      <ul className="nav nav-tabs">
-                                          <li className="active"><a href="#tab-1" data-toggle="tab">Kids</a></li>
-                                          <li className=""><a href="#tab-2" data-toggle="tab">Teachers</a></li>
-                                      </ul>
-                                  </div>
-                              </div>
-
-                              <div className="panel-body">
-
-                                <div className="tab-content">
-                                  <div className="tab-pane active" id="tab-1">
-
-                                  </div>
-                                  <div className="tab-pane" id="tab-2">
-
-                                  </div>
+                              {(typeof classroom.students !== "undefined" ?
+                                <TableResponsive
+                                  fields={["#", "Full Name", "-", "-", "Updated", "Created", ""]} >
+                                   {
+                                     students && Object.values(students).filter( i => i.id == classroom.key ).map((student, index) => {
+                                       return (<TableRowStudent studentKey={index} key={index} student={student} />)
+                                     })
+                                   }
+                                </TableResponsive>
+                                :
+                                <div className="alert alert-warning">
+                                    No students assigned to this classroom.
                                 </div>
-
-                              </div>
-
+                              )}
                             </div>
                           </div>
                         </div>

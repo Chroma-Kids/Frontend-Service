@@ -14,14 +14,10 @@ export default function (state = {}, action) {
         students: action.payload
       };
     case types.FETCH_STUDENT_FULFILLED:
+      console.log(payload)
       return {
         ...state,
-        currentStudent: payload ? payload : initialState.currentStudent,
-      };
-    case types.SAVE_STUDENT_FULFILLED:
-      return {
-        ...state,
-        currentStudent: payload ? payload : initialState.currentStudent,
+        currentStudent: payload,
       };
     default:
       return state;
