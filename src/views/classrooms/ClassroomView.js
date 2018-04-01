@@ -38,7 +38,8 @@ class Classroom extends PureComponent<Props, State> {
   // To handle the select from the popup
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
-    console.log(`Selected: ${selectedOption.label}`);
+    if(selectedOption !== null)
+      console.log(`Selected: ${selectedOption.label}`);
   }
 
   render() {
@@ -47,6 +48,8 @@ class Classroom extends PureComponent<Props, State> {
     const { selectedOption } = this.state;
 
     const value = selectedOption && selectedOption.value;
+
+    console.log(students)
 
     return (
       (!classroom ?
