@@ -7,7 +7,7 @@ const initialState = {
 export default function (state = {}, action) {
   const { payload } = action;
   switch (action.type) {
-    case types.FETCH_TEACHERS:
+    case types.FETCH_TEACHERS_FULFILLED:
       return {
         teachers: payload
       }
