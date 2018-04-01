@@ -9,7 +9,7 @@ export default function (state = {}, action) {
   const { payload } = action;
 
   switch (action.type) {
-    case types.FETCH_STUDENTS:
+    case types.FETCH_STUDENTS_FULFILLED:
       return {
         students: action.payload
       };
