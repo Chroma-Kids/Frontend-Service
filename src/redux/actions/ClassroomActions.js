@@ -57,7 +57,7 @@ export function fetchClassroom(uid) {
 export function createClassroom(classroom) {
 
   classroom.created_at = new Date().getTime()/1000;
-  
+
   return dispatch => {
     dispatch({
       type: types.CREATE_CLASSROOM_PENDING,
@@ -122,20 +122,40 @@ export function updateClassroom(classroom, uid) {
 * 2) delete the classroom itself
 **/
 export function deleteClassroom(classroomId) {
-  return {
-    type: types.DELETE_CLASSROOM,
-    payload: (() => {
-      database.ref(`classrooms/${classroomId}/teachers`).once('value', (snapshot) => {
-        const teachers = Object.keys(snapshot.val() || {});
-        teachers.forEach((teacherId) => {
-          database.ref('classrooms/').child(classroomId).child('teachers').child(teacherId).remove();
-          database.ref('teachers-non-assigned/').child(teacherId).set(true);
 
-          database.ref('teachers/').child(teacherId).child('classrooms').child(classroomId).remove();
-        });
-      }).then(() => {
-        database.ref('classrooms/').child(classroomId).remove();
+  return dispatch => {
+    dispatch({
+      type: types.DELETE_CLASSROOM_PENDING,
+      payload: true
+    });
+
+    try {
+      dispatch({
+        type: types.DELETE_CLASSROOM_FULFILLED,
+        payload: (() => {
+          database.ref(`classrooms/${classroomId}/teachers`).once('value', (snapshot) => {
+            const teachers = Object.keys(snapshot.val() || {});
+            teachers.forEach((teacherId) => {
+              database.ref('classrooms/').child(classroomId).child('teachers').child(teacherId).remove();
+              database.ref('teachers-non-assigned/').child(teacherId).set(true);
+
+              database.ref('teachers/').child(teacherId).child('classrooms').child(classroomId).remove();
+            });
+          }).then(() => {
+            database.ref('classrooms/').child(classroomId).remove();
+            dispatch({
+              type: types.DELETE_CLASSROOM_PENDING,
+              payload: false
+            });
+          });
+        })
       });
-    }),
-  };
+    }
+    catch (e) {
+      dispatch({
+        type: types.DELETE_CLASSROOM_REJECTED,
+        payload: true
+      });
+    }    
+  }
 }
