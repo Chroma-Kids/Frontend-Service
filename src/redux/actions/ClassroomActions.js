@@ -156,6 +156,37 @@ export function deleteClassroom(classroomId) {
         type: types.DELETE_CLASSROOM_REJECTED,
         payload: true
       });
-    }    
+    }
   }
+}
+
+export function addStudentToClassroom(classroom, student) {
+
+  classroom.updated_at = new Date().getTime()/1000;
+
+  return dispatch => {
+    dispatch({
+      type: types.ADD_STUDENT_CLASSROOM_PENDING,
+      payload: true
+    });
+    new Promise((resolve, reject) => {
+      database.ref(`classrooms/${classroom.id}`).child('students').child(student).set(true, function(e){
+        if (e) {
+          dispatch({
+            type: types.ADD_STUDENT_CLASSROOM_REJECTED,
+            payload: reject(e.message)
+          });
+        }else {
+          dispatch({
+            type: types.ADD_STUDENT_CLASSROOM_FULFILLED,
+            payload: resolve(classroom)
+          });
+          dispatch({
+            type: types.ADD_STUDENT_CLASSROOM_PENDING,
+            payload: false
+          });
+        }
+      })
+    })
+  };
 }

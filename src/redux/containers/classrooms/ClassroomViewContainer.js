@@ -5,7 +5,7 @@ import { reduxForm, reset } from 'redux-form';
 
 import { getTeachers } from '../../actions/TeacherActions';
 import { getStudents } from '../../actions/StudentActions';
-import { fetchClassroom } from '../../actions/ClassroomActions';
+import { fetchClassroom, addStudentToClassroom } from '../../actions/ClassroomActions';
 import ClassroomView from '../../../views/classrooms/ClassroomView';
 
 export class ClassroomViewContainer extends Component {
@@ -35,11 +35,11 @@ const mapStateToProps = (state, ownProps)=> {
 }
 
 const mapDispatchToProps = (dispatch, state)=> {
-    return bindActionCreators({ fetchClassroom, getTeachers, getStudents }, dispatch);
+    return bindActionCreators({ fetchClassroom, getTeachers, getStudents, addStudentToClassroom }, dispatch);
 }
 
 let addStudentForm = reduxForm({
-    form: 'AddTeacher'
+    form: 'AddStudent'
 })(ClassroomViewContainer);
 
 export default connect(mapStateToProps, mapDispatchToProps)(addStudentForm);

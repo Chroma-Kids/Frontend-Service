@@ -8,6 +8,8 @@ export default function (state = {}, action) {
 
     const { payload } = action;
 
+    console.log(payload)
+
     switch (action.type) {
       case types.FETCH_CLASSROOMS_FULFILLED:
         return {

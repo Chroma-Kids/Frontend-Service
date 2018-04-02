@@ -28,28 +28,36 @@ class Classroom extends PureComponent<Props, State> {
   }
 
   onSubmit(values){
-    this.props.createTeacher(values);
-    this.setState({
-      showPopup: !this.state.showPopup
-    });
-    this.props.dispatch(reset('NewTeacher'))
+    const { selectedOption } = this.state;
+    const { classroom, classroom_id } = this.props;
+
+    classroom.id = classroom_id;
+
+    if(selectedOption !== null){
+      this.props.addStudentToClassroom(classroom, selectedOption.value);
+      this.setState({
+        showPopup: !this.state.showPopup
+      });
+      this.props.dispatch(reset('AddStudent'))
+    }
   }
 
   // To handle the select from the popup
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
     if(selectedOption !== null)
-      console.log(`Selected: ${selectedOption.label}`);
+      console.log(`Selected: ${selectedOption.value}`);
   }
 
   render() {
 
     const { classroom, teachers, tabs, students, handleSubmit } = this.props;
+
     const { selectedOption } = this.state;
 
     const value = selectedOption && selectedOption.value;
 
-    console.log(students)
+    console.log(classroom)
 
     return (
       (!classroom ?
@@ -67,16 +75,16 @@ class Classroom extends PureComponent<Props, State> {
             description={"Select a student to be added to this classroom."}
             onSubmit={handleSubmit(this.onSubmit.bind(this))}
             buttonClose={this.toggleMenu.bind(this)}
-            >
-              <Select
-                name="form-field-name"
-                value={value}
-                onChange={this.handleChange}
-                options={[
-                  { value: 'one', label: 'One' },
-                  { value: 'two', label: 'Two' },
-                ]}
-              />
+          >
+              {(typeof students !== "undefined" ?
+                    <Select
+                      name="form-field-name"
+                      value={value}
+                      onChange={this.handleChange}
+                      options={Object.keys(students).map(obj => ({ value: obj, label: students[obj].name }))}
+                    />
+              :
+              <p>Loading popup</p>)}
           </Popup>
 
           <Toolbar
@@ -147,12 +155,12 @@ class Classroom extends PureComponent<Props, State> {
                           <div className="col-lg-12">
                             <div className="panel blank-panel">
 
-                              {(typeof classroom.students !== "undefined" ?
+                              {( typeof classroom.students !== "undefined" && typeof students !== "undefined" && classroom.students != null ?
                                 <TableResponsive
                                   fields={["#", "Full Name", "-", "-", "Updated", "Created", ""]} >
                                    {
-                                     students && Object.values(students).filter( i => i.id == classroom.key ).map((student, index) => {
-                                       return (<TableRowStudent studentKey={index} key={index} student={student} />)
+                                     Object.keys(classroom.students).map((student, index) => {
+                                       return (<TableRowStudent studentKey={student} key={index} student={students[student]} />)
                                      })
                                    }
                                 </TableResponsive>
