@@ -9,7 +9,7 @@ const ListItemClassroom = (props) => {
   return (
     <tr key={itemKey}>
         <td className="project-status">
-            <span className="label label-primary">Active</span>
+            <span className="label label-primary"> Ratio {classroom.ratio}</span>
         </td>
         <td className="project-title">
             <Link to={`/classroom/${itemKey}`}>{classroom.name}</Link>
