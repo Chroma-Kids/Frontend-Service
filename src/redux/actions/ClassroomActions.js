@@ -177,6 +177,10 @@ export function addStudentToClassroom(classroom, student) {
             payload: reject(e.message)
           });
         }else {
+          database.ref(`classrooms/${classroom.id}`).child('num_students').transaction(function (current_value) {
+            return (current_value || 0) + 1;
+          });
+
           dispatch({
             type: types.ADD_STUDENT_CLASSROOM_FULFILLED,
             payload: resolve(classroom)

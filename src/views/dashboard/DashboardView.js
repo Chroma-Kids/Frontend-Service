@@ -8,11 +8,17 @@ import { DragDropContext } from 'react-dnd';
 
 import compose from 'recompose/compose';
 
-import Toolbar from '../../components/toolbar/Toolbar'
+import ToolbarDashboard from '../../components/toolbar/ToolbarDashboard'
 import TeacherDrag from '../../components/dragdropteacher/Dragteacher'
 import ClassroomDrop from '../../components/dragdropteacher/Dropclassroom'
+import { Link } from 'react-router-dom';
 
 class Dashboard extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = { enableRecordingTrajectory: false }
+  }
 
   renderTeachersNotAssigned(teachersNotAssigned){
     return _.map(Object.keys(teachersNotAssigned), key => {
@@ -21,6 +27,7 @@ class Dashboard extends Component {
           text={this.props.teachers[key].name}
           key={key}
           teacherid={key}
+          recording={this.state.enableRecordingTrajectory}
         />
       )
     })
@@ -34,6 +41,7 @@ class Dashboard extends Component {
           key={key}
           teacherid={key}
           classroomid={classroomKey}
+          recording={this.state.enableRecordingTrajectory}
         />
       )
     })
@@ -41,11 +49,22 @@ class Dashboard extends Component {
 
   renderClassrooms(){
     return _.map(this.props.classrooms, (classroom, key) => {
+
+      let ratio = 1 / classroom.ratio;
+      let ratio_real = classroom.num_teachers / classroom.num_students;
+      let ratio_spare = ratio + 0.20;
+
       return (
         <div className="col-lg-3 p-r-none" key={key}>
           <div className="ibox">
               <div className="ibox-content">
-                  <h3>{ classroom.name } (show ratio classroom)</h3>
+                  <h3>
+                  <Link to={`classroom/${key}`}>{ classroom.name }</Link>
+                  {(ratio > ratio_real ? <span className="label label-danger m-l">Teacher needed</span> : null)}
+                  {(ratio_real > ratio_spare && classroom.num_teachers > 1 ? <span className="label label-primary m-l">Spare teacher</span> : null)}
+                  </h3>
+                  <p className="small"><i className="fa fa-hand-o-up"></i> Add here a toolbar for the classroom.
+                  For instance creating incidents for this classroom direclty.</p>
                   <p className="small"><i className="fa fa-hand-o-up"></i> Drag teachers between classrooms</p>
 
                   {/*<div className="input-group">
@@ -71,6 +90,12 @@ class Dashboard extends Component {
 
   }
 
+  toggleMenu(){
+    this.setState({
+      enableRecordingTrajectory: !this.state.enableRecordingTrajectory
+    });
+  }
+
   render() {
 
     const { handleSubmit } = this.props;
@@ -78,8 +103,10 @@ class Dashboard extends Component {
     return (
       <div key="homeView">
 
-        <Toolbar
-            title={"Dashboard"} />
+        <ToolbarDashboard
+          button={this.toggleMenu.bind(this)}
+          buttonText={(this.state.enableRecordingTrajectory ? "Recording..." : "Testing")}
+          title={"Dashboard"} />
 
         <div className="row">
           <div className="col-lg-12 m-t">
