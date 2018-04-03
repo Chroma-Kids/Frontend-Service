@@ -52,8 +52,6 @@ class Classroom extends PureComponent<Props, State> {
 
     const value = selectedOption && selectedOption.value;
 
-    // console.log(classroom)
-
     return (
       (!classroom ?
         <div className="spiner-example">
@@ -69,14 +67,15 @@ class Classroom extends PureComponent<Props, State> {
             title={"Add a new student"}
             description={"Select a student to be added to this classroom."}
             onSubmit={handleSubmit(this.onSubmit.bind(this))}
-            buttonClose={this.toggleMenu.bind(this)}
-          >
+            buttonClose={this.toggleMenu.bind(this)} >
               {(typeof students !== "undefined" ?
                     <Select
                       name="form-field-name"
                       value={value}
                       onChange={this.handleChange}
-                      options={Object.keys(students).map(obj => ({ value: obj, label: students[obj].name }))}
+                      options={Object.keys(students)
+                        .filter(obj => (!!classroom.students ? !classroom.students[obj] : obj))
+                        .map(obj => ({ value: obj, label: students[obj].name }))}
                     />
               :
               <p>Loading popup</p>)}
