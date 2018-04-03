@@ -156,7 +156,7 @@ export function deleteClassroom(classroomId) {
 
 export function addStudentToClassroom(classroom, student) {
 
-  classroom.updated_at = new Date().getTime()/1000;
+  // classroom.updated_at = new Date().getTime()/1000;
 
   return dispatch => {
     dispatch({
@@ -176,6 +176,36 @@ export function addStudentToClassroom(classroom, student) {
 
           dispatch({
             type: types.ADD_STUDENT_CLASSROOM_FULFILLED,
+            payload: resolve(classroom)
+          });
+        }
+      })
+    })
+  };
+}
+
+export function deleteStudentFromClassroom(classroom, student) {
+
+  // classroom.updated_at = new Date().getTime()/1000;
+
+  return dispatch => {
+    dispatch({
+      type: types.REMOVE_STUDENT_CLASSROOM_PENDING
+    });
+    new Promise((resolve, reject) => {
+      database.ref(`classrooms/${classroom}`).child('students').child(student).remove(function(e){
+        if (e) {
+          dispatch({
+            type: types.REMOVE_STUDENT_CLASSROOM_REJECTED,
+            payload: reject(e.message)
+          });
+        }else {
+          database.ref(`classrooms/${classroom}`).child('num_students').transaction(function (current_value) {
+            return (current_value || 0) - 1;
+          });
+
+          dispatch({
+            type: types.REMOVE_STUDENT_CLASSROOM_FULFILLED,
             payload: resolve(classroom)
           });
         }

@@ -32,6 +32,17 @@ export default function (state = {}, action) {
           ...state,
           loading: false
         }
+      // Add Student to Classroom
+      case types.REMOVE_STUDENT_CLASSROOM_PENDING:
+        return {
+          ...state,
+          loading: true
+        }
+      case types.REMOVE_STUDENT_CLASSROOM_FULFILLED:
+        return {
+          ...state,
+          loading: false
+        }
       // Classroom
       case types.FETCH_CLASSROOM_FULFILLED:
         return {

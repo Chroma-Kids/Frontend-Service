@@ -42,13 +42,11 @@ class Classroom extends PureComponent<Props, State> {
   // To handle the select from the popup
   handleChange = (selectedOption) => {
     this.setState({ selectedOption });
-    if(selectedOption !== null)
-      console.log(`Selected: ${selectedOption.value}`);
   }
 
   render() {
 
-    const { classroom, teachers, students, handleSubmit } = this.props;
+    const { classroom, teachers, students, handleSubmit, classroom_id } = this.props;
 
     const { selectedOption } = this.state;
 
@@ -154,10 +152,10 @@ class Classroom extends PureComponent<Props, State> {
 
                               {( typeof classroom.students !== "undefined" && typeof students !== "undefined" && classroom.students != null ?
                                 <TableResponsive
-                                  fields={["#", "Full Name", "-", "-", "Updated", "Created", ""]} >
+                                  fields={["", "Full Name", "Date of birth", "Alergies", "Updated", "Created", ""]} >
                                    {
                                      Object.keys(classroom.students).map((student, index) => {
-                                       return (<TableRowStudent studentKey={student} key={index} student={students[student]} />)
+                                       return (<TableRowStudent studentKey={student} key={index} student={students[student]} {...this.props} />)
                                      })
                                    }
                                 </TableResponsive>
