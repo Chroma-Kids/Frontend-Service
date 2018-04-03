@@ -17,6 +17,7 @@ const cardSource = {
     return {
       text: props.text,
       classroomid: props.classroomid,
+      recording: props.recording,
       teacherid: props.teacherid
     };
   }
@@ -41,7 +42,7 @@ const propTypes = {
 
 class TeacherDrag extends Component {
   render() {
-    const { isDragging, connectDragSource, text, key, teacherid, classroomid } = this.props;
+    const { isDragging, connectDragSource, text, key, teacherid } = this.props;
     return connectDragSource(
       <li style={{ opacity: isDragging ? 0.5 : 1 }} key={key} teacherid={teacherid} className="warning-element" >
           <Link to={`/teacher/${teacherid}`}>{text}</Link>
