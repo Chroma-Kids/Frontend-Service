@@ -4,22 +4,16 @@ import * as types from './ActionTypes';
 export function getClassrooms() {
   return dispatch => {
     dispatch({
-      type: types.FETCH_CLASSROOMS_PENDING,
-      payload: true
+      type: types.FETCH_CLASSROOMS_PENDING
     });
     database.ref('classrooms/').on('value', snapshot => {
       dispatch({
         type: types.FETCH_CLASSROOMS_FULFILLED,
         payload: snapshot.val()
       });
-      dispatch({
-        type: types.FETCH_CLASSROOMS_PENDING,
-        payload: false
-      });
     }, () => {
       dispatch({
-        type: types.FETCH_CLASSROOMS_REJECTED,
-        payload: -1
+        type: types.FETCH_CLASSROOMS_REJECTED
       });
     });
   };

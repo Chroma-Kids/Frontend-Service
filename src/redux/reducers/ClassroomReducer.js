@@ -8,13 +8,20 @@ export default function (state = {}, action) {
 
     const { payload } = action;
 
-    // console.log("CLASSREDUCER", payload)
-
     switch (action.type) {
+      // Classrooms
+      case types.FETCH_CLASSROOMS_PENDING:
+        return {
+          ...state,
+          loading: true
+        }
       case types.FETCH_CLASSROOMS_FULFILLED:
         return {
-          classrooms: action.payload
-        };
+          ...state,
+          classrooms: payload,
+          loading: false
+        }
+      // Classroom
       case types.FETCH_CLASSROOM_FULFILLED:
         return {
           ...state,

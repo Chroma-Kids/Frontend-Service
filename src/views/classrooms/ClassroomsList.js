@@ -41,7 +41,7 @@ export default class ClassroomsList extends Component {
   }
 
   render() {
-    const { handleSubmit, classrooms } = this.props;
+    const { handleSubmit, classrooms, loading } = this.props;
 
     return (
       <div key="homeView">
@@ -81,7 +81,7 @@ export default class ClassroomsList extends Component {
             button={this.toggleMenu.bind(this)}
             buttonText={"New classroom"} />
 
-        {(!classrooms ?
+        {(loading ?
           <div className="spiner-example">
               <div className="sk-spinner sk-spinner-double-bounce">
                   <div className="sk-double-bounce1"></div>

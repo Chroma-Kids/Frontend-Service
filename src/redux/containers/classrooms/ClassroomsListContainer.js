@@ -24,6 +24,7 @@ export class ClassroomsListContainer extends Component {
 const mapStateToProps = (state, ownProps)=> {
     return {
         classrooms: state.classrooms.classrooms,
+        loading: state.classrooms.loading
     }
 }
 
