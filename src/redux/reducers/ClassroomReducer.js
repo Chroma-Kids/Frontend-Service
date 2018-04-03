@@ -21,6 +21,17 @@ export default function (state = {}, action) {
           classrooms: payload,
           loading: false
         }
+      // Add Student to Classroom
+      case types.ADD_STUDENT_CLASSROOM_PENDING:
+        return {
+          ...state,
+          loading: true
+        }
+      case types.ADD_STUDENT_CLASSROOM_FULFILLED:
+        return {
+          ...state,
+          loading: false
+        }
       // Classroom
       case types.FETCH_CLASSROOM_FULFILLED:
         return {

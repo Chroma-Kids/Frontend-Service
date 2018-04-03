@@ -160,8 +160,7 @@ export function addStudentToClassroom(classroom, student) {
 
   return dispatch => {
     dispatch({
-      type: types.ADD_STUDENT_CLASSROOM_PENDING,
-      payload: true
+      type: types.ADD_STUDENT_CLASSROOM_PENDING
     });
     new Promise((resolve, reject) => {
       database.ref(`classrooms/${classroom.id}`).child('students').child(student).set(true, function(e){
@@ -178,10 +177,6 @@ export function addStudentToClassroom(classroom, student) {
           dispatch({
             type: types.ADD_STUDENT_CLASSROOM_FULFILLED,
             payload: resolve(classroom)
-          });
-          dispatch({
-            type: types.ADD_STUDENT_CLASSROOM_PENDING,
-            payload: false
           });
         }
       })
