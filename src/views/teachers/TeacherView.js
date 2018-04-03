@@ -7,7 +7,7 @@ class Teacher extends PureComponent<Props, State> {
 
   render() {
 
-    const { teacher } = this.props;
+    const { teacher, teacher_id } = this.props;
 
     return (
       (!teacher ?
@@ -21,7 +21,9 @@ class Teacher extends PureComponent<Props, State> {
         <div key="teacherView">
           <Toolbar
             title={`${teacher.name+" "+teacher.surname}`}
-            breadcrumb={['Dashboard', 'Teachers']} />
+            breadcrumb={['Dashboard', 'Teachers']}
+            link={`/teacher/${teacher_id}/edit`}
+            linkText={"Edit Teacher"} />
 
           <div className="wrapper wrapper-content animated fadeInRight">
 
