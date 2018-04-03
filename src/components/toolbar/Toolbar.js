@@ -6,7 +6,7 @@ function makeItLower(char){
   return char.toLowerCase();
 }
 
-const Toolbar = ({title, breadcrumb, button, buttonText}) => (
+const Toolbar = ({title, breadcrumb, button, buttonText, link, linkText}) => (
   <div className="row wrapper border-bottom white-bg page-heading">
     <div className="col-sm-4">
       <h2>{title}</h2>
@@ -35,6 +35,16 @@ const Toolbar = ({title, breadcrumb, button, buttonText}) => (
             <i className="fa fa-info" />
             + {buttonText}
           </button>
+        </div>
+      )}
+      { (!linkText ?
+        null
+        :
+        <div className="title-action">
+          <Link className="btn btn-success " to={link}>
+            <i className="fa fa-info" />
+            + {linkText}
+          </Link>
         </div>
       )}
     </div>

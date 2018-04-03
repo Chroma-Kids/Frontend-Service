@@ -34,10 +34,10 @@ const ListItemClassroom = (props) => {
             <a href=""><img alt="imagecircle" className="img-circle" src="img/a3.jpg"/></a>
         </td>
         <td className="project-actions">
-            <Link to={`/classroom/${itemKey}/edit`} className="btn btn-white btn-sm"><i className="fa fa-cross"></i> Edit </Link>
+            <Link to={`/classroom/${itemKey}/edit`} className="btn btn-success btn-sm"><i className="fa fa-cross"></i> Edit </Link>
             <button onClick={() => {
               deleteClassroom(itemKey)
-            }} className="btn btn-white btn-sm"><i className="fa fa-cross"></i> Delete </button>
+            }} className="btn btn-danger btn-sm"><i className="fa fa-cross"></i> Delete </button>
         </td>
     </tr>
   )

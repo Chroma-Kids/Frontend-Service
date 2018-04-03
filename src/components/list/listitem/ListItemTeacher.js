@@ -31,10 +31,10 @@ const ListItemTeacher = (props) => {
             <a href=""><img alt="cirsl" className="img-circle" src="img/a3.jpg"/></a>
         </td>
         <td className="project-actions">
-            <Link to={`/teacher/${itemKey}/edit`} className="btn btn-white btn-sm"><i className="fa fa-cross"></i> Edit </Link>
+            <Link to={`/teacher/${itemKey}/edit`} className="btn btn-success btn-sm"><i className="fa fa-cross"></i> Edit </Link>
             <button onClick={() => {
               deleteTeacher(itemKey)
-            }} className="btn btn-white btn-sm"><i className="fa fa-cross"></i> Delete </button>
+            }} className="btn btn-danger btn-sm"><i className="fa fa-cross"></i> Delete </button>
         </td>
     </tr>
   )

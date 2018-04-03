@@ -7,7 +7,9 @@ export default class StudentView extends PureComponent<Props, State> {
 
   render() {
 
-    const { student } = this.props;
+    const { student, student_id } = this.props;
+
+    console.log(student_id)
 
     return (
       (!student ?
@@ -21,7 +23,9 @@ export default class StudentView extends PureComponent<Props, State> {
         <div key="studentView">
           <Toolbar
               title={`${student.name+" "+student.surname}`}
-              breadcrumb={['Dashboard', 'Students']} />
+              breadcrumb={['Dashboard', 'Students']}
+              link={`/student/${student_id}/edit`}
+              linkText={"Edit Student"} />
 
           <div className="wrapper wrapper-content animated fadeInRight">
 
