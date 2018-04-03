@@ -4,7 +4,7 @@ import Timestamp from 'react-timestamp'
 
 const ListItemStudent = (props) => {
 
-  const { student, itemKey, deleteStudent } = props;
+  const { student, itemKey, deleteStudent, classrooms } = props;
 
   return (
     <tr key={itemKey}>
@@ -26,9 +26,15 @@ const ListItemStudent = (props) => {
             </div>
         </td>
         <td className="project-people">
-            <a href=""><img alt="circles" className="img-circle" src="img/a7.jpg"/></a>
-            <a href=""><img alt="circles" className="img-circle" src="img/a6.jpg"/></a>
-            <a href=""><img alt="circles" className="img-circle" src="img/a3.jpg"/></a>
+          {(!!classrooms && typeof student.classrooms !== "undefined" ?
+            Object.keys(student.classrooms).map(key => {
+              return <Link key={key} to={`/classroom/${key}`}><img alt={classrooms[key].name} className="img-circle"/></Link>;
+            })
+            :
+            <div className="alert alert-warning m-b-none">
+                Student not assigned to a classroom
+            </div>
+          )}
         </td>
         <td className="project-actions">
             <Link to={`/student/${itemKey}/edit`} className="btn btn-success btn-sm"><i className="fa fa-cross"></i> Edit </Link>

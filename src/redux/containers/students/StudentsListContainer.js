@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
 import { getStudents, createStudent, deleteStudent } from '../../actions/StudentActions';
+import { getClassrooms } from '../../actions/ClassroomActions';
 import StudentsList from '../../../views/students/StudentsList';
 
 export class StudentsListContainer extends Component {
 
     componentDidMount(){
       this.props.getStudents();
+      this.props.getClassrooms();
     }
 
     render() {
@@ -24,11 +26,12 @@ export class StudentsListContainer extends Component {
 const mapStateToProps = (state, ownProps)=> {
     return {
         students: state.students.students,
+        classrooms: state.classrooms.classrooms,
     }
 }
 
 const mapDispatchToProps = (dispatch, state)=> {
-    return bindActionCreators({ getStudents, createStudent, deleteStudent }, dispatch);
+    return bindActionCreators({ getStudents, createStudent, deleteStudent, getClassrooms }, dispatch);
 }
 
 let newStudentForm = reduxForm({
