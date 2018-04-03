@@ -1,14 +1,11 @@
 // #region imports
 import React, { PureComponent } from 'react';
-import { type Match, type Location, type RouterHistory } from 'react-router';
-import _ from 'lodash';
 import { Link } from 'react-router-dom';
-import { Field, reset } from 'redux-form';
+import { reset } from 'redux-form';
 import Toolbar from '../../components/toolbar/Toolbar'
 import TableResponsive from '../../components/tableresponsive/TableResponsive'
 import TableRowStudent from '../../components/tableresponsive/TableRowStudent'
 import Popup from '../../components/popup/Popup'
-import { capitalize } from '../../helpers/Helpers'
 import Select from 'react-select';
 
 class Classroom extends PureComponent<Props, State> {
@@ -51,13 +48,13 @@ class Classroom extends PureComponent<Props, State> {
 
   render() {
 
-    const { classroom, teachers, tabs, students, handleSubmit } = this.props;
+    const { classroom, teachers, students, handleSubmit } = this.props;
 
     const { selectedOption } = this.state;
 
     const value = selectedOption && selectedOption.value;
 
-    console.log(classroom)
+    // console.log(classroom)
 
     return (
       (!classroom ?
@@ -100,7 +97,7 @@ class Classroom extends PureComponent<Props, State> {
                         <div className="row">
                             <div className="col-lg-12">
                                 <div className="m-b-md">
-                                    <a href="#" className="btn btn-white btn-xs pull-right">Edit project</a>
+                                    <a className="btn btn-white btn-xs pull-right">Edit project</a>
                                     <h2>{classroom.name} class</h2>
                                 </div>
                                 <dl className="dl-horizontal">
@@ -114,7 +111,7 @@ class Classroom extends PureComponent<Props, State> {
 
                                     <dt>Created by:</dt> <dd>Alex Smith</dd>
                                     <dt>Messages:</dt> <dd>  162</dd>
-                                    <dt>Client:</dt> <dd><a href="#" className="text-navy"> Zender Company</a> </dd>
+                                    <dt>Client:</dt> <dd><a className="text-navy"> Zender Company</a> </dd>
                                     <dt>Version:</dt> <dd> 	v1.4.2 </dd>
                                 </dl>
                             </div>

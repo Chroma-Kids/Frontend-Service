@@ -3,7 +3,7 @@ import _ from 'lodash';
 
 const TableResponsive = (props) => {
 
-  const { elements, children, fields } = props;
+  const { children, fields } = props;
 
   return (
     <div className="table-responsive">

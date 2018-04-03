@@ -6,7 +6,7 @@ export default function (state = {}, action) {
 
     switch (action.type) {
       case types.FETCH_TEACHERS_NOT_ASSIGNED:
-        return action.payload;
+        return payload;
       default:
         return state;
     }

@@ -1,12 +1,8 @@
-// #region imports
 import React, { Component } from 'react';
-import { type Match, type Location, type RouterHistory } from 'react-router';
 import _ from 'lodash';
 import HTML5Backend from 'react-dnd-html5-backend';
 
 import { DragDropContext } from 'react-dnd';
-
-import compose from 'recompose/compose';
 
 import ToolbarDashboard from '../../components/toolbar/ToolbarDashboard'
 import TeacherDrag from '../../components/dragdropteacher/Dragteacher'
@@ -97,8 +93,6 @@ class Dashboard extends Component {
   }
 
   render() {
-
-    const { handleSubmit } = this.props;
 
     return (
       <div key="homeView">

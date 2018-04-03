@@ -26,9 +26,9 @@ const ListItemTeacher = (props) => {
             </div>
         </td>
         <td className="project-people">
-            <a href=""><img alt="image" className="img-circle" src="img/a7.jpg"/></a>
-            <a href=""><img alt="image" className="img-circle" src="img/a6.jpg"/></a>
-            <a href=""><img alt="image" className="img-circle" src="img/a3.jpg"/></a>
+            <a href=""><img alt="cirsl" className="img-circle" src="img/a7.jpg"/></a>
+            <a href=""><img alt="cirsl" className="img-circle" src="img/a6.jpg"/></a>
+            <a href=""><img alt="cirsl" className="img-circle" src="img/a3.jpg"/></a>
         </td>
         <td className="project-actions">
             <Link to={`/teacher/${itemKey}/edit`} className="btn btn-white btn-sm"><i className="fa fa-cross"></i> Edit </Link>

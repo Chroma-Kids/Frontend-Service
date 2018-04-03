@@ -1,11 +1,6 @@
-import React, { Component, PropTypes } from 'react';
-import classnames from 'classnames';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
 import { Field } from 'redux-form';
-import { Redirect } from 'react-router';
-import { updateStudent, fetchStudent } from '../../redux/actions/StudentActions';
 import Toolbar from '../../components/toolbar/Toolbar'
-import InputField from '../../components/inputfield/InputField'
 import { Link } from 'react-router-dom';
 
 export default class StudentForm extends Component {
@@ -14,13 +9,13 @@ export default class StudentForm extends Component {
     }
 
     render() {
-        const { fields: { name, surname }, formType, handleSubmit, submitting } = this.props;
+        const { formType, handleSubmit, submitting } = this.props;
 
         return (
           <div key="editStudentView">
             <Toolbar
               breadcrumb={['Dashboard', 'Students']}
-              title={this.props.formType == 'edit' ? 'Edit Student' : 'New Student'} />
+              title={this.props.formType === 'edit' ? 'Edit Student' : 'New Student'} />
 
             <section className="teachers">
               <div className="ibox col-lg-12">
@@ -52,7 +47,7 @@ export default class StudentForm extends Component {
                         />
                       </div>
                     </div>
-                        {formType == 'edit' ?
+                        {formType === 'edit' ?
                                 <button disabled={submitting} className="btn btn-primary" type="submit">Save changes</button>
                              :
                             <button className="btn btn-primary" type="submit">Create Student</button>

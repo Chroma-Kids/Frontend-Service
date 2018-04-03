@@ -1,15 +1,8 @@
 // #region imports
 import React, { Component } from 'react';
-import { type Match, type Location, type RouterHistory } from 'react-router';
 import { Field, reset } from 'redux-form';
 import _ from 'lodash';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
-import compose from 'recompose/compose';
-import { getClassrooms, createClassroom, updateClassroom, deleteClassroom } from '../../redux/actions/ClassroomActions';
-import { getUser } from '../../redux/actions/UserActions';
-import { reduxForm } from 'redux-form';
 import Toolbar from '../../components/toolbar/Toolbar'
 import List from '../../components/list/List'
 import ListItemClassroom from '../../components/list/listitem/ListItemClassroom'

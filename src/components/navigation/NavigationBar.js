@@ -1,6 +1,5 @@
 // #region imports
-import React, { type SyntheticEvent } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
@@ -19,13 +18,13 @@ const NavigationBar = ({
   }
 
   return (
-    <nav className="navbar-default navbar-static-side" role="navigation">
+    <nav className="navbar-default navbar-static-side">
       <ul className="nav metismenu" id="side-menu">
           <li className="nav-header">
               <div className="dropdown profile-element"> <span>
-                  <img alt="image" className="img-circle img-nav-profile" src={user.photoURL} />
+                  <img alt="imagecircle" className="img-circle img-nav-profile" src={user.photoURL} />
                </span>
-                  <a data-toggle="dropdown" className="dropdown-toggle" href="#">
+                  <a data-toggle="dropdown" className="dropdown-toggle">
               <span className="clear"> <span className="block m-t-xs"> <strong className="font-bold">{(user.displayName ? user.displayName : "-" )}</strong>
                </span> <span className="text-muted text-xs block">{user.email}</span> </span> </a>
               </div>

@@ -1,9 +1,5 @@
 import * as types from '../actions/ActionTypes';
 
-const initialState = {
-  currentStudent: undefined,
-};
-
 export default function (state = {}, action) {
 
   const { payload } = action;

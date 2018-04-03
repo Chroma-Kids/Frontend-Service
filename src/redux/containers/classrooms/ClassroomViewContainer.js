@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { reduxForm, reset } from 'redux-form';
+import { reduxForm } from 'redux-form';
 
 import { getTeachers } from '../../actions/TeacherActions';
 import { getStudents } from '../../actions/StudentActions';

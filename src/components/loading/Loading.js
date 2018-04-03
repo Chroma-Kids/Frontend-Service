@@ -5,7 +5,6 @@ import { withRouter } from 'react-router-dom';
 import { getUser } from '../../redux/actions/UserActions';
 import { getTeachers } from '../../redux/actions/TeacherActions';
 import { getClassrooms } from '../../redux/actions/ClassroomActions';
-import { getStudents } from '../../redux/actions/StudentActions';
 
 class LoadingComponent extends Component {
 

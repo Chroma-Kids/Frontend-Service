@@ -2,7 +2,7 @@ import React from 'react';
 
 const List = (props) => {
 
-  const { elements, children, className } = props;
+  const { children, className } = props;
 
   return (
     <section className={className}>

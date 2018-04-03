@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { reduxForm, reset } from 'redux-form';
+import { reduxForm } from 'redux-form';
 
 import { fetchTeacher, updateTeacher, deleteTeacher } from '../../actions/TeacherActions';
 import TeacherForm from '../../../views/teachers/TeacherForm';

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { reduxForm, reset } from 'redux-form';
+import { reduxForm } from 'redux-form';
 
 import { fetchStudent, updateStudent, deleteStudent } from '../../actions/StudentActions';
 import StudentForm from '../../../views/students/StudentForm';
@@ -48,6 +48,7 @@ const validate = (values) => {
     fields.map((field) => {
         if (!values[field]) {
             errors[field] = `${field} is required`;
+            return
         }
     });
     return errors;

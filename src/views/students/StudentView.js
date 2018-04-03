@@ -1,12 +1,7 @@
 // #region imports
 import React, { PureComponent } from 'react';
-import { type Match, type Location, type RouterHistory } from 'react-router';
-import _ from 'lodash';
-import { Link } from 'react-router-dom';
-import { Field, reset } from 'redux-form';
 
 import Toolbar from '../../components/toolbar/Toolbar'
-// #region imports
 
 export default class StudentView extends PureComponent<Props, State> {
 
@@ -119,16 +114,16 @@ export default class StudentView extends PureComponent<Props, State> {
                                   anything embarrassing
                               </p>
                               <div className="user-friends">
-                                  <a href=""><img alt="image" className="img-circle" src="img/a3.jpg"/></a>
-                                  <a href=""><img alt="image" className="img-circle" src="img/a1.jpg"/></a>
-                                  <a href=""><img alt="image" className="img-circle" src="img/a2.jpg"/></a>
-                                  <a href=""><img alt="image" className="img-circle" src="img/a4.jpg"/></a>
-                                  <a href=""><img alt="image" className="img-circle" src="img/a5.jpg"/></a>
-                                  <a href=""><img alt="image" className="img-circle" src="img/a6.jpg"/></a>
-                                  <a href=""><img alt="image" className="img-circle" src="img/a7.jpg"/></a>
-                                  <a href=""><img alt="image" className="img-circle" src="img/a8.jpg"/></a>
-                                  <a href=""><img alt="image" className="img-circle" src="img/a2.jpg"/></a>
-                                  <a href=""><img alt="image" className="img-circle" src="img/a1.jpg"/></a>
+                                  <a href=""><img alt="imagecircle" className="img-circle" src="img/a3.jpg"/></a>
+                                  <a href=""><img alt="imagecircle" className="img-circle" src="img/a1.jpg"/></a>
+                                  <a href=""><img alt="imagecircle" className="img-circle" src="img/a2.jpg"/></a>
+                                  <a href=""><img alt="imagecircle" className="img-circle" src="img/a4.jpg"/></a>
+                                  <a href=""><img alt="imagecircle" className="img-circle" src="img/a5.jpg"/></a>
+                                  <a href=""><img alt="imagecircle" className="img-circle" src="img/a6.jpg"/></a>
+                                  <a href=""><img alt="imagecircle" className="img-circle" src="img/a7.jpg"/></a>
+                                  <a href=""><img alt="imagecircle" className="img-circle" src="img/a8.jpg"/></a>
+                                  <a href=""><img alt="imagecircle" className="img-circle" src="img/a2.jpg"/></a>
+                                  <a href=""><img alt="imagecircle" className="img-circle" src="img/a1.jpg"/></a>
                               </div>
                           </div>
                       </div>
@@ -178,15 +173,15 @@ export default class StudentView extends PureComponent<Props, State> {
                                   <i className="fa fa-angle-down"></i>
                               </button>
                               <ul className="dropdown-menu m-t-xs">
-                                  <li><a href="#">Config</a></li>
+                                  <li><a>Config</a></li>
                               </ul>
                           </div>
                           <div className="social-avatar">
                               <a href="" className="pull-left">
-                                  <img alt="image" src="img/a1.jpg" />
+                                  <img alt="imagecircle" src="img/a1.jpg" />
                               </a>
                               <div className="media-body">
-                                  <a href="#">
+                                  <a>
                                       Andrew Williams
                                   </a>
                                   <small className="text-muted">Today 4:21 pm - 12.06.2014</small>
@@ -209,37 +204,37 @@ export default class StudentView extends PureComponent<Props, State> {
                           <div className="social-footer">
                               <div className="social-comment">
                                   <a href="" className="pull-left">
-                                      <img alt="image" src="img/a1.jpg" />
+                                      <img alt="imagecircle" src="img/a1.jpg" />
                                   </a>
                                   <div className="media-body">
-                                      <a href="#">
+                                      <a>
                                           Andrew Williams
                                       </a>
                                       Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words.
                                       <br/>
-                                      <a href="#" className="small"><i className="fa fa-thumbs-up"></i> 26 Like this!</a> -
+                                      <a className="small"><i className="fa fa-thumbs-up"></i> 26 Like this!</a> -
                                       <small className="text-muted">12.06.2014</small>
                                   </div>
                               </div>
 
                               <div className="social-comment">
                                   <a href="" className="pull-left">
-                                      <img alt="image" src="img/a2.jpg" />
+                                      <img alt="imagecircle" src="img/a2.jpg" />
                                   </a>
                                   <div className="media-body">
-                                      <a href="#">
+                                      <a>
                                           Andrew Williams
                                       </a>
                                       Making this the first true generator on the Internet. It uses a dictionary of.
                                       <br/>
-                                      <a href="#" className="small"><i className="fa fa-thumbs-up"></i> 11 Like this!</a> -
+                                      <a className="small"><i className="fa fa-thumbs-up"></i> 11 Like this!</a> -
                                       <small className="text-muted">10.07.2014</small>
                                   </div>
                               </div>
 
                               <div className="social-comment">
                                   <a href="" className="pull-left">
-                                      <img alt="image" src="img/a3.jpg" />
+                                      <img alt="imagecircle" src="img/a3.jpg" />
                                   </a>
                                   <div className="media-body">
                                       <textarea className="form-control" placeholder="Write comment..."></textarea>
@@ -262,7 +257,7 @@ export default class StudentView extends PureComponent<Props, State> {
                                   <h2>Meeting</h2>
                                   <p>Conference on the sales results for the previous year. Monica please examine sales trends in marketing and products. Below please find the current status of the sale.
                                   </p>
-                                  <a href="#" className="btn btn-sm btn-primary"> More info</a>
+                                  <a className="btn btn-sm btn-primary"> More info</a>
                                       <span className="vertical-date">
                                           Today <br/>
                                           <small>Dec 24</small>
@@ -278,7 +273,7 @@ export default class StudentView extends PureComponent<Props, State> {
                               <div className="vertical-timeline-content">
                                   <h2>Send documents to Mike</h2>
                                   <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry standard dummy text ever since.</p>
-                                  <a href="#" className="btn btn-sm btn-success"> Download document </a>
+                                  <a className="btn btn-sm btn-success"> Download document </a>
                                       <span className="vertical-date">
                                           Today <br/>
                                           <small>Dec 24</small>
@@ -294,7 +289,7 @@ export default class StudentView extends PureComponent<Props, State> {
                               <div className="vertical-timeline-content">
                                   <h2>Coffee Break</h2>
                                   <p>Go to shop and find some products. Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys. </p>
-                                  <a href="#" className="btn btn-sm btn-info">Read more</a>
+                                  <a className="btn btn-sm btn-info">Read more</a>
                                   <span className="vertical-date"> Yesterday <br/><small>Dec 23</small></span>
                               </div>
                           </div>
