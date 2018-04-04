@@ -1,155 +1,108 @@
 import { database } from '../../firebase'
 import * as types from './ActionTypes';
 
-export function getStudents() {
+export const getStudents = () => {
   return dispatch => {
     dispatch({
-      type: types.FETCH_STUDENTS_PENDING,
-      payload: true
+      type: types.FETCH_STUDENTS_PENDING
     });
     database.ref('students/').on('value', snapshot => {
       dispatch({
         type: types.FETCH_STUDENTS_FULFILLED,
         payload: snapshot.val()
       });
-      dispatch({
-        type: types.FETCH_STUDENTS_PENDING,
-        payload: false
-      });
     }, () => {
       dispatch({
-        type: types.FETCH_STUDENTS_REJECTED,
-        payload: true
+        type: types.FETCH_STUDENTS_REJECTED
       });
     });
   };
 }
 
-
-export function fetchStudent(uid) {
+export const fetchStudent = (uid) => {
   return dispatch => {
     dispatch({
-      type: types.FETCH_STUDENT_PENDING,
-      payload: true
+      type: types.FETCH_STUDENT_PENDING
     });
-    new Promise((resolve, reject) => {
-        try {
-            database.ref('students/').child(uid).on('value', function (snapshot) {
-                dispatch({
-                  type: types.FETCH_STUDENT_FULFILLED,
-                  payload: snapshot.val()
-                });
-                dispatch({
-                  type: types.FETCH_STUDENT_PENDING,
-                  payload: false
-                });
-            });
-        }
-        catch (e) {
-            dispatch({
-              type: types.FETCH_STUDENT_REJECTED,
-              payload: reject(e.message)
-            });
-        }
-    })
+
+    database.ref('students/').child(uid).on('value', function (snapshot, error) {
+      if (error)
+        dispatch({
+          type: types.FETCH_STUDENT_REJECTED
+        });
+      else
+        dispatch({
+          type: types.FETCH_STUDENT_FULFILLED,
+          payload: snapshot.val()
+        });
+    });
   };
 }
 
-export function createStudent(student) {
+export const createStudent = (student) => {
 
   student.created_at = new Date().getTime()/1000;
 
   return dispatch => {
     dispatch({
-      type: types.CREATE_STUDENT_PENDING,
-      payload: true
+      type: types.CREATE_STUDENT_PENDING
     });
-    new Promise((resolve, reject) => {
-        try {
-          dispatch({
-            type: types.CREATE_STUDENT_FULFILLED,
-            payload: database.ref('students/').push({ ...student })
-          });
-          dispatch({
-            type: types.CREATE_STUDENT_PENDING,
-            payload: false
-          });
-        }
-        catch (e) {
-            dispatch({
-              type: types.CREATE_STUDENT_REJECTED,
-              payload: reject(e.message)
-            });
-        }
+
+    database.ref('students/').push({ ...student }, function(error) {
+      if (error)
+        dispatch({
+          type: types.CREATE_STUDENT_REJECTED
+        });
+      else
+        dispatch({
+          type: types.CREATE_STUDENT_FULFILLED
+        });
     })
   };
 }
 
-export function deleteStudent(uid) {
-
+export const deleteStudent = (uid) => {
   return dispatch => {
     dispatch({
-      type: types.DELETE_STUDENT_PENDING,
-      payload: true
+      type: types.DELETE_STUDENT_PENDING
     });
-    new Promise((resolve, reject) => {
-        try {
-            database.ref('students/').child(uid).remove();
-            dispatch({
-              type: types.DELETE_STUDENT_FULFILLED,
-              payload: true
-            });
-            dispatch({
-              type: types.DELETE_STUDENT_PENDING,
-              payload: false
-            });
-        }
-        catch (e) {
-            dispatch({
-              type: types.DELETE_STUDENT_REJECTED,
-              payload: true
-            });
-        }
-    })
+    database.ref('students/').child(uid).remove()
+      .then(function() {
+        dispatch({
+          type: types.DELETE_STUDENT_FULFILLED
+        });
+      })
+      .catch(function(error) {
+        dispatch({
+          type: types.DELETE_STUDENT_REJECTED,
+          payload: error
+        });
+      });
   };
 }
 
-export function updateStudent(student, uid) {
+
+export const updateStudent = (student, uid) => {
 
   student.updated_at = new Date().getTime()/1000;
 
   return dispatch => {
     dispatch({
-      type: types.SAVE_STUDENT_PENDING,
-      payload: true
+      type: types.SAVE_STUDENT_PENDING
     });
-    new Promise((resolve, reject) => {
-        try {
-            database.ref(`students/${uid}`).set({...student}, function () {
-                dispatch({
-                  type: types.SAVE_STUDENT_FULFILLED,
-                  payload: resolve(student)
-                });
-                dispatch({
-                  type: types.SAVE_STUDENT_PENDING,
-                  payload: false
-                });
-            });
-        }
-        catch (e) {
-            dispatch({
-              type: types.SAVE_STUDENT_REJECTED,
-              payload: reject(e.message)
-            });
-        }
-    })
+
+    database.ref(`students/${uid}`).set({...student}, function (error) {
+      if (error)
+        dispatch({
+          type: types.SAVE_STUDENT_REJECTED,
+          payload: error
+        });
+      else
+        dispatch({
+          type: types.SAVE_STUDENT_FULFILLED,
+          payload: student
+        });
+
+    });
   };
 }
-
-// export function resetCurrentStudent(){
-//     return (dispatch) => {
-//         dispatch({
-//             type: types.STUDENT_RESET
-//         })
-//     }
-// }
