@@ -28,7 +28,7 @@ export class StudentEditContainer extends Component {
     }
 }
 
-const mapStateToProps = (state, ownProps)=> {
+const mapStateToProps = (state, ownProps) => {
     return {
         initialValues: state.students.currentStudent,
         student: state.students.currentStudent,
@@ -38,7 +38,7 @@ const mapStateToProps = (state, ownProps)=> {
     }
 }
 
-const mapDispatchToProps = (dispatch, state)=> {
+const mapDispatchToProps = (dispatch, state) => {
     return bindActionCreators({updateStudent, fetchStudent, deleteStudent}, dispatch);
 
 }

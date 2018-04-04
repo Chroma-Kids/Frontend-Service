@@ -81,7 +81,6 @@ export const deleteStudent = (uid) => {
   };
 }
 
-
 export const updateStudent = (student, uid) => {
 
   student.updated_at = new Date().getTime()/1000;
