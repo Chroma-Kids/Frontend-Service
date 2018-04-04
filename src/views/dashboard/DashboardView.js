@@ -22,7 +22,7 @@ class Dashboard extends Component {
         <TeacherDrag
           text={this.props.teachers[key].name}
           key={key}
-          teacherid={key}
+          teacherId={key}
           recording={this.state.enableRecordingTrajectory}
         />
       )
@@ -35,8 +35,8 @@ class Dashboard extends Component {
         <TeacherDrag
           text={this.props.teachers[key].name}
           key={key}
-          teacherid={key}
-          classroomid={classroomKey}
+          teacherId={key}
+          classroomId={classroomKey}
           recording={this.state.enableRecordingTrajectory}
         />
       )

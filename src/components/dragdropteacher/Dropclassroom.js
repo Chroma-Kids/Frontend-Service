@@ -17,10 +17,10 @@ const Types = {
  */
  const listTarget = {
    drop(props, source) {
-      props.moveTeacherToClassroom(source.getItem().teacherid, source.getItem().classroomid, props.classroomId, source.getItem().recording);
+      props.moveTeacherToClassroom(source.getItem().teacherId, source.getItem().classroomId, props.classroomId, source.getItem().recording);
 
       // // if (source.getItem().recording) {
-      //   props.addTrajectory(source.getItem().teacherid, props.classroomId)
+      //   props.addTrajectory(source.getItem().teacherId, props.classroomId)
       // // }
    }
  };

@@ -16,9 +16,9 @@ const cardSource = {
   beginDrag(props) {
     return {
       text: props.text,
-      classroomid: props.classroomid,
+      classroomId: props.classroomId,
       recording: props.recording,
-      teacherid: props.teacherid
+      teacherId: props.teacherId
     };
   }
 };
@@ -42,10 +42,10 @@ const propTypes = {
 
 class TeacherDrag extends Component {
   render() {
-    const { isDragging, connectDragSource, text, key, teacherid } = this.props;
+    const { isDragging, connectDragSource, text, key, teacherId } = this.props;
     return connectDragSource(
-      <li style={{ opacity: isDragging ? 0.5 : 1 }} key={key} teacherid={teacherid} className="warning-element" >
-          <Link to={`/teacher/${teacherid}`}>{text}</Link>
+      <li style={{ opacity: isDragging ? 0.5 : 1 }} key={key} className="warning-element" >
+          <Link to={`/teacher/${teacherId}`}>{text}</Link>
           <div className="agile-detail">
               <a  className="pull-right btn btn-xs btn-white">show breaks done</a>
               <i className="fa fa-clock-o"></i> show Hours (minutes) completed
