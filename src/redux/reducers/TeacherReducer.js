@@ -9,6 +9,7 @@ export default function (state = {}, action) {
   switch (action.type) {
     case types.FETCH_TEACHERS_FULFILLED:
       return {
+        ...state,
         teachers: payload
       }
     case types.FETCH_TEACHER_FULFILLED:

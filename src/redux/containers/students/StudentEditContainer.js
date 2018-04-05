@@ -59,7 +59,8 @@ const fields = ['name', 'surname'];
 let editorForm = reduxForm({
     form: 'EditStudent',
     fields,
-    validate
+    validate,
+    enableReinitialize: true
 })(StudentEditContainer);
 
 export default connect(mapStateToProps, mapDispatchToProps)(editorForm);
