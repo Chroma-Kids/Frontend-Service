@@ -46,7 +46,7 @@ class Classroom extends PureComponent<Props, State> {
 
   render() {
 
-    const { classroom, teachers, students, handleSubmit, classroom_id } = this.props;
+    const { classroom, teachers, students, handleSubmit } = this.props;
 
     const { selectedOption } = this.state;
 

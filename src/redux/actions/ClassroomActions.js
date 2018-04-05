@@ -1,12 +1,21 @@
 import { database } from '../../firebase'
 import * as types from './ActionTypes';
 
-export function getClassrooms() {
+export const removeClassroomsListener = () => {
+  return dispatch => {
+    dispatch({
+      type: types.CLASSROOMS_CLEANED,
+      payload: database.ref('/classrooms/').off()
+    });
+  }
+}
+
+export const getClassrooms = () => {
   return dispatch => {
     dispatch({
       type: types.FETCH_CLASSROOMS_PENDING
     });
-    database.ref('classrooms/').on('value', snapshot => {
+    database.ref('/classrooms/').on('value', snapshot => {
       dispatch({
         type: types.FETCH_CLASSROOMS_FULFILLED,
         payload: snapshot.val()
@@ -25,7 +34,7 @@ export const fetchClassroom = (uid) => {
       type: types.FETCH_CLASSROOM_PENDING
     });
 
-    database.ref('classrooms/').child(uid).on('value', function (snapshot, error) {
+    database.ref('/classrooms/').child(uid).on('value', function (snapshot, error) {
       if (error)
         dispatch({
           type: types.FETCH_CLASSROOM_REJECTED,
@@ -49,7 +58,7 @@ export const createClassroom = (classroom) => {
       type: types.CREATE_CLASSROOM_PENDING
     });
 
-    database.ref('classrooms/').push({ ...classroom }, function(error) {
+    database.ref('/classrooms/').push({ ...classroom }, function(error) {
       if (error)
         dispatch({
           type: types.CREATE_CLASSROOM_REJECTED,
@@ -72,7 +81,7 @@ export const updateClassroom = (classroom, uid) => {
       type: types.SAVE_CLASSROOM_PENDING
     });
 
-    database.ref(`classrooms/${uid}`).set({...classroom}, function (error) {
+    database.ref(`/classrooms/${uid}`).set({...classroom}, function (error) {
       if (error)
         dispatch({
           type: types.SAVE_CLASSROOM_REJECTED,
@@ -92,42 +101,33 @@ export const updateClassroom = (classroom, uid) => {
 * 1) move the teachers of the classroom to break
 * 2) delete the classroom itself
 **/
-export function deleteClassroom(classroomId) {
+export const deleteClassroom = (classroomId) => {
 
   return dispatch => {
     dispatch({
-      type: types.DELETE_CLASSROOM_PENDING,
-      payload: true
+      type: types.DELETE_CLASSROOM_PENDING
     });
 
-    try {
+    database.ref(`/classrooms/${classroomId}/teachers`).once('value', (snapshot) => {
+      const teachers = Object.keys(snapshot.val() || {});
+      teachers.forEach((teacherId) => {
+        database.ref('/classrooms/').child(classroomId).child('teachers').child(teacherId).remove();
+        database.ref('/teachers-non-assigned/').child(teacherId).set(true);
+
+        database.ref('/teachers/').child(teacherId).child('classrooms').child(classroomId).remove();
+      });
+    }).then(() => {
+      database.ref('/classrooms/').child(classroomId).remove();
       dispatch({
         type: types.DELETE_CLASSROOM_FULFILLED,
-        payload: (() => {
-          database.ref(`classrooms/${classroomId}/teachers`).once('value', (snapshot) => {
-            const teachers = Object.keys(snapshot.val() || {});
-            teachers.forEach((teacherId) => {
-              database.ref('classrooms/').child(classroomId).child('teachers').child(teacherId).remove();
-              database.ref('teachers-non-assigned/').child(teacherId).set(true);
-
-              database.ref('teachers/').child(teacherId).child('classrooms').child(classroomId).remove();
-            });
-          }).then(() => {
-            database.ref('classrooms/').child(classroomId).remove();
-            dispatch({
-              type: types.DELETE_CLASSROOM_PENDING,
-              payload: false
-            });
-          });
-        })
+        payload: false
       });
-    }
-    catch (e) {
+    }).catch(function(error) {
       dispatch({
         type: types.DELETE_CLASSROOM_REJECTED,
-        payload: true
+        payload: error
       });
-    }
+    });
   }
 }
 
@@ -138,7 +138,7 @@ export function deleteClassroom(classroomId) {
 * 3) we update with a transaction the number of students in the classroom.
 *    it allows O(1) in access and calculating ratios
 **/
-export function addStudentToClassroom(classroom, student) {
+export const addStudentToClassroom = (classroom, student) => {
 
   // classroom.updated_at = new Date().getTime()/1000;
 
@@ -146,30 +146,29 @@ export function addStudentToClassroom(classroom, student) {
     dispatch({
       type: types.ADD_STUDENT_CLASSROOM_PENDING
     });
-    new Promise((resolve, reject) => {
-      // 1) add student to classroom
-      database.ref(`classrooms/${classroom.id}`).child('students').child(student).set(true, function(e){
-        if (e) {
-          dispatch({
-            type: types.ADD_STUDENT_CLASSROOM_REJECTED,
-            payload: reject(e.message)
-          });
-        }else {
-          // 2) add classroom to student
-          database.ref('students/').child(student).child('classrooms').child(classroom.id).set(true);
 
-          // 3) update number of students in classroom
-          database.ref(`classrooms/${classroom.id}`).child('num_students').transaction(function (current_value) {
-            return (current_value || 0) + 1;
-          });
+    // 1) add student to classroom
+    database.ref(`/classrooms/${classroom.id}`).child('students').child(student).set(true, function(error){
+      if (error) {
+        dispatch({
+          type: types.ADD_STUDENT_CLASSROOM_REJECTED,
+          payload: error.message
+        });
+      }else {
+        // 2) add classroom to student
+        database.ref('/students/').child(student).child('classrooms').child(classroom.id).set(true);
 
-          dispatch({
-            type: types.ADD_STUDENT_CLASSROOM_FULFILLED,
-            payload: resolve(classroom)
-          });
-        }
-      })
-    })
+        // 3) update number of students in classroom
+        database.ref(`/classrooms/${classroom.id}`).child('num_students').transaction(function (current_value) {
+          return (current_value || 0) + 1;
+        });
+
+        dispatch({
+          type: types.ADD_STUDENT_CLASSROOM_FULFILLED,
+          payload: classroom
+        });
+      }
+    });
   };
 }
 
@@ -180,7 +179,7 @@ export function addStudentToClassroom(classroom, student) {
 * 3) we update with a transaction the number of students in the classroom.
 *    it allows O(1) in access and calculating ratios
 **/
-export function deleteStudentFromClassroom(classroom, student) {
+export const deleteStudentFromClassroom = (classroom, student) => {
 
   // classroom.updated_at = new Date().getTime()/1000;
 
@@ -188,29 +187,28 @@ export function deleteStudentFromClassroom(classroom, student) {
     dispatch({
       type: types.REMOVE_STUDENT_CLASSROOM_PENDING
     });
-    new Promise((resolve, reject) => {
-      // 1) remove student from classroom
-      database.ref(`classrooms/${classroom}`).child('students').child(student).remove(function(e){
-        if (e) {
-          dispatch({
-            type: types.REMOVE_STUDENT_CLASSROOM_REJECTED,
-            payload: reject(e.message)
-          });
-        }else {
-          // 2) remove classroom from student
-          database.ref('students/').child(student).child('classrooms').child(classroom).remove();
 
-          // 3) update number of students in classroom
-          database.ref(`classrooms/${classroom}`).child('num_students').transaction(function (current_value) {
-            return (current_value || 0) - 1;
-          });
+    // 1) remove student from classroom
+    database.ref(`/classrooms/${classroom}`).child('students').child(student).remove(function(error){
+      if (error) {
+        dispatch({
+          type: types.REMOVE_STUDENT_CLASSROOM_REJECTED,
+          payload: error.message
+        });
+      }else {
+        // 2) remove classroom from student
+        database.ref('/students/').child(student).child('classrooms').child(classroom).remove();
 
-          dispatch({
-            type: types.REMOVE_STUDENT_CLASSROOM_FULFILLED,
-            payload: resolve(classroom)
-          });
-        }
-      })
+        // 3) update number of students in classroom
+        database.ref(`/classrooms/${classroom}`).child('num_students').transaction(function (current_value) {
+          return (current_value || 0) - 1;
+        });
+
+        dispatch({
+          type: types.REMOVE_STUDENT_CLASSROOM_FULFILLED,
+          payload: classroom
+        });
+      }
     })
   };
 }

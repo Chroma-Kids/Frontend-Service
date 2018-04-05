@@ -3,13 +3,17 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
-import { getClassrooms, createClassroom, deleteClassroom } from '../../actions/ClassroomActions';
+import { getClassrooms, createClassroom, deleteClassroom, removeClassroomsListener } from '../../actions/ClassroomActions';
 import ClassroomsList from '../../../views/classrooms/ClassroomsList';
 
 export class ClassroomsListContainer extends Component {
 
     componentDidMount(){
       this.props.getClassrooms();
+    }
+
+    componentWillUnmount(){
+      this.props.removeClassroomsListener();
     }
 
     render() {
@@ -29,7 +33,7 @@ const mapStateToProps = (state, ownProps)=> {
 }
 
 const mapDispatchToProps = (dispatch, state)=> {
-    return bindActionCreators({ getClassrooms, createClassroom, deleteClassroom }, dispatch);
+    return bindActionCreators({ getClassrooms, createClassroom, deleteClassroom, removeClassroomsListener }, dispatch);
 }
 
 let newClassroomForm = reduxForm({

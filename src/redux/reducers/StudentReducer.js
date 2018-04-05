@@ -6,13 +6,11 @@ export default function (state = {}, action) {
 
   switch (action.type) {
     case types.FETCH_STUDENTS_FULFILLED:
-          console.log(state)
       return {
         ...state,
         students: action.payload
       };
     case types.FETCH_STUDENT_FULFILLED:
-      console.log(payload)
       return {
         ...state,
         currentStudent: payload,

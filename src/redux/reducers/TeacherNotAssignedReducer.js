@@ -5,7 +5,7 @@ export default function (state = {}, action) {
     const { payload } = action;
 
     switch (action.type) {
-      case types.FETCH_TEACHERS_NOT_ASSIGNED:
+      case types.TEACHER_NOT_ASSIGNED_FULFILLED:
         return payload;
       default:
         return state;

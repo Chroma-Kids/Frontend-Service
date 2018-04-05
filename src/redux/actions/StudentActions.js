@@ -1,12 +1,21 @@
 import { database } from '../../firebase'
 import * as types from './ActionTypes';
 
+export const removeStudentsListener = () => {
+  return dispatch => {
+    dispatch({
+      type: types.STUDENTS_CLEANED,
+      payload: database.ref('/students/').off()
+    });
+  }
+}
+
 export const getStudents = () => {
   return dispatch => {
     dispatch({
       type: types.FETCH_STUDENTS_PENDING
     });
-    database.ref('students/').on('value', snapshot => {
+    database.ref('/students/').on('value', snapshot => {
       dispatch({
         type: types.FETCH_STUDENTS_FULFILLED,
         payload: snapshot.val()
@@ -25,7 +34,7 @@ export const fetchStudent = (uid) => {
       type: types.FETCH_STUDENT_PENDING
     });
 
-    database.ref('students/').child(uid).on('value', function (snapshot, error) {
+    database.ref('/students/').child(uid).on('value', function (snapshot, error) {
       if (error)
         dispatch({
           type: types.FETCH_STUDENT_REJECTED,
@@ -49,7 +58,7 @@ export const createStudent = (student) => {
       type: types.CREATE_STUDENT_PENDING
     });
 
-    database.ref('students/').push({ ...student }, function(error) {
+    database.ref('/students/').push({ ...student }, function(error) {
       if (error)
         dispatch({
           type: types.CREATE_STUDENT_REJECTED,
@@ -68,7 +77,7 @@ export const deleteStudent = (uid) => {
     dispatch({
       type: types.DELETE_STUDENT_PENDING
     });
-    database.ref('students/').child(uid).remove()
+    database.ref('/students/').child(uid).remove()
       .then(function() {
         dispatch({
           type: types.DELETE_STUDENT_FULFILLED
@@ -92,7 +101,7 @@ export const updateStudent = (student, uid) => {
       type: types.SAVE_STUDENT_PENDING
     });
 
-    database.ref(`students/${uid}`).set({...student}, function (error) {
+    database.ref(`/students/${uid}`).set({...student}, function (error) {
       if (error)
         dispatch({
           type: types.SAVE_STUDENT_REJECTED,

@@ -3,8 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
-import { getStudents, createStudent, deleteStudent } from '../../actions/StudentActions';
-import { getClassrooms } from '../../actions/ClassroomActions';
+import { getStudents, createStudent, deleteStudent, removeStudentsListener } from '../../actions/StudentActions';
+import { getClassrooms, removeClassroomsListener } from '../../actions/ClassroomActions';
 import StudentsList from '../../../views/students/StudentsList';
 
 export class StudentsListContainer extends Component {
@@ -12,6 +12,11 @@ export class StudentsListContainer extends Component {
     componentDidMount(){
       this.props.getStudents();
       this.props.getClassrooms();
+    }
+
+    componentWillUnmount(){
+      this.props.removeStudentsListener();
+      this.props.removeClassroomsListener();
     }
 
     render() {
@@ -31,7 +36,9 @@ const mapStateToProps = (state, ownProps)=> {
 }
 
 const mapDispatchToProps = (dispatch, state)=> {
-    return bindActionCreators({ getStudents, createStudent, deleteStudent, getClassrooms }, dispatch);
+    return bindActionCreators({
+      getStudents, createStudent, deleteStudent, getClassrooms, 
+      removeStudentsListener, removeClassroomsListener }, dispatch);
 }
 
 let newStudentForm = reduxForm({

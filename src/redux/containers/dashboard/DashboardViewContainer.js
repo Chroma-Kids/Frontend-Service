@@ -3,9 +3,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import DashboardView from '../../../views/dashboard/DashboardView';
-import { getTeachersNotAssigned } from '../../actions/TeacherNotAssignedActions';
-import { getTeachers} from '../../actions/TeacherActions';
-import { getClassrooms } from '../../actions/ClassroomActions';
+import { getTeachersNotAssigned, removeTeachersNotAssignedListener } from '../../actions/TeacherNotAssignedActions';
+import { getTeachers, removeTeachersListener } from '../../actions/TeacherActions';
+import { getClassrooms, removeClassroomsListener } from '../../actions/ClassroomActions';
 
 export class DashboardViewContainer extends Component {
 
@@ -13,6 +13,12 @@ export class DashboardViewContainer extends Component {
       this.props.getTeachersNotAssigned();
       this.props.getTeachers();
       this.props.getClassrooms();
+    }
+
+    componentWillUnmount(){
+      this.props.removeClassroomsListener();
+      this.props.removeTeachersListener();
+      this.props.removeTeachersNotAssignedListener();
     }
 
     render() {
@@ -33,7 +39,8 @@ const mapStateToProps = (state, ownProps)=> {
 }
 
 const mapDispatchToProps = (dispatch, state)=> {
-    return bindActionCreators({ getTeachersNotAssigned, getTeachers, getClassrooms }, dispatch);
+    return bindActionCreators({ getTeachersNotAssigned, getTeachers, getClassrooms,
+    removeTeachersListener, removeClassroomsListener, removeTeachersNotAssignedListener }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(DashboardViewContainer);
