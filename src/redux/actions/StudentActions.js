@@ -28,7 +28,8 @@ export const fetchStudent = (uid) => {
     database.ref('students/').child(uid).on('value', function (snapshot, error) {
       if (error)
         dispatch({
-          type: types.FETCH_STUDENT_REJECTED
+          type: types.FETCH_STUDENT_REJECTED,
+          payload: error
         });
       else
         dispatch({
@@ -51,7 +52,8 @@ export const createStudent = (student) => {
     database.ref('students/').push({ ...student }, function(error) {
       if (error)
         dispatch({
-          type: types.CREATE_STUDENT_REJECTED
+          type: types.CREATE_STUDENT_REJECTED,
+          payload: error
         });
       else
         dispatch({

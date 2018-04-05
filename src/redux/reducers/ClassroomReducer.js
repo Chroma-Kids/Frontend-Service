@@ -44,9 +44,16 @@ export default function (state = {}, action) {
           loading: false
         }
       // Classroom
+      case types.FETCH_CLASSROOM_PENDING:
+        return {
+          ...state,
+          loading: true,
+          currentClassroom: {}
+        }
       case types.FETCH_CLASSROOM_FULFILLED:
         return {
           ...state,
+          loading: false,
           currentClassroom: payload ? payload : initialState.currentClassroom,
         };
       case types.SAVE_CLASSROOM_FULFILLED:

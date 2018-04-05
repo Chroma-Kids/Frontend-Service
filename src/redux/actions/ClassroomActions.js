@@ -19,94 +19,71 @@ export function getClassrooms() {
   };
 }
 
-export function fetchClassroom(uid) {
+export const fetchClassroom = (uid) => {
   return dispatch => {
     dispatch({
-      type: types.FETCH_CLASSROOM_PENDING,
-      payload: true
+      type: types.FETCH_CLASSROOM_PENDING
     });
-    new Promise((resolve, reject) => {
-        try {
-            database.ref('classrooms/').child(uid).on('value', function (snapshot) {
-                dispatch({
-                  type: types.FETCH_CLASSROOM_FULFILLED,
-                  payload: snapshot.val()
-                });
-                dispatch({
-                  type: types.FETCH_CLASSROOM_PENDING,
-                  payload: false
-                });
-            });
-        }
-        catch (e) {
-            dispatch({
-              type: types.FETCH_CLASSROOM_REJECTED,
-              payload: reject(e.message)
-            });
-        }
-    })
+
+    database.ref('classrooms/').child(uid).on('value', function (snapshot, error) {
+      if (error)
+        dispatch({
+          type: types.FETCH_CLASSROOM_REJECTED,
+          payload: error
+        });
+      else
+        dispatch({
+          type: types.FETCH_CLASSROOM_FULFILLED,
+          payload: snapshot.val()
+        });
+    });
   };
 }
 
-export function createClassroom(classroom) {
+export const createClassroom = (classroom) => {
 
   classroom.created_at = new Date().getTime()/1000;
 
   return dispatch => {
     dispatch({
-      type: types.CREATE_CLASSROOM_PENDING,
-      payload: true
+      type: types.CREATE_CLASSROOM_PENDING
     });
-    new Promise((resolve, reject) => {
-        try {
-          dispatch({
-            type: types.CREATE_CLASSROOM_FULFILLED,
-            payload: database.ref('classrooms/').push({ ...classroom })
-          });
-          dispatch({
-            type: types.CREATE_CLASSROOM_PENDING,
-            payload: false
-          });
-        }
-        catch (e) {
-            dispatch({
-              type: types.CREATE_CLASSROOM_REJECTED,
-              payload: reject(e.message)
-            });
-        }
+
+    database.ref('classrooms/').push({ ...classroom }, function(error) {
+      if (error)
+        dispatch({
+          type: types.CREATE_CLASSROOM_REJECTED,
+          payload: error
+        });
+      else
+        dispatch({
+          type: types.CREATE_CLASSROOM_FULFILLED
+        });
     })
   };
 }
 
-export function updateClassroom(classroom, uid) {
+export const updateClassroom = (classroom, uid) => {
 
   classroom.updated_at = new Date().getTime()/1000;
 
   return dispatch => {
     dispatch({
-      type: types.SAVE_CLASSROOM_PENDING,
-      payload: true
+      type: types.SAVE_CLASSROOM_PENDING
     });
-    new Promise((resolve, reject) => {
-        try {
-            database.ref(`classrooms/${uid}`).set({...classroom}, function () {
-                dispatch({
-                  type: types.SAVE_CLASSROOM_FULFILLED,
-                  payload: resolve(classroom)
-                });
-                dispatch({
-                  type: types.SAVE_CLASSROOM_PENDING,
-                  payload: false
-                });
-            });
-        }
-        catch (e) {
-            dispatch({
-              type: types.SAVE_CLASSROOM_REJECTED,
-              payload: reject(e.message)
-            });
-        }
-    })
+
+    database.ref(`classrooms/${uid}`).set({...classroom}, function (error) {
+      if (error)
+        dispatch({
+          type: types.SAVE_CLASSROOM_REJECTED,
+          payload: error
+        });
+      else
+        dispatch({
+          type: types.SAVE_CLASSROOM_FULFILLED,
+          payload: classroom
+        });
+    });
   };
 }
 
