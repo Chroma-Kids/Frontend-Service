@@ -21,7 +21,7 @@ class TopHeader extends Component {
 
       return (
         <div className="row border-bottom">
-            <nav className="navbar navbar-static-top white-bg" style={{marginBottom: 0}}>
+            <nav className="navbar navbar-static-top white-bg m-b-none">
                 {/*<div className="navbar-header">
                     <a className="navbar-minimalize minimalize-styl-2 btn btn-primary " onClick={this.toggleNavigation} href="#"><i className="fa fa-bars"></i> </a>
                 </div>*/}

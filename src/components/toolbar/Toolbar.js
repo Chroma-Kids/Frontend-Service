@@ -1,10 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+
+import { makeItLower } from '../../helpers/Helpers'
 import _ from 'lodash';
 
-function makeItLower(char){
-  return char.toLowerCase();
-}
 
 const Toolbar = ({title, breadcrumb, button, buttonText, link, linkText}) => (
   <div className="row wrapper border-bottom white-bg page-heading">

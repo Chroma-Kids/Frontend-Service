@@ -2,15 +2,6 @@ import React from 'react';
 
 const Popup = ({title, description, showhide, buttonClose, children, onSubmit}: { children: any | undefined }) => {
 
-  // const handleClearMessages = function(e) {
-  //   if (e.keyCode === 27) {
-  //     console.log('You pressed the escape key!')
-  //   }
-  //
-  //     // props.clearMessages(); // create classroom, teacher or whatever
-  //     // should be passed to the component
-  // }
-
   return (
     <div className={"modal inmodal " + ( showhide ? 'show' : 'hide') }
          tabIndex="-1" role="dialog" aria-hidden="true" onKeyDown={this.handleKeyDown}>

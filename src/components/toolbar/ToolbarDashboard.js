@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import _ from 'lodash';
 
-function makeItLower(char){
-  return char.toLowerCase();
-}
+import { makeItLower } from '../../helpers/Helpers'
+import _ from 'lodash';
 
 class ToolbarDashboard extends Component {
 
