@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const TableRowStudent = (props) => {
 
-  const { studentKey, student, index, deleteStudentFromClassroom, classroom_id } = props;
+  const { studentKey, student, deleteStudentFromClassroom, classroom_id } = props;
 
   return (
     (!!student &&
