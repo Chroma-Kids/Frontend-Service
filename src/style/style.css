@@ -6683,9 +6683,6 @@ body.landing-page {
 .registerView h1, .registerView h2, .registerView h3, .registerView h4, .registerView h5, .registerView p, .registerView label {
   color: #FFF; }
 
-section.teachers {
-  display: flex; }
-
 section.teachersList {
   margin-top: 2em;
   flex: 3; }
