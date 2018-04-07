@@ -30,7 +30,14 @@ export function createUser(uid, email, name){
 export function login(email, password) {
   return {
     type: types.LOGIN,
-    payload: auth.signInWithEmailAndPassword(email, password),
+    payload: auth.signInWithEmailAndPassword(email, password).then(({ user }) => {
+      database.ref(`users/${user.uid}`).update({
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        lastLogin: new Date().getTime()/1000
+      });
+    })
   };
 }
 
@@ -51,6 +58,13 @@ export function createAccount(email, password) {
 export function googleLogin() {
   return {
     type: types.GOOGLE_LOGIN,
-    payload: auth.signInWithPopup(googleProvider),
+    payload: auth.signInWithPopup(googleProvider).then(({ user }) => {
+      database.ref(`users/${user.uid}`).update({
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+        lastLogin: new Date().getTime()/1000
+      });
+    })
   };
 }

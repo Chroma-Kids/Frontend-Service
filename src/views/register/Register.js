@@ -1,10 +1,7 @@
 // #region imports
 import React, { PureComponent } from 'react';
 import { connect } from 'react-redux';
-import { type Match, type Location, type RouterHistory } from 'react-router';
-import _ from 'lodash';
 import { Link } from 'react-router-dom';
-import { Field, reset } from 'redux-form';
 import InputField from '../../components/inputfield/InputField'
 import { createAccount, createUser } from '../../redux/actions/UserActions';
 
@@ -84,7 +81,7 @@ class Register extends PureComponent<Props, State> {
               </div>
               <h3>Register to CK+</h3>
               <p>Create account to see it in action.</p>
-              <form className="m-t" role="form" onSubmit={(event) => this.submitAccount(event)}>
+              <form className="m-t" onSubmit={(event) => this.submitAccount(event)}>
                   <InputField
                     id="name"
                     type="text"

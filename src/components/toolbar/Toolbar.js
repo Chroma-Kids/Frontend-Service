@@ -1,17 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const Toolbar = ({title, button, buttonText}) => (
+import { makeItLower } from '../../helpers/Helpers'
+import _ from 'lodash';
+
+
+const Toolbar = ({title, breadcrumb, button, buttonText, link, linkText}) => (
   <div className="row wrapper border-bottom white-bg page-heading">
     <div className="col-sm-4">
       <h2>{title}</h2>
       <ol className="breadcrumb">
-          <li>
-            <Link to={'/'}>
-              <i className="fa fa-info" />
-              Home
-            </Link>
-          </li>
+          {_.map(breadcrumb, (key, val) => {
+            return (
+              <li key={val}>
+                <Link to={`/${makeItLower(key)}`}>
+                  <i className="fa fa-info" />
+                  {key}
+                </Link>
+              </li>
+            )
+          })}
           <li className="active">
               <strong>{title}</strong>
           </li>
@@ -26,6 +34,16 @@ const Toolbar = ({title, button, buttonText}) => (
             <i className="fa fa-info" />
             + {buttonText}
           </button>
+        </div>
+      )}
+      { (!linkText ?
+        null
+        :
+        <div className="title-action">
+          <Link className="btn btn-success " to={link}>
+            <i className="fa fa-info" />
+            + {linkText}
+          </Link>
         </div>
       )}
     </div>

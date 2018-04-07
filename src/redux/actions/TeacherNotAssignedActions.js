@@ -1,26 +1,28 @@
 import { database } from '../../firebase'
 import * as types from './ActionTypes';
 
-export function getTeachersNotAssigned() {
+export const removeTeachersNotAssignedListener = () => {
   return dispatch => {
     dispatch({
-      type: types.TEACHER_NOT_ASSIGNED_STATUS,
-      payload: true
+      type: types.TEACHERS_NOT_ASSIGNED_CLEANED,
+      payload: database.ref('/teachers-non-assigned/').off()
     });
-    database.ref('teachers-non-assigned/').on('value', snapshot => {
-      console.log(snapshot.val())
+  }
+}
+
+export const getTeachersNotAssigned = () => {
+  return dispatch => {
+    dispatch({
+      type: types.TEACHER_NOT_ASSIGNED_PENDING
+    });
+    database.ref('/teachers-non-assigned/').on('value', snapshot => {
       dispatch({
-        type: types.FETCH_TEACHERS_NOT_ASSIGNED,
+        type: types.TEACHER_NOT_ASSIGNED_FULFILLED,
         payload: snapshot.val()
-      });
-      dispatch({
-        type: types.TEACHER_NOT_ASSIGNED_STATUS,
-        payload: false
       });
     }, () => {
       dispatch({
-        type: types.TEACHER_NOT_ASSIGNED_STATUS,
-        payload: -1
+        type: types.TEACHER_NOT_ASSIGNED_REJECTED
       });
     });
   };

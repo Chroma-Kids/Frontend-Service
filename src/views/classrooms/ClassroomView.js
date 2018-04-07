@@ -1,19 +1,57 @@
 // #region imports
 import React, { PureComponent } from 'react';
-import { type Match, type Location, type RouterHistory } from 'react-router';
-import _ from 'lodash';
 import { Link } from 'react-router-dom';
-import { Field, reset } from 'redux-form';
-
+import { reset } from 'redux-form';
 import Toolbar from '../../components/toolbar/Toolbar'
-// #region imports
+import TableResponsive from '../../components/tableresponsive/TableResponsive'
+import TableRowStudent from '../../components/tableresponsive/TableRowStudent'
+import Popup from '../../components/popup/Popup'
+import Select from 'react-select';
 
 class Classroom extends PureComponent<Props, State> {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      showPopup: false,
+      selectedOption: ''
+    }
+  }
+
+  toggleMenu(){
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
+  }
+
+  onSubmit(values){
+    const { selectedOption } = this.state;
+    const { classroom, classroom_id } = this.props;
+
+    classroom.id = classroom_id;
+
+    if(selectedOption !== null){
+      this.props.addStudentToClassroom(classroom, selectedOption.value);
+      this.setState({
+        showPopup: !this.state.showPopup
+      });
+      this.props.dispatch(reset('AddStudent'))
+    }
+  }
+
+  // To handle the select from the popup
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption });
+  }
+
   render() {
 
-    const { classroom, teachers } = this.props;
-    
+    const { classroom, teachers, students, handleSubmit } = this.props;
+
+    const { selectedOption } = this.state;
+
+    const value = selectedOption && selectedOption.value;
+
     return (
       (!classroom ?
         <div className="spiner-example">
@@ -24,16 +62,39 @@ class Classroom extends PureComponent<Props, State> {
         </div>
         :
         <div key="classroomView">
-          <Toolbar title={`${classroom.name}`} />
+          <Popup
+            showhide={this.state.showPopup}
+            title={"Add a new student"}
+            description={"Select a student to be added to this classroom."}
+            onSubmit={handleSubmit(this.onSubmit.bind(this))}
+            buttonClose={this.toggleMenu.bind(this)} >
+              {(typeof students !== "undefined" ?
+                    <Select
+                      name="form-field-name"
+                      value={value}
+                      onChange={this.handleChange}
+                      options={Object.keys(students)
+                        .filter(obj => (!!classroom.students ? !classroom.students[obj] : obj))
+                        .map(obj => ({ value: obj, label: students[obj].name }))}
+                    />
+              :
+              <p>Loading popup</p>)}
+          </Popup>
+
+          <Toolbar
+            title={`${classroom.name}`}
+            button={this.toggleMenu.bind(this)}
+            buttonText={"Add student"}
+            breadcrumb={['Dashboard', 'Classrooms']} />
 
           <div className="row">
-            <div className="col-lg-9">
+            <div className="col-lg-12">
                 <div className="wrapper wrapper-content animated fadeInUp">
                     <div className="ibox-content">
                         <div className="row">
                             <div className="col-lg-12">
                                 <div className="m-b-md">
-                                    <a href="#" className="btn btn-white btn-xs pull-right">Edit project</a>
+                                    <a className="btn btn-white btn-xs pull-right">Edit project</a>
                                     <h2>{classroom.name} class</h2>
                                 </div>
                                 <dl className="dl-horizontal">
@@ -47,7 +108,7 @@ class Classroom extends PureComponent<Props, State> {
 
                                     <dt>Created by:</dt> <dd>Alex Smith</dd>
                                     <dt>Messages:</dt> <dd>  162</dd>
-                                    <dt>Client:</dt> <dd><a href="#" className="text-navy"> Zender Company</a> </dd>
+                                    <dt>Client:</dt> <dd><a className="text-navy"> Zender Company</a> </dd>
                                     <dt>Version:</dt> <dd> 	v1.4.2 </dd>
                                 </dl>
                             </div>
@@ -87,35 +148,28 @@ class Classroom extends PureComponent<Props, State> {
                         <div className="row m-t-sm">
                           <div className="col-lg-12">
                             <div className="panel blank-panel">
-                              <div className="panel-heading">
-                                  <div className="panel-options">
-                                      <ul className="nav nav-tabs">
-                                          <li className="active"><a href="#tab-1" data-toggle="tab">Kids</a></li>
-                                          <li className=""><a href="#tab-2" data-toggle="tab">Teachers</a></li>
-                                      </ul>
-                                  </div>
-                              </div>
 
-                              <div className="panel-body">
-
-                                <div className="tab-content">
-                                  <div className="tab-pane active" id="tab-1">
-
-                                  </div>
-                                  <div className="tab-pane" id="tab-2">
-
-                                  </div>
+                              {( typeof classroom.students !== "undefined" && typeof students !== "undefined" && classroom.students != null ?
+                                <TableResponsive
+                                  fields={["", "Full Name", "Date of birth", "Alergies", "Updated", "Created", ""]} >
+                                   {
+                                     Object.keys(classroom.students).map((student, index) => {
+                                       return (<TableRowStudent studentKey={student} key={index} student={students[student]} {...this.props} />)
+                                     })
+                                   }
+                                </TableResponsive>
+                                :
+                                <div className="alert alert-warning">
+                                    No students assigned to this classroom.
                                 </div>
-
-                              </div>
-
+                              )}
                             </div>
                           </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="col-lg-3">
+            {/*<div className="col-lg-3">
                 <div className="wrapper wrapper-content project-manager">
                     <h4>Project description</h4>
                     <img src="img/zender_logo.png" className="img-responsive"/>
@@ -146,7 +200,7 @@ class Classroom extends PureComponent<Props, State> {
 
                     </div>
                 </div>
-            </div>
+            </div>*/}
           </div>
         </div>
       )

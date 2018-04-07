@@ -1,29 +1,19 @@
-// #region imports
 import React, { Component } from 'react';
-import { type Match, type Location, type RouterHistory } from 'react-router';
 import _ from 'lodash';
-import { Field, reset } from 'redux-form';
 import HTML5Backend from 'react-dnd-html5-backend';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+
 import { DragDropContext } from 'react-dnd';
 
-import compose from 'recompose/compose';
-import { getTeachers, createTeacher, saveTeacher, deleteTeacher } from '../../redux/actions/TeacherActions';
-import { getUser } from '../../redux/actions/UserActions';
-import { reduxForm } from 'redux-form';
-import Toolbar from '../../components/toolbar/Toolbar'
+import ToolbarDashboard from '../../components/toolbar/ToolbarDashboard'
 import TeacherDrag from '../../components/dragdropteacher/Dragteacher'
 import ClassroomDrop from '../../components/dragdropteacher/Dropclassroom'
-import Popup from '../../components/popup/Popup'
-import { capitalize } from '../../helpers/Helpers'
-import { getTeachersNotAssigned } from '../../redux/actions/TeacherNotAssignedActions';
-// #region imports
+import { Link } from 'react-router-dom';
 
 class Dashboard extends Component {
 
-  componentDidMount(){
-    this.props.getTeachersNotAssigned();
+  constructor(props) {
+    super(props);
+    this.state = { enableRecordingTrajectory: false }
   }
 
   renderTeachersNotAssigned(teachersNotAssigned){
@@ -32,7 +22,8 @@ class Dashboard extends Component {
         <TeacherDrag
           text={this.props.teachers[key].name}
           key={key}
-          teacherid={key}
+          teacherId={key}
+          recording={this.state.enableRecordingTrajectory}
         />
       )
     })
@@ -44,8 +35,9 @@ class Dashboard extends Component {
         <TeacherDrag
           text={this.props.teachers[key].name}
           key={key}
-          teacherid={key}
-          classroomid={classroomKey}
+          teacherId={key}
+          classroomId={classroomKey}
+          recording={this.state.enableRecordingTrajectory}
         />
       )
     })
@@ -53,11 +45,22 @@ class Dashboard extends Component {
 
   renderClassrooms(){
     return _.map(this.props.classrooms, (classroom, key) => {
+
+      let ratio = 1 / classroom.ratio;
+      let ratio_real = classroom.num_teachers / classroom.num_students;
+      let ratio_spare = ratio + 0.20;
+
       return (
         <div className="col-lg-3 p-r-none" key={key}>
           <div className="ibox">
               <div className="ibox-content">
-                  <h3>{ classroom.name } (show ratio classroom)</h3>
+                  <h3>
+                  <Link to={`classroom/${key}`}>{ classroom.name }</Link>
+                  {(ratio > ratio_real ? <span className="label label-danger m-l">Teacher needed</span> : null)}
+                  {(ratio_real > ratio_spare && classroom.num_teachers > 1 ? <span className="label label-primary m-l">Spare teacher</span> : null)}
+                  </h3>
+                  <p className="small"><i className="fa fa-hand-o-up"></i> Add here a toolbar for the classroom.
+                  For instance creating incidents for this classroom direclty.</p>
                   <p className="small"><i className="fa fa-hand-o-up"></i> Drag teachers between classrooms</p>
 
                   {/*<div className="input-group">
@@ -83,17 +86,21 @@ class Dashboard extends Component {
 
   }
 
+  toggleMenu(){
+    this.setState({
+      enableRecordingTrajectory: !this.state.enableRecordingTrajectory
+    });
+  }
+
   render() {
-
-    const { handleSubmit } = this.props;
-
-    console.log(this.props)
 
     return (
       <div key="homeView">
 
-        <Toolbar
-            title={"Dashboard"} />
+        <ToolbarDashboard
+          button={this.toggleMenu.bind(this)}
+          buttonText={(this.state.enableRecordingTrajectory ? "Recording..." : "Testing")}
+          title={"Dashboard"} />
 
         <div className="row">
           <div className="col-lg-12 m-t">
@@ -111,22 +118,20 @@ class Dashboard extends Component {
           </div>
         </div>
         <div className="row">
-          {this.renderClassrooms()}
+        {
+          (typeof this.props.classrooms !== "undefined" && this.props.classrooms != null ?
+          this.renderClassrooms()
+          :
+          <div className="col-lg-12 m-t">
+            <div className="ibox-content">
+              <div className="alert alert-warning m">You must create some classrooms first</div>
+            </div>
+          </div>
+        )}
         </div>
       </div>
     );
   }
-  // #endregion
 }
 
-let form = reduxForm({
-  form: 'NewTeacher'
-})(Dashboard);
-
-form = connect((state, ownProps) => ({
-    teachers: state.teachers,
-    user: state.user.user,
-  }), { getTeachersNotAssigned }
-)(form);
-
-export default DragDropContext(HTML5Backend)(form);
+export default DragDropContext(HTML5Backend)(Dashboard);
