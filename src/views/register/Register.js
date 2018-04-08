@@ -75,7 +75,7 @@ class Register extends PureComponent<Props, State> {
               </div>
               <h3>Register to CK+</h3>
               <p>Create account to see it in action.</p>
-              <form className="m-t" role="form" onSubmit={(event) => this.submitAccount(event)}>
+              <form className="m-t" onSubmit={(event) => this.submitAccount(event)}>
                   <InputField
                     id="name"
                     type="text"

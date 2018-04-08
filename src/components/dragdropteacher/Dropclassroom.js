@@ -17,7 +17,11 @@ const Types = {
  */
  const listTarget = {
    drop(props, source) {
-      props.moveTeacherToClassroom(source.getItem().teacherid, source.getItem().classroomid, props.classroomId)
+      props.moveTeacherToClassroom(source.getItem().teacherId, source.getItem().classroomId, props.classroomId, source.getItem().recording);
+
+      // // if (source.getItem().recording) {
+      //   props.addTrajectory(source.getItem().teacherId, props.classroomId)
+      // // }
    }
  };
 
@@ -39,7 +43,7 @@ const propTypes = {
 
 class ClassroomDrop extends Component {
   render() {
-    const { isOver, connectDropTarget, children, classroomId } = this.props;
+    const { connectDropTarget, children, classroomId } = this.props;
 
     return connectDropTarget(
       <ul className="sortable-list connectList agile-list ui-sortable" id={classroomId}>

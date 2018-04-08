@@ -1,10 +1,13 @@
-import { FETCH_TEACHERS_NOT_ASSIGNED } from '../actions/ActionTypes';
+import * as types from '../actions/ActionTypes';
 
 export default function (state = {}, action) {
-  switch (action.type) {
-    case FETCH_TEACHERS_NOT_ASSIGNED:
-      return action.payload;
-    default:
-      return state;
-  }
+
+    const { payload } = action;
+
+    switch (action.type) {
+      case types.TEACHER_NOT_ASSIGNED_FULFILLED:
+        return payload;
+      default:
+        return state;
+    }
 }

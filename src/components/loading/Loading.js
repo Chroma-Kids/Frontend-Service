@@ -30,6 +30,7 @@ function mapStateToProps(state) {
   return {
     userLoading: state.loading.user,
     teachersLoading: state.loading.teachers,
+    studentsLoading: state.loading.students,
     classroomsLoading: state.loading.classroom,
   };
 }
