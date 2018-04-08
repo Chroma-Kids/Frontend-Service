@@ -9,6 +9,16 @@ const Types = {
   TEACHER: 'teacher'
 };
 
+// const style = {
+// 	border: '1px dashed gray',
+// 	backgroundColor: 'white',
+// 	padding: '0.5rem 1rem',
+// 	marginRight: '1.5rem',
+// 	marginBottom: '1.5rem',
+// 	cursor: 'move',
+// 	float: 'left',
+// }
+
 /**
  * Implements the drag source contract.
  */
@@ -35,7 +45,6 @@ function collect(connect, monitor) {
 
 const propTypes = {
   text: PropTypes.string.isRequired,
-  // Injected by React DnD:
   isDragging: PropTypes.bool.isRequired,
   connectDragSource: PropTypes.func.isRequired
 };
@@ -43,8 +52,11 @@ const propTypes = {
 class TeacherDrag extends Component {
   render() {
     const { isDragging, connectDragSource, text, key, teacherId } = this.props;
+
+    const opacity = isDragging ? 0.5 : 1;
+
     return connectDragSource(
-      <li style={{ opacity: isDragging ? 0.5 : 1 }} key={key} className="warning-element" >
+      <li style={{ opacity }} key={key} className="warning-element" >
           <Link to={`/teacher/${teacherId}`}>{text}</Link>
           <div className="agile-detail">
               <a  className="pull-right btn btn-xs btn-white">show breaks done</a>
