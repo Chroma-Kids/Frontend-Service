@@ -5,7 +5,7 @@ import { reduxForm } from 'redux-form';
 
 import { getTeachers, removeTeachersListener } from '../../actions/TeacherActions';
 import { getStudents, removeStudentsListener } from '../../actions/StudentActions';
-import { fetchClassroom, addStudentToClassroom, deleteStudentFromClassroom } from '../../actions/ClassroomActions';
+import { fetchClassroom, addStudentToClassroom, deleteStudentFromClassroom, removeClassroomListener } from '../../actions/ClassroomActions';
 import ClassroomView from '../../../views/classrooms/ClassroomView';
 
 export class ClassroomViewContainer extends Component {
@@ -19,6 +19,7 @@ export class ClassroomViewContainer extends Component {
     componentWillUnmount(){
       this.props.removeStudentsListener();
       this.props.removeTeachersListener();
+      this.props.removeClassroomListener(this.props.classroomId);
     }
 
     render() {
@@ -41,7 +42,7 @@ const mapStateToProps = (state, ownProps)=> {
 
 const mapDispatchToProps = (dispatch, state)=> {
     return bindActionCreators({ fetchClassroom, getTeachers, getStudents,
-      removeStudentsListener, removeTeachersListener, 
+      removeStudentsListener, removeTeachersListener, removeClassroomListener,
       addStudentToClassroom, deleteStudentFromClassroom }, dispatch);
 }
 

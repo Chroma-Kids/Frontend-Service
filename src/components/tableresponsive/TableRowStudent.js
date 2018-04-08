@@ -7,8 +7,6 @@ const TableRowStudent = (props) => {
 
   const { studentKey, student, deleteStudentFromClassroom, classroomId } = props;
 
-  console.log(classroomId, studentKey)
-
   return (
     (!!student &&
       <tr>
