@@ -1,4 +1,3 @@
-// #region imports
 import React, { Component } from 'react';
 import { Field, reset } from 'redux-form';
 import _ from 'lodash';

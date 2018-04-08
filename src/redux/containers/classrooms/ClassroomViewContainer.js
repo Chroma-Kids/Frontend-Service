@@ -11,7 +11,7 @@ import ClassroomView from '../../../views/classrooms/ClassroomView';
 export class ClassroomViewContainer extends Component {
 
     componentDidMount(){
-      this.props.fetchClassroom(this.props.classroom_id);
+      this.props.fetchClassroom(this.props.classroomId);
       this.props.getTeachers();
       this.props.getStudents();
     }
@@ -28,7 +28,7 @@ export class ClassroomViewContainer extends Component {
 const mapStateToProps = (state, ownProps)=> {
     return {
         classroom: state.classrooms.currentClassroom,
-        classroom_id: ownProps.match.params.id,
+        classroomId: ownProps.match.params.classroomId,
         teachers: state.teachers.teachers,
         students: state.students.students
     }

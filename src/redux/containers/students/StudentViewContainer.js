@@ -8,7 +8,7 @@ import StudentView from '../../../views/students/StudentView';
 export class StudentViewContainer extends Component {
 
     componentDidMount(){
-      this.props.fetchStudent(this.props.student_id);
+      this.props.fetchStudent(this.props.studentId);
     }
 
     render() {
@@ -23,7 +23,7 @@ export class StudentViewContainer extends Component {
 const mapStateToProps = (state, ownProps)=> {
     return {
         student: state.students.currentStudent,
-        student_id: ownProps.match.params.id
+        studentId: ownProps.match.params.studentId
     }
 }
 

@@ -8,6 +8,7 @@ import ToolbarDashboard from '../../components/toolbar/ToolbarDashboard'
 import TeacherDrag from '../../components/dragdropteacher/Dragteacher'
 import ClassroomDrop from '../../components/dragdropteacher/Dropclassroom'
 import { Link } from 'react-router-dom';
+import { ROUTES } from '../../index';
 
 class Dashboard extends React.Component {
 
@@ -55,7 +56,7 @@ class Dashboard extends React.Component {
           <div className="ibox">
               <div className="ibox-content">
                   <h3>
-                  <Link to={`classroom/${key}`}>{ classroom.name }</Link>
+                  <Link to={ROUTES.AUTHENTICATED.CLASSROOM(key)}>{ classroom.name }</Link>
                   {(ratio > ratio_real ? <span className="label label-danger m-l">Teacher needed</span> : null)}
                   {(ratio_real > ratio_spare && classroom.num_teachers > 1 ? <span className="label label-primary m-l">Spare teacher</span> : null)}
                   </h3>

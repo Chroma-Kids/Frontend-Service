@@ -8,15 +8,15 @@ import ClassroomForm from '../../../views/classrooms/ClassroomForm';
 
 export class ClassroomEditContainer extends Component {
     onSubmit(classroom) {
-        this.props.updateClassroom(classroom, this.props.classroom_id);
+        this.props.updateClassroom(classroom, this.props.classroomId);
     }
 
     onDelete() {
-        this.props.deleteClassroom(this.props.classroom_id);
+        this.props.deleteClassroom(this.props.classroomId);
     }
 
     componentDidMount() {
-        this.props.fetchClassroom(this.props.classroom_id);
+        this.props.fetchClassroom(this.props.classroomId);
     }
 
     render() {
@@ -32,7 +32,7 @@ const mapStateToProps = (state, ownProps)=> {
     return {
         initialValues: state.classrooms.currentClassroom,
         classroom: state.classrooms.currentClassroom,
-        classroom_id: ownProps.match.params.id,
+        classroomId: ownProps.match.params.classroomId,
         formType: 'edit',
         keyAwait: "updateClassroom"
     }

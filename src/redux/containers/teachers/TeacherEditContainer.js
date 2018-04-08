@@ -8,15 +8,15 @@ import TeacherForm from '../../../views/teachers/TeacherForm';
 
 export class TeacherEditContainer extends Component {
     onSubmit(teacher) {
-        this.props.updateTeacher(teacher, this.props.teacher_id);
+        this.props.updateTeacher(teacher, this.props.teacherId);
     }
 
     onDelete() {
-        this.props.deleteTeacher(this.props.teacher_id);
+        this.props.deleteTeacher(this.props.teacherId);
     }
 
     componentDidMount() {
-        this.props.fetchTeacher(this.props.teacher_id);
+        this.props.fetchTeacher(this.props.teacherId);
     }
 
     render() {
@@ -32,7 +32,7 @@ const mapStateToProps = (state, ownProps)=> {
     return {
         initialValues: state.teachers.currentTeacher,
         teacher: state.teachers.currentTeacher,
-        teacher_id: ownProps.match.params.id,
+        teacherId: ownProps.match.params.teacherId,
         formType: 'edit',
         keyAwait: "updateTeacher"
     }

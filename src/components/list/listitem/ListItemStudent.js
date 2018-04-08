@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Timestamp from 'react-timestamp'
+import { ROUTES } from '../../../index';
 
 const ListItemStudent = (props) => {
 
@@ -12,7 +13,7 @@ const ListItemStudent = (props) => {
             <span className="label label-primary">Active</span>
         </td>
         <td className="project-title">
-            <Link to={`/student/${itemKey}`}>{student.name} {student.surname}</Link>
+            <Link to={ROUTES.AUTHENTICATED.STUDENT(itemKey)}>{student.name} {student.surname}</Link>
             <br />
             <small>Created <Timestamp time={student.created_at} format='ago' actualSeconds autoUpdate /></small>
             <br />
@@ -37,7 +38,7 @@ const ListItemStudent = (props) => {
           )}
         </td>
         <td className="project-actions">
-            <Link to={`/student/${itemKey}/edit`} className="btn btn-success btn-sm"><i className="fa fa-cross"></i> Edit </Link>
+            <Link to={ROUTES.AUTHENTICATED.STUDENT_EDIT(itemKey)} className="btn btn-success btn-sm"><i className="fa fa-cross"></i> Edit </Link>
             <button onClick={() => {
               deleteStudent(itemKey)
             }} className="btn btn-danger btn-sm"><i className="fa fa-cross"></i> Delete </button>

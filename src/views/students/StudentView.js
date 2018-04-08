@@ -1,4 +1,3 @@
-// #region imports
 import React, { PureComponent } from 'react';
 
 import Toolbar from '../../components/toolbar/Toolbar'
@@ -331,5 +330,4 @@ export default class StudentView extends PureComponent<Props, State> {
       )
     );
   }
-  // #endregion
 }

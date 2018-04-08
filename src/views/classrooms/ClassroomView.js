@@ -6,6 +6,7 @@ import TableResponsive from '../../components/tableresponsive/TableResponsive'
 import TableRowStudent from '../../components/tableresponsive/TableRowStudent'
 import Popup from '../../components/popup/Popup'
 import Select from 'react-select';
+import { ROUTES } from '../../index';
 
 class Classroom extends PureComponent<Props, State> {
 
@@ -119,7 +120,8 @@ class Classroom extends PureComponent<Props, State> {
 
                                     {(typeof classroom.teachers !== "undefined" ?
                                       Object.keys(classroom.teachers).map(key => {
-                                        return <Link to={`/teacher/${key}`} key={key} ><img alt={teachers[key].name} className="img-circle" src={teachers[key].photoURL} /></Link>;
+                                        // TODO: Fails if teachers are not loaded
+                                        return <Link to={ROUTES.AUTHENTICATED.TEACHER(key)} key={key} ><img alt={teachers[key].name} className="img-circle" src={teachers[key].photoURL} /></Link>;
                                       })
                                       :
                                       <div className="alert alert-warning">
