@@ -34,7 +34,7 @@ export const ROUTES = {
     CLASSROOMS: '/classrooms',
     CLASSROOM: (classroomId) => `${ROUTES.AUTHENTICATED.CLASSROOMS}/${classroomId}`,
     CLASSROOM_EDIT: (classroomId) => `${ROUTES.AUTHENTICATED.CLASSROOM(classroomId)}/edit`,
-    STUDENTS: 'students',
+    STUDENTS: '/students',
     STUDENT: (studentId) => `${ROUTES.AUTHENTICATED.STUDENTS}/${studentId}`,
     STUDENT_EDIT: (studentId) => `${ROUTES.AUTHENTICATED.STUDENT(studentId)}/edit`,
   },
@@ -64,6 +64,8 @@ ReactDOM.render(
               <Route exact path={ROUTES.AUTHENTICATED.STUDENTS} component={StudentsListContainer}/>
               <Route exact path={ROUTES.AUTHENTICATED.STUDENT(':studentId')} component={StudentViewContainer}/>
               <Route exact path={ROUTES.AUTHENTICATED.STUDENT_EDIT(':studentId')} component={StudentEditContainer}/>
+
+              {/* TODO: Provide a view when a user is logged in but no route matches the location */}
             </App>
           </AuthenticatedRoutes>
         </LoadingComponent>
