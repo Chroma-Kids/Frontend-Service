@@ -11,7 +11,7 @@ class AuthenticatedRoutes extends React.Component {
     const defaultRoute = ROUTES.NO_AUTHENTICATED.LOGIN;
 
     if (user) {
-      return children;
+      return Object.values(ROUTES.AUTHENTICATED).includes(location.pathname) ? children : <Redirect to={ROUTES.AUTHENTICATED.DASHBOARD}/>;
     } else {
       return location.pathname !== defaultRoute ?
              <Redirect to={defaultRoute}/> : null
