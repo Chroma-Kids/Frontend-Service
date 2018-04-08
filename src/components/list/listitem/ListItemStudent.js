@@ -29,7 +29,7 @@ const ListItemStudent = (props) => {
         <td className="project-people">
           {(!!classrooms && typeof student.classrooms !== "undefined" ?
             Object.keys(student.classrooms).map(key => {
-              return <Link key={key} to={`/classroom/${key}`}><img alt={classrooms[key].name} className="img-circle"/></Link>;
+              return <Link key={key} to={ROUTES.AUTHENTICATED.CLASSROOM(key)}><img alt={classrooms[key].name} className="img-circle"/></Link>;
             })
             :
             <div className="alert alert-warning m-b-none">

@@ -26,11 +26,12 @@ class Classroom extends PureComponent<Props, State> {
 
   onSubmit(values){
     const { selectedOption } = this.state;
-    const { classroom, classroom_id } = this.props;
+    const { classroom, classroomId } = this.props;
 
-    classroom.id = classroom_id;
+    classroom.id = classroomId;
 
     if(selectedOption !== null){
+
       this.props.addStudentToClassroom(classroom, selectedOption.value);
       this.setState({
         showPopup: !this.state.showPopup
@@ -118,7 +119,7 @@ class Classroom extends PureComponent<Props, State> {
 
                                     <dd className="project-people">
 
-                                    {(typeof classroom.teachers !== "undefined" ?
+                                    {(typeof classroom.teachers !== "undefined" && typeof teachers !== "undefined" ?
                                       Object.keys(classroom.teachers).map(key => {
                                         // TODO: Fails if teachers are not loaded
                                         return <Link to={ROUTES.AUTHENTICATED.TEACHER(key)} key={key} ><img alt={teachers[key].name} className="img-circle" src={teachers[key].photoURL} /></Link>;

@@ -1,14 +1,13 @@
 import React, { PureComponent } from 'react';
 
 import Toolbar from '../../components/toolbar/Toolbar'
+import { ROUTES } from '../../index';
 
 export default class StudentView extends PureComponent<Props, State> {
 
   render() {
 
-    const { student, student_id } = this.props;
-
-    console.log(student_id)
+    const { student, studentId } = this.props;
 
     return (
       (!student ?
@@ -23,7 +22,7 @@ export default class StudentView extends PureComponent<Props, State> {
           <Toolbar
               title={`${student.name+" "+student.surname}`}
               breadcrumb={['Dashboard', 'Students']}
-              link={`/student/${student_id}/edit`}
+              link={ROUTES.AUTHENTICATED.STUDENT_EDIT(studentId)}
               linkText={"Edit Student"} />
 
           <div className="wrapper wrapper-content animated fadeInRight">

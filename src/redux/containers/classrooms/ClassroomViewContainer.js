@@ -3,8 +3,8 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
-import { getTeachers } from '../../actions/TeacherActions';
-import { getStudents } from '../../actions/StudentActions';
+import { getTeachers, removeTeachersListener } from '../../actions/TeacherActions';
+import { getStudents, removeStudentsListener } from '../../actions/StudentActions';
 import { fetchClassroom, addStudentToClassroom, deleteStudentFromClassroom } from '../../actions/ClassroomActions';
 import ClassroomView from '../../../views/classrooms/ClassroomView';
 
@@ -14,6 +14,11 @@ export class ClassroomViewContainer extends Component {
       this.props.fetchClassroom(this.props.classroomId);
       this.props.getTeachers();
       this.props.getStudents();
+    }
+
+    componentWillUnmount(){
+      this.props.removeStudentsListener();
+      this.props.removeTeachersListener();
     }
 
     render() {
@@ -35,7 +40,9 @@ const mapStateToProps = (state, ownProps)=> {
 }
 
 const mapDispatchToProps = (dispatch, state)=> {
-    return bindActionCreators({ fetchClassroom, getTeachers, getStudents, addStudentToClassroom, deleteStudentFromClassroom }, dispatch);
+    return bindActionCreators({ fetchClassroom, getTeachers, getStudents,
+      removeStudentsListener, removeTeachersListener, 
+      addStudentToClassroom, deleteStudentFromClassroom }, dispatch);
 }
 
 let addStudentForm = reduxForm({

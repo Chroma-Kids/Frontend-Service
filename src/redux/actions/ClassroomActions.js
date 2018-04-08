@@ -34,7 +34,7 @@ export const fetchClassroom = (uid) => {
       type: types.FETCH_CLASSROOM_PENDING
     });
 
-    database.ref('/classrooms/').child(uid).on('value', function (snapshot, error) {
+    database.ref('/classrooms/').child(uid).once('value', function (snapshot, error) {
       if (error)
         dispatch({
           type: types.FETCH_CLASSROOM_REJECTED,

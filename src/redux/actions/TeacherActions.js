@@ -35,7 +35,7 @@ export const fetchTeacher = (uid) => {
       type: types.FETCH_TEACHER_PENDING
     });
 
-    database.ref('/teachers/').child(uid).on('value', function (snapshot, error) {
+    database.ref('/teachers/').child(uid).once('value', function (snapshot, error) {
       if (error)
         dispatch({
           type: types.FETCH_TEACHER_REJECTED,
