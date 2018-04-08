@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import Timestamp from 'react-timestamp'
+import Timestamp from 'react-timestamp';
 
 const ListItemClassroom = (props) => {
 
