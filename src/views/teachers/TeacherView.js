@@ -1,7 +1,7 @@
-// #region imports
 import React, { PureComponent } from 'react';
 
 import Toolbar from '../../components/toolbar/Toolbar'
+import { ROUTES } from '../../index';
 import ActivityStream from '../../components/activitystream/ActivityStream'
 import _ from 'lodash';
 
@@ -22,10 +22,10 @@ class Teacher extends PureComponent<Props, State> {
 
   render() {
 
-    const { teacher, teacher_id, trajectories } = this.props;
+    const { teacher, teacherId, trajectories } = this.props;
 
     if(typeof teacher !== "undefined"){
-      teacher.id = teacher_id;
+      teacher.id = teacherId;
       console.log(teacher.trajectories);
     }
 
@@ -46,7 +46,7 @@ class Teacher extends PureComponent<Props, State> {
           <Toolbar
             title={`${teacher.name+" "+teacher.surname}`}
             breadcrumb={['Dashboard', 'Teachers']}
-            link={`/teacher/${teacher_id}/edit`}
+            link={ROUTES.AUTHENTICATED.TEACHER_EDIT(teacherId)}
             linkText={"Edit Teacher"} />
 
           <div className="wrapper wrapper-content animated fadeInRight">
@@ -387,7 +387,6 @@ class Teacher extends PureComponent<Props, State> {
       )
     );
   }
-  // #endregion
 }
 
 export default Teacher;

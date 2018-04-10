@@ -16,7 +16,7 @@ const rootReducer = combineReducers({
   trajectories: TrajectoryReducer,
   teachersNotAssigned: TeacherNotAssignedReducer,
   user: UserReducer,
-  loading: LoadingReducer
+  loading: LoadingReducer,
 });
 
 export default rootReducer;

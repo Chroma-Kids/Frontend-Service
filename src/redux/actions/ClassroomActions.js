@@ -10,6 +10,15 @@ export const removeClassroomsListener = () => {
   }
 }
 
+export const removeClassroomListener = (uid) => {
+  return dispatch => {
+    dispatch({
+      type: types.CLASSROOMS_CLEANED,
+      payload: database.ref('/classrooms/').child(uid).off()
+    });
+  }
+}
+
 export const getClassrooms = () => {
   return dispatch => {
     dispatch({

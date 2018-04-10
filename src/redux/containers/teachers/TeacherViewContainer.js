@@ -10,7 +10,7 @@ import TeacherView from '../../../views/teachers/TeacherView';
 export class TeacherViewContainer extends Component {
 
     componentDidMount(){
-      this.props.fetchTeacher(this.props.teacher_id);
+      this.props.fetchTeacher(this.props.teacherId);
       // OPTIMIZE:  we don't need to load them all
       this.props.getTrajectories();
       this.props.getClassrooms();
@@ -34,7 +34,7 @@ export class TeacherViewContainer extends Component {
 const mapStateToProps = (state, ownProps)=> {
     return {
         teacher: state.teachers.currentTeacher,
-        teacher_id: ownProps.match.params.id,
+        teacherId: ownProps.match.params.teacherId,
         // OPTIMIZE:  we don't need to load them all
         trajectories: state.trajectories.trajectories,
         classrooms: state.classrooms.classrooms,
