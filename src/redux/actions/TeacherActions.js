@@ -349,3 +349,26 @@ export const moveTeacherToClassroom = (teacher, from, to) => {
     }
   }
 }
+
+export const checkInTeacher = (uid) => {
+
+  console.log(uid);
+
+  return dispatch => {
+    dispatch({
+      type: types.TEACHER_CHECK_IN_PENDING
+    });
+
+    database.ref(`/teachers/${uid}`).update({ checked_in: new Date().getTime()/1000 }, function (error) {
+      if (error)
+        dispatch({
+          type: types.TEACHER_CHECK_IN_REJECTED,
+          payload: error
+        });
+      else
+        dispatch({
+          type: types.TEACHER_CHECK_IN_FULFILLED
+        });
+    })
+  };
+}

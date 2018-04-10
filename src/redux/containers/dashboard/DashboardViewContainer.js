@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import DashboardView from '../../../views/dashboard/DashboardView';
 import { getTeachersNotAssigned, removeTeachersNotAssignedListener } from '../../actions/TeacherNotAssignedActions';
-import { getTeachers, removeTeachersListener } from '../../actions/TeacherActions';
+import { getTeachers, removeTeachersListener, checkInTeacher } from '../../actions/TeacherActions';
 import { getClassrooms, removeClassroomsListener } from '../../actions/ClassroomActions';
 
 export class DashboardViewContainer extends Component {
@@ -39,7 +39,7 @@ const mapStateToProps = (state, ownProps)=> {
 }
 
 const mapDispatchToProps = (dispatch, state)=> {
-    return bindActionCreators({ getTeachersNotAssigned, getTeachers, getClassrooms,
+    return bindActionCreators({ getTeachersNotAssigned, getTeachers, getClassrooms, checkInTeacher,
     removeTeachersListener, removeClassroomsListener, removeTeachersNotAssignedListener }, dispatch);
 }
 

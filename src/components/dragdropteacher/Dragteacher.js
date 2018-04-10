@@ -4,20 +4,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { DragSource } from 'react-dnd';
 import { Link } from 'react-router-dom';
+import Timestamp from 'react-timestamp'
 
 const Types = {
   TEACHER: 'teacher'
 };
-
-// const style = {
-// 	border: '1px dashed gray',
-// 	backgroundColor: 'white',
-// 	padding: '0.5rem 1rem',
-// 	marginRight: '1.5rem',
-// 	marginBottom: '1.5rem',
-// 	cursor: 'move',
-// 	float: 'left',
-// }
 
 /**
  * Implements the drag source contract.
@@ -25,7 +16,7 @@ const Types = {
 const cardSource = {
   beginDrag(props) {
     return {
-      text: props.text,
+      teacher: props.teacher,
       classroomId: props.classroomId,
       recording: props.recording,
       teacherId: props.teacherId
@@ -44,23 +35,28 @@ function collect(connect, monitor) {
 }
 
 const propTypes = {
-  text: PropTypes.string.isRequired,
+  teacher: PropTypes.object.isRequired,
   isDragging: PropTypes.bool.isRequired,
-  connectDragSource: PropTypes.func.isRequired
+  connectDragSource: PropTypes.func.isRequired,
+  checkInTeacher: PropTypes.func.isRequired
 };
 
 class TeacherDrag extends Component {
   render() {
-    const { isDragging, connectDragSource, text, key, teacherId } = this.props;
+    const { isDragging, connectDragSource, text, key, teacherId, teacher, checkInTeacher } = this.props;
 
     const opacity = isDragging ? 0.5 : 1;
 
     return connectDragSource(
       <li style={{ opacity }} key={key} className="warning-element" >
-          <Link to={`/teacher/${teacherId}`}>{text}</Link>
+          <Link to={`/teacher/${teacherId}`}>{teacher.name}</Link>
           <div className="agile-detail">
-              <a  className="pull-right btn btn-xs btn-white">show breaks done</a>
-              <i className="fa fa-clock-o"></i> show Hours (minutes) completed
+              {
+                (typeof teacher.checked_in === "undefined" ? <a className="pull-right btn btn-xs btn-white" onClick={() => {this.props.checkInTeacher(teacherId)}}>Check {teacher.name} in</a> : null)
+              }
+              <i className="fa fa-clock-o"></i> {
+                (typeof teacher.checked_in !== "undefined" ? <span className="label label-success">IN</span> : "-")
+              }
           </div>
       </li>
     );

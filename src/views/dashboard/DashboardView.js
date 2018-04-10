@@ -20,10 +20,11 @@ class Dashboard extends Component {
     return _.map(Object.keys(teachersNotAssigned), key => {
       return (
         <TeacherDrag
-          text={this.props.teachers[key].name}
+          teacher={this.props.teachers[key]}
           key={key}
           teacherId={key}
           recording={this.state.enableRecordingTrajectory}
+          {...this.props}
         />
       )
     })
@@ -33,11 +34,12 @@ class Dashboard extends Component {
     return _.map(Object.keys(teachersKey), key => {
       return (
         <TeacherDrag
-          text={this.props.teachers[key].name}
+          teacher={this.props.teachers[key]}
           key={key}
           teacherId={key}
           classroomId={classroomKey}
           recording={this.state.enableRecordingTrajectory}
+          {...this.props}
         />
       )
     })
