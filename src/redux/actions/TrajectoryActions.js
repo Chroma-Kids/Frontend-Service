@@ -1,7 +1,7 @@
 import { database } from '../../firebase';
 import * as types from './ActionTypes';
 
-export const removeTeachersListener = () => {
+export const removeTrajectoriesListener = () => {
   return dispatch => {
     dispatch({
       type: types.TEACHERS_CLEANED,

@@ -2,16 +2,39 @@
 import React, { PureComponent } from 'react';
 
 import Toolbar from '../../components/toolbar/Toolbar'
-import TimeLineTrajectory from '../../components/timelinetrajectory/TimeLineTrajectory'
+import ActivityStream from '../../components/activitystream/ActivityStream'
+import _ from 'lodash';
 
 class Teacher extends PureComponent<Props, State> {
 
+
+  renderTeachersTrajectories(trajectories){
+    return _.map(Object.keys(trajectories).reverse(), key => {
+      return (
+        <ActivityStream
+          key={key}
+          itemKey={key}
+          trajectory={this.props.trajectories[key]}
+        />
+      )
+    })
+  }
+
   render() {
 
-    const { teacher, teacher_id } = this.props;
+    const { teacher, teacher_id, trajectories } = this.props;
+
+    if(typeof teacher !== "undefined"){
+      teacher.id = teacher_id;
+      console.log(teacher.trajectories);
+    }
+
+    if(typeof trajectories !== "undefined"){
+      console.log(trajectories);
+    }
 
     return (
-      (!teacher ?
+      (!teacher?
         <div className="spiner-example">
             <div className="sk-spinner sk-spinner-double-bounce">
                 <div className="sk-double-bounce1"></div>
@@ -163,10 +186,21 @@ class Teacher extends PureComponent<Props, State> {
                         </div>
                     </div>
                 </div>
-                <div className="col-lg-4 m-b-lg">
-                    <TimeLineTrajectory teacher={teacher} {...this.props} />
+                <div className="col-lg-6 m-b-lg">
+                  <div className="ibox">
+                    <div className="ibox-content">
+                    {
+                      ( typeof teacher !== "undefined" && typeof trajectories !== "undefined" ?
+                        this.renderTeachersTrajectories(teacher.trajectories)
+                      :
+                        null
+                      )
+                    }
+
+                    </div>
+                  </div>
                 </div>
-                <div className="col-lg-5">
+                <div className="col-lg-3">
 
                     <div className="social-feed-box">
 

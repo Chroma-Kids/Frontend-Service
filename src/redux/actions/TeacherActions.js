@@ -29,6 +29,86 @@ export const getTeachers = () => {
   };
 }
 
+// export const getTeacherTrajectories = (uid) => {
+//
+//   return dispatch => {
+//     dispatch({
+//       type: types.FETCH_TEACHER_TRAJECTORIES_PENDING
+//     });
+//
+//     database.ref(`/teachers/${uid}/trajectories`).once('value', snapshot => {
+//
+//       const trajectories = Object.keys(snapshot.val() || {});
+//
+//       const newt = trajectories.map((key) => ({ key, ...trajectories[key] }))
+//
+//
+//       var obj = trajectories.reduce(function(acc, cur, i) {
+//         acc[i] = cur;
+//         console.log(cur);
+//         return acc;
+//       }, {});
+//
+//       console.log(obj);
+//
+//
+//       // trajectories.forEach((key) => {
+//       //
+//       //   database.ref(`/trajectories/${key}`).once('value', snapshot => {
+//       //     console.log(snapshot.val());
+//       //
+//       //     const tra = Object.values(snapshot.val() || {});
+//       //
+//       //     console.log(tra);
+//       //
+//       //   }).then((data) => {
+//       //     console.log(data.val());
+//       //   });
+//       // });
+//
+//       // database.ref(`/trajectories/${snapshot.key}`).once('value', snapshot => {
+//       //   let trajectory = snapshot.val();
+//       //   console.log(trajectory);
+//       //   // database.ref(`/classrooms/${snapshot.val().to}/name`).once('value', snapshot => {
+//       //   //   console.log(snapshot.val());
+//       //   //   trajectory.to = snapshot.val();
+//       //   // });
+//       //   // database.ref(`/classrooms/${snapshot.val().from}/name`).once('value', snapshot => {
+//       //   //   console.log(snapshot.val());
+//       //   //   trajectory.from = snapshot.val();
+//       //   // });
+//       //
+//       //
+//       //     console.log(trajectory)
+//       //     // console.log(snapshot.val().from)
+//       //
+//       // });
+//
+//       // aux. = trajectory;
+//
+//       // dispatch({
+//       //   type: types.FETCH_TEACHER_TRAJECTORIES_FULFILLED,
+//       //   payload: aux
+//       // });
+//       // Object.keys(snapshot.val()).map(key => {
+//       //   database.ref('/trajectories/').child(key).once('value', snapshot => {
+//       //     console.log(snapshot.val())
+//       //     dispatch({
+//       //       type: types.FETCH_TEACHER_TRAJECTORIES_FULFILLED,
+//       //       payload: snapshot.val()
+//       //     });
+//       //   });
+//       // });
+//
+//     }, () => {
+//       dispatch({
+//         type: types.FETCH_TEACHER_TRAJECTORIES_REJECTED,
+//         payload: true
+//       });
+//     })
+//   };
+// }
+
 export const fetchTeacher = (uid) => {
   return dispatch => {
     dispatch({

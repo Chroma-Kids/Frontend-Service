@@ -3,16 +3,23 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import { fetchTeacher } from '../../actions/TeacherActions';
-import { getClassrooms } from '../../actions/ClassroomActions';
-import { getTrajectories } from '../../actions/TrajectoryActions';
+import { getClassrooms, removeClassroomsListener } from '../../actions/ClassroomActions';
+import { getTrajectories, removeTrajectoriesListener } from '../../actions/TrajectoryActions';
 import TeacherView from '../../../views/teachers/TeacherView';
 
 export class TeacherViewContainer extends Component {
 
     componentDidMount(){
       this.props.fetchTeacher(this.props.teacher_id);
+      // OPTIMIZE:  we don't need to load them all
       this.props.getTrajectories();
       this.props.getClassrooms();
+      // this.props.getTeacherTrajectories(this.props.teacher_id);
+    }
+
+    componentWillUnmount(){
+      this.props.removeClassroomsListener();
+      this.props.removeTrajectoriesListener();
     }
 
     render() {
@@ -28,13 +35,16 @@ const mapStateToProps = (state, ownProps)=> {
     return {
         teacher: state.teachers.currentTeacher,
         teacher_id: ownProps.match.params.id,
+        // OPTIMIZE:  we don't need to load them all
         trajectories: state.trajectories.trajectories,
-        classrooms: state.classrooms.classrooms
+        classrooms: state.classrooms.classrooms,
+        teacherTrajectories: state.teachers.teacherTrajectories
     }
 }
 
 const mapDispatchToProps = (dispatch, state)=> {
-    return bindActionCreators({ fetchTeacher, getTrajectories, getClassrooms }, dispatch);
+    return bindActionCreators({ fetchTeacher, getClassrooms, getTrajectories,
+                removeTrajectoriesListener, removeClassroomsListener }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeacherViewContainer);

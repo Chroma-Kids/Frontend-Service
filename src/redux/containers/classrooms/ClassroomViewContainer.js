@@ -12,6 +12,8 @@ export class ClassroomViewContainer extends Component {
 
     componentDidMount(){
       this.props.fetchClassroom(this.props.classroom_id);
+
+      // OPTIMIZE: we don't need to load them all
       this.props.getTeachers();
       this.props.getStudents();
     }
@@ -29,6 +31,7 @@ const mapStateToProps = (state, ownProps)=> {
     return {
         classroom: state.classrooms.currentClassroom,
         classroom_id: ownProps.match.params.id,
+        // OPTIMIZE:  we don't need to load them all
         teachers: state.teachers.teachers,
         students: state.students.students
     }
