@@ -44,7 +44,8 @@ const propTypes = {
 
 class TeacherDrag extends Component {
   render() {
-    const { isDragging, connectDragSource, key, teacherId, teacher, checkInTeacher, checkOutTeacher } = this.props;
+    const { isDragging, connectDragSource, key, teacherId, teacher, classroomId,
+      checkInTeacher, checkOutTeacher, moveTeacherToClassroom } = this.props;
 
     const opacity = isDragging ? 0.5 : 1;
 
@@ -59,8 +60,9 @@ class TeacherDrag extends Component {
 
               { (typeof teacher.checked_in !== "undefined" && typeof teacher.checked_out === "undefined" ?
                 <a className="pull-right btn btn-xs btn-white"
-                    onClick={() => { checkOutTeacher(teacherId) } }>Check {teacher.name} out</a> : null )
+                    onClick={() => { checkOutTeacher(teacherId); moveTeacherToClassroom(teacherId, classroomId) } }>Check {teacher.name} out</a> : null )
               }
+
               <i className="fa fa-clock-o"></i> {
                 (typeof teacher.checked_in !== "undefined" && typeof teacher.checked_out === "undefined"  ? <span className="label label-success">IN</span> : null)}
                 {
