@@ -38,10 +38,13 @@ const ListItemStudent = (props) => {
           )}
         </td>
         <td className="project-actions">
-            <Link to={ROUTES.AUTHENTICATED.STUDENT_EDIT(itemKey)} className="btn btn-success btn-sm"><i className="fa fa-cross"></i> Edit </Link>
+          <div class="btn-group">
+            <Link to={ROUTES.AUTHENTICATED.STUDENT_EDIT(itemKey)} className="btn btn-white btn-sm"><i className="fa fa-cross"></i> Edit </Link>
             <button onClick={() => {
-              deleteStudent(itemKey)
-            }} className="btn btn-danger btn-sm"><i className="fa fa-cross"></i> Delete </button>
+                deleteStudent(itemKey)
+              }} className="btn btn-white btn-sm"><i className="fa fa-cross"></i> Delete
+            </button>
+          </div>
         </td>
     </tr>
   )
