@@ -38,24 +38,33 @@ const propTypes = {
   teacher: PropTypes.object.isRequired,
   isDragging: PropTypes.bool.isRequired,
   connectDragSource: PropTypes.func.isRequired,
-  checkInTeacher: PropTypes.func.isRequired
+  checkInTeacher: PropTypes.func.isRequired,
+  checkOutTeacher: PropTypes.func.isRequired
 };
 
 class TeacherDrag extends Component {
   render() {
-    const { isDragging, connectDragSource, key, teacherId, teacher, checkInTeacher } = this.props;
+    const { isDragging, connectDragSource, key, teacherId, teacher, checkInTeacher, checkOutTeacher } = this.props;
 
     const opacity = isDragging ? 0.5 : 1;
 
     return connectDragSource(
-      <li style={{ opacity }} key={key} className="warning-element" >
+      <li style={{ opacity }} key={key} className="warning-element clear" >
           <Link to={ROUTES.AUTHENTICATED.TEACHER(teacherId)}>{teacher.name}</Link>
           <div className="agile-detail">
               {
-                (typeof teacher.checked_in === "undefined" ? <a className="pull-right btn btn-xs btn-white" onClick={() => {checkInTeacher(teacherId)}}>Check {teacher.name} in</a> : null)
+                (typeof teacher.checked_in === "undefined" && typeof teacher.checked_out === "undefined" ?
+                <a className="pull-right btn btn-xs btn-white"
+                  onClick={() => { checkInTeacher(teacherId) } }>Check {teacher.name} in</a> : null ) }
+
+              { (typeof teacher.checked_in !== "undefined" && typeof teacher.checked_out === "undefined" ?
+                <a className="pull-right btn btn-xs btn-white"
+                    onClick={() => { checkOutTeacher(teacherId) } }>Check {teacher.name} out</a> : null )
               }
               <i className="fa fa-clock-o"></i> {
-                (typeof teacher.checked_in !== "undefined" ? <span className="label label-success">IN</span> : "-")
+                (typeof teacher.checked_in !== "undefined" && typeof teacher.checked_out === "undefined"  ? <span className="label label-success">IN</span> : null)}
+                {
+                (typeof teacher.checked_in !== "undefined" && typeof teacher.checked_out !== "undefined" ? <span className="label label-danger">OUT</span> : null)
               }
           </div>
       </li>

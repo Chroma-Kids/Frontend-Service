@@ -372,3 +372,24 @@ export const checkInTeacher = (uid) => {
     })
   };
 }
+
+export const checkOutTeacher = (uid) => {
+
+  return dispatch => {
+    dispatch({
+      type: types.TEACHER_CHECK_OUT_PENDING
+    });
+
+    database.ref(`/teachers/${uid}`).update({ checked_out: new Date().getTime()/1000 }, function (error) {
+      if (error)
+        dispatch({
+          type: types.TEACHER_CHECK_OUT_REJECTED,
+          payload: error
+        });
+      else
+        dispatch({
+          type: types.TEACHER_CHECK_OUT_FULFILLED
+        });
+    })
+  };
+}
