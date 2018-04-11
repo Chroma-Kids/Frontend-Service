@@ -32,7 +32,7 @@ class DashboardTeachersNotAssigned extends React.Component {
     return (
       <div className="row">
         <div className="col-lg-12 m-t">
-          <div className="ibox-content">
+          <div className="ibox-content clear teachers-not-assigned">
             <h3>Teachers having a break</h3>
             <ClassroomDrop className="alert alert-info m-n">
               {

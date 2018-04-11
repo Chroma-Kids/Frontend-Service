@@ -50,7 +50,7 @@ class TeacherDrag extends Component {
     const opacity = isDragging ? 0.5 : 1;
 
     return connectDragSource(
-      <li style={{ opacity }} key={key} className="warning-element clear" >
+      <li style={{ opacity }} key={key} className="warning-element clear float-left" >
           <Link to={ROUTES.AUTHENTICATED.TEACHER(teacherId)}>{teacher.name}</Link>
             <p>{(typeof shifts !== "undefined" && teacher.shift != null ?
                shifts[teacher.shift].label

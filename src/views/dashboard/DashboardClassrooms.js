@@ -32,7 +32,7 @@ class DashboardClassrooms extends React.Component {
 
       return (
         <div className="col-lg-3 p-r-none" key={key}>
-          <div className="ibox">
+          <div className="ibox clear">
               <div className="ibox-content">
                   <h3>
                   <Link to={ROUTES.AUTHENTICATED.CLASSROOM(key)}>{ classroom.name }</Link>
