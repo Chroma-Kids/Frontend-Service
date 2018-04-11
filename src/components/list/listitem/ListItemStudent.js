@@ -38,11 +38,11 @@ const ListItemStudent = (props) => {
           )}
         </td>
         <td className="project-actions">
-          <div class="btn-group">
-            <Link to={ROUTES.AUTHENTICATED.STUDENT_EDIT(itemKey)} className="btn btn-white btn-sm"><i className="fa fa-cross"></i> Edit </Link>
+          <div className="btn-group">
+            <Link to={ROUTES.AUTHENTICATED.STUDENT_EDIT(itemKey)} className="btn btn-white btn-sm"><i className="fa fa-edit"></i> Edit </Link>
             <button onClick={() => {
                 deleteStudent(itemKey)
-              }} className="btn btn-white btn-sm"><i className="fa fa-cross"></i> Delete
+              }} className="btn btn-white btn-sm"><i className="fa fa-trash-o"></i> Delete
             </button>
           </div>
         </td>

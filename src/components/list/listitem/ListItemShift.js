@@ -24,7 +24,7 @@ const ListItemShift = (props) => {
             {/*<a onClick={() => editShift(shift) } className="btn btn-success btn-sm"><i className="fa fa-cross"></i> Edit </a>*/}
             <button onClick={() => {
               deleteShift(itemKey)
-            }} className="btn btn-white btn-sm"><i className="fa fa-cross"></i> Delete </button>
+            }} className="btn btn-white btn-sm"><i className="fa fa-trash-o"></i> Delete </button>
         </td>
     </tr>
   )

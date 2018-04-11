@@ -37,11 +37,11 @@ const ListItemTeacher = (props) => {
             <a href=""><img alt="cirsl" className="img-circle" src="img/a3.jpg"/></a>
         </td>
         <td className="project-actions">
-          <div class="btn-group">
-            <Link to={ROUTES.AUTHENTICATED.TEACHER_EDIT(itemKey)} className="btn btn-white btn-sm"><i className="fa fa-cross"></i> Edit </Link>
+          <div className="btn-group">
+            <Link to={ROUTES.AUTHENTICATED.TEACHER_EDIT(itemKey)} className="btn btn-white btn-sm"><i className="fa fa-edit"></i> Edit </Link>
             <button onClick={() => {
                 deleteTeacher(itemKey)
-              }} className="btn btn-white btn-sm"><i className="fa fa-cross"></i> Delete
+              }} className="btn btn-white btn-sm"><i className="fa fa-trash-o"></i> Delete
             </button>
           </div>
         </td>

@@ -68,7 +68,7 @@ class TeacherDrag extends Component {
                     onClick={() => { checkOutTeacher(teacherId); moveTeacherToClassroom(teacherId, classroomId) } }>Check {teacher.name} out</a> : null )
               }
 
-              <i className="fa fa-clock-o"></i> {
+              {
                 (typeof teacher.checked_in !== "undefined" && typeof teacher.checked_out === "undefined"  ? <span className="label label-success">IN</span> : null)}
                 {
                 (typeof teacher.checked_in !== "undefined" && typeof teacher.checked_out !== "undefined" ? <span className="label label-danger">OUT</span> : null)

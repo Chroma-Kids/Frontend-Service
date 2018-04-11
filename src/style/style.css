@@ -3457,19 +3457,17 @@ code {
   display: table; }
 
 .ibox-title {
-  -moz-border-bottom-colors: none;
-  -moz-border-left-colors: none;
-  -moz-border-right-colors: none;
-  -moz-border-top-colors: none;
-  background-color: #ffffff;
-  border-color: #e7eaec;
+  background-color: #293a5a;
+  -webkit-border-image: none;
+  -o-border-image: none;
   border-image: none;
   border-style: solid solid none;
-  border-width: 2px 0 0;
-  color: inherit;
+  border-width: 0px;
+  color: white;
   margin-bottom: 0;
   padding: 15px 15px 7px;
-  min-height: 48px; }
+  min-height: 48px;
+  border-radius: 7px 7px 0px 0px; }
 
 .ibox-content {
   background-color: #ffffff;
@@ -3478,7 +3476,8 @@ code {
   border-color: #e7eaec;
   border-image: none;
   border-style: solid solid none;
-  border-width: 1px 0; }
+  border-width: 1px 0;
+  border-radius: 0px 0px 7px 7px; }
 
 .ibox-footer {
   color: inherit;

@@ -15,6 +15,7 @@ import Session from './components/Router/Session';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style/style.css';
 import 'react-select/dist/react-select.css';
+import 'font-awesome/css/font-awesome.min.css';
 
 import { DashboardViewContainer } from './redux/containers/dashboard/index';
 import { ConfigViewContainer } from './redux/containers/config/index';

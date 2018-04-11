@@ -32,19 +32,19 @@ const NavigationBar = ({
               </div>
           </li>
           <li className={activeRoute(location, "dashboard")}>
-            <Link to="/dashboard"><i className="fa fa-th-large"></i> <span className="nav-label">Dashboard</span></Link>
+            <Link to="/dashboard"><i className="fa fa-dashboard"></i> <span className="nav-label">Dashboard</span></Link>
           </li>
           <li className={activeRoute(location, "config")}>
-            <Link to="/config"><i className="fa fa-th-large"></i> <span className="nav-label">Config</span></Link>
+            <Link to="/config"><i className="fa fa-wrench"></i> <span className="nav-label">Config</span></Link>
           </li>
           <li className={activeRoute(location, "class")}>
-            <Link to="/classrooms"><i className="fa fa-th-large"></i> <span className="nav-label">Classrooms</span></Link>
+            <Link to="/classrooms"><i className="fa fa-university"></i> <span className="nav-label">Classrooms</span></Link>
           </li>
           <li className={activeRoute(location, "teacher")} >
-              <Link to="/teachers"><i className="fa fa-th-large"></i> <span className="nav-label">Teachers</span></Link>
+              <Link to="/teachers"><i className="fa fa-graduation-cap"></i> <span className="nav-label">Teachers</span></Link>
           </li>
           <li className={activeRoute(location, "student")} >
-              <Link to="/students"><i className="fa fa-th-large"></i> <span className="nav-label">Students</span></Link>
+              <Link to="/students"><i className="fa fa-group"></i> <span className="nav-label">Students</span></Link>
           </li>
       </ul>
     </nav>
