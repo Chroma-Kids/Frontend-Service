@@ -4,19 +4,25 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
 import { fetchTeacher, updateTeacher, deleteTeacher } from '../../actions/TeacherActions';
+import { getShifts, removeShiftsListener } from '../../actions/ShiftActions';
 import TeacherForm from '../../../views/teachers/TeacherForm';
 
 export class TeacherEditContainer extends Component {
+    componentDidMount() {
+        this.props.fetchTeacher(this.props.teacherId);
+        this.props.getShifts();
+    }
+
+    componentWillUnmount(){
+      this.props.removeShiftsListener();
+    }
+
     onSubmit(teacher) {
         this.props.updateTeacher(teacher, this.props.teacherId);
     }
 
     onDelete() {
         this.props.deleteTeacher(this.props.teacherId);
-    }
-
-    componentDidMount() {
-        this.props.fetchTeacher(this.props.teacherId);
     }
 
     render() {
@@ -33,13 +39,15 @@ const mapStateToProps = (state, ownProps)=> {
         initialValues: state.teachers.currentTeacher,
         teacher: state.teachers.currentTeacher,
         teacherId: ownProps.match.params.teacherId,
+        shifts: state.shifts.shifts,
         formType: 'edit',
         keyAwait: "updateTeacher"
     }
 }
 
 const mapDispatchToProps = (dispatch, state)=> {
-    return bindActionCreators({updateTeacher, fetchTeacher, deleteTeacher}, dispatch);
+    return bindActionCreators({updateTeacher, fetchTeacher, deleteTeacher,
+    getShifts, removeShiftsListener}, dispatch);
 
 }
 
@@ -53,7 +61,7 @@ const validate = (values) => {
     return errors;
 }
 
-const fields = ['name', 'surname'];
+const fields = ['name', 'surname', 'shift'];
 
 let editorForm = reduxForm({
     form: 'EditTeacher',
