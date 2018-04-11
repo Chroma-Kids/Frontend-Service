@@ -17,6 +17,7 @@ import './style/style.css';
 import 'react-select/dist/react-select.css';
 
 import { DashboardViewContainer } from './redux/containers/dashboard/index';
+import { ConfigViewContainer } from './redux/containers/config/index';
 import { ClassroomsListContainer, ClassroomViewContainer, ClassroomEditContainer } from './redux/containers/classrooms/index';
 import { TeachersListContainer, TeacherViewContainer, TeacherEditContainer } from './redux/containers/teachers/index';
 import { StudentsListContainer, StudentViewContainer, StudentEditContainer } from './redux/containers/students/index';
@@ -28,6 +29,7 @@ export const ROUTES = {
   },
   AUTHENTICATED: {
     DASHBOARD: '/dashboard',
+    CONFIG: '/config',
     TEACHERS: '/teachers',
     TEACHER: (teacherId) => `${ROUTES.AUTHENTICATED.TEACHERS}/${teacherId}`,
     TEACHER_EDIT: (teacherId) => `${ROUTES.AUTHENTICATED.TEACHER(teacherId)}/edit`,
@@ -52,6 +54,8 @@ ReactDOM.render(
           <AuthenticatedRoutes>
             <App>
               <Route exact path={ROUTES.AUTHENTICATED.DASHBOARD} component={DashboardViewContainer}/>
+
+              <Route exact path={ROUTES.AUTHENTICATED.CONFIG} component={ConfigViewContainer}/>
 
               <Route exact path={ROUTES.AUTHENTICATED.TEACHERS} component={TeachersListContainer}/>
               <Route exact path={ROUTES.AUTHENTICATED.TEACHER(':teacherId')} component={TeacherViewContainer}/>
