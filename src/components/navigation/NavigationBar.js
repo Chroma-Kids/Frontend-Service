@@ -34,6 +34,9 @@ const NavigationBar = ({
           <li className={activeRoute(location, "dashboard")}>
             <Link to="/dashboard"><i className="fa fa-th-large"></i> <span className="nav-label">Dashboard</span></Link>
           </li>
+          <li className={activeRoute(location, "config")}>
+            <Link to="/config"><i className="fa fa-th-large"></i> <span className="nav-label">Config</span></Link>
+          </li>
           <li className={activeRoute(location, "class")}>
             <Link to="/classrooms"><i className="fa fa-th-large"></i> <span className="nav-label">Classrooms</span></Link>
           </li>

@@ -7,6 +7,7 @@ import TeacherNotAssignedReducer from './TeacherNotAssignedReducer'
 import ClassroomReducer from './ClassroomReducer'
 import LoadingReducer from './LoadingReducer'
 import UserReducer from './UserReducer'
+import ShiftReducer from './ShiftReducer'
 
 const rootReducer = combineReducers({
   form: formReducer,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
   teachersNotAssigned: TeacherNotAssignedReducer,
   user: UserReducer,
   loading: LoadingReducer,
+  shifts: ShiftReducer,
 });
 
 export default rootReducer;
