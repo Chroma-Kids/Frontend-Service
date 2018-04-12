@@ -33,7 +33,7 @@ const mapStateToProps = (state, ownProps) => {
         initialValues: state.shifts.currentShift,
         student: state.shifts.currentShift,
         studentId: ownProps.match.params.studentId,
-        formType: 'edit',
+        form: 'edit',
         keyAwait: "updateShift"
     }
 }
@@ -55,11 +55,11 @@ const validate = (values) => {
 
 const fields = ['name', 'surname'];
 
-let editorForm = reduxForm({
+let editorShiftForm = reduxForm({
     form: 'EditShift',
     fields,
     validate,
     enableReinitialize: true
 })(ShiftEditContainer);
 
-export default connect(mapStateToProps, mapDispatchToProps)(editorForm);
+export default connect(mapStateToProps, mapDispatchToProps)(editorShiftForm);

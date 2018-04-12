@@ -25,6 +25,8 @@
 @import "metismenu";
 @import "spinners";
 
+@import "shifts";
+
 // Landing page styles
 @import "landing";
 
@@ -56,6 +58,7 @@
 // Custom style
 // Your custom style to override base style
 @import "custom";
+
 
 // Clear layout on print mode
 @media print {

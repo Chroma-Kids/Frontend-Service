@@ -10,6 +10,11 @@ export default function (state = {}, action) {
         ...state,
         shifts: action.payload
       };
+    case types.FETCH_SHIFTTYPES_FULFILLED:
+      return {
+        ...state,
+        shiftTypes: action.payload
+      };
     default:
       return state;
   }

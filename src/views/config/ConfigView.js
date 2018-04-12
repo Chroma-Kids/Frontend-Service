@@ -1,7 +1,7 @@
 import React from 'react';
 import Toolbar from '../../components/toolbar/Toolbar'
 
-import { ShiftsListContainer } from '../../redux/containers/shifts/index'
+import { ShiftTypesListContainer } from '../../redux/containers/shifttypes/index'
 
 class Config extends React.Component {
 
@@ -19,7 +19,7 @@ class Config extends React.Component {
           title={"Config"} />
 
 
-        <ShiftsListContainer />
+        <ShiftTypesListContainer />
 
       </div>
     );

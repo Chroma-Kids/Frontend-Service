@@ -6,7 +6,7 @@ import DashboardView from '../../../views/dashboard/DashboardView';
 import { getTeachersNotAssigned, removeTeachersNotAssignedListener } from '../../actions/TeacherNotAssignedActions';
 import { getTeachers, removeTeachersListener, checkInTeacher, checkOutTeacher, moveTeacherToClassroom } from '../../actions/TeacherActions';
 import { getClassrooms, removeClassroomsListener } from '../../actions/ClassroomActions';
-import { getShifts, removeShiftsListener } from '../../actions/ShiftActions';
+import { getShiftTypes, removeShiftTypesListener } from '../../actions/ShiftActions';
 
 export class DashboardViewContainer extends Component {
 
@@ -14,14 +14,14 @@ export class DashboardViewContainer extends Component {
       this.props.getTeachersNotAssigned();
       this.props.getTeachers();
       this.props.getClassrooms();
-      this.props.getShifts();
+      this.props.getShiftTypes();
     }
 
     componentWillUnmount(){
       this.props.removeClassroomsListener();
       this.props.removeTeachersListener();
       this.props.removeTeachersNotAssignedListener();
-      this.props.removeShiftsListener();
+      this.props.removeShiftTypesListener();
 
     }
 
@@ -39,14 +39,14 @@ const mapStateToProps = (state, ownProps)=> {
       classrooms: state.classrooms.classrooms,
       teachers: state.teachers.teachers,
       teachersnotassigned: state.teachersNotAssigned,
-      shifts: state.shifts.shifts
+      shiftTypes: state.shifts.shiftTypes
     }
 }
 
 const mapDispatchToProps = (dispatch, state)=> {
     return bindActionCreators({ getTeachersNotAssigned, getTeachers, getClassrooms,
       checkInTeacher, checkOutTeacher, moveTeacherToClassroom,
-      getShifts, removeShiftsListener,
+      getShiftTypes, removeShiftTypesListener,
     removeTeachersListener, removeClassroomsListener, removeTeachersNotAssignedListener }, dispatch);
 }
 

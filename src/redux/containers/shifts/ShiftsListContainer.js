@@ -4,19 +4,19 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
 import { getShifts, createShift, deleteShift, removeShiftsListener } from '../../actions/ShiftActions';
-// import { getClassrooms, removeClassroomsListener } from '../../actions/ClassroomActions';
+import { getTeachers, removeTeachersListener } from '../../actions/TeacherActions';
 import ShiftsList from '../../../views/shifts/ShiftsList';
 
 export class ShiftsListContainer extends Component {
 
     componentDidMount(){
       this.props.getShifts();
-      // this.props.getClassrooms();
+      this.props.getTeachers();
     }
 
     componentWillUnmount(){
       this.props.removeShiftsListener();
-      // this.props.removeClassroomsListener();
+      this.props.removeTeachersListener();
     }
 
     render() {
@@ -31,12 +31,13 @@ export class ShiftsListContainer extends Component {
 const mapStateToProps = (state, ownProps)=> {
     return {
         shifts: state.shifts.shifts,
-        // classrooms: state.classrooms.classrooms,
+        teachers: state.teachers.teachers
     }
 }
 
 const mapDispatchToProps = (dispatch, state)=> {
     return bindActionCreators({
+      getTeachers, removeTeachersListener,
       getShifts, createShift, deleteShift, getShifts,
       removeShiftsListener }, dispatch);
 }

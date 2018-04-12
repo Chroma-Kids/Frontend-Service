@@ -45,15 +45,15 @@ const propTypes = {
 class TeacherDrag extends Component {
   render() {
     const { isDragging, connectDragSource, key, teacherId, teacher, classroomId,
-      checkInTeacher, checkOutTeacher, moveTeacherToClassroom, shifts } = this.props;
+      checkInTeacher, checkOutTeacher, moveTeacherToClassroom, shiftTypes } = this.props;
 
     const opacity = isDragging ? 0.5 : 1;
 
     return connectDragSource(
       <li style={{ opacity }} key={key} className="warning-element clear float-left" >
           <Link to={ROUTES.AUTHENTICATED.TEACHER(teacherId)}>{teacher.name}</Link>
-            <p>{(typeof shifts !== "undefined" && teacher.shift != null ?
-               shifts[teacher.shift].label
+            <p>{(typeof shiftTypes !== "undefined" && teacher.shiftType != null ?
+               shiftTypes[teacher.shiftType].label
              : "No shift assigned" )}
            </p>
 

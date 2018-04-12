@@ -18,7 +18,7 @@ export default class TeacherForm extends Component {
 
       if(selectedOption !== null){
         // TODO: we should be able to embed shift as field form
-        values.shift = selectedOption.value;
+        values.shiftType = selectedOption.value;
       }
 
       this.props.onSubmit(values);
@@ -38,18 +38,18 @@ export default class TeacherForm extends Component {
     // }
 
     render() {
-        const { formType, handleSubmit, submitting, shifts, teacher } = this.props;
+        const { formType, handleSubmit, submitting, shiftTypes, teacher } = this.props;
 
         const { selectedOption } = this.state;
 
         const value = selectedOption && selectedOption.value;
 
-        let shiftsOptions = null;
+        let shiftTypesOptions = null;
 
-        if(typeof shifts !== "undefined"){
-          shiftsOptions = _.map(shifts, (shift, key) => ({ value: key, label: shift.label }) );
+        if(typeof shiftTypes !== "undefined"){
+          shiftTypesOptions = _.map(shiftTypes, (shiftType, key) => ({ value: key, label: shiftType.label }) );
         }
-        
+
         return (
           <div key="editTeacherView">
             <Toolbar
@@ -89,12 +89,12 @@ export default class TeacherForm extends Component {
                     <div className="form-group row">
                       <label className="col-sm-3 col-form-label">Shift</label>
                       <div className="col-sm-12">
-                        {(typeof shifts !== "undefined" ?
+                        {(typeof shiftTypes !== "undefined" ?
                               <Select
                                 name="shift"
                                 value={value}
                                 onChange={this.handleChange}
-                                options={shiftsOptions}
+                                options={shiftTypesOptions}
                               />
                         :
                         <p>Loading select...</p>)}

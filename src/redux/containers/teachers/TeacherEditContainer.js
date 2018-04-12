@@ -4,17 +4,17 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
 import { fetchTeacher, updateTeacher, deleteTeacher } from '../../actions/TeacherActions';
-import { getShifts, removeShiftsListener } from '../../actions/ShiftActions';
+import { getShiftTypes, removeShiftTypesListener } from '../../actions/ShiftActions';
 import TeacherForm from '../../../views/teachers/TeacherForm';
 
 export class TeacherEditContainer extends Component {
     componentDidMount() {
         this.props.fetchTeacher(this.props.teacherId);
-        this.props.getShifts();
+        this.props.getShiftTypes();
     }
 
     componentWillUnmount(){
-      this.props.removeShiftsListener();
+      this.props.removeShiftTypesListener();
     }
 
     onSubmit(teacher) {
@@ -39,7 +39,7 @@ const mapStateToProps = (state, ownProps)=> {
         initialValues: state.teachers.currentTeacher,
         teacher: state.teachers.currentTeacher,
         teacherId: ownProps.match.params.teacherId,
-        shifts: state.shifts.shifts,
+        shiftTypes: state.shifts.shiftTypes,
         formType: 'edit',
         keyAwait: "updateTeacher"
     }
@@ -47,7 +47,7 @@ const mapStateToProps = (state, ownProps)=> {
 
 const mapDispatchToProps = (dispatch, state)=> {
     return bindActionCreators({updateTeacher, fetchTeacher, deleteTeacher,
-    getShifts, removeShiftsListener}, dispatch);
+    getShiftTypes, removeShiftTypesListener}, dispatch);
 
 }
 

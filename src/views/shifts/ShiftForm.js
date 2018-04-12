@@ -3,7 +3,7 @@ import { Field } from 'redux-form';
 import Toolbar from '../../components/toolbar/Toolbar'
 import { Link } from 'react-router-dom';
 
-export default class TeacherForm extends Component {
+export default class ShiftForm extends Component {
     onSubmit(values) {
         this.props.onSubmit(values);
     }

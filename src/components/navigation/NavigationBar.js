@@ -64,10 +64,13 @@ class NavigationBar extends React.Component {
                 </div>
             </li>
             <li className={this.activeRoute(location, "dashboard")}>
-                <a onClick={()=> this.toggle(this) }><i className="fa fa-th-large"></i> <span className="nav-label">Dashboards</span></a>
+                <a onClick={()=> this.toggle(this) }><i className="fa fa-dashboard"></i> <span className="nav-label">Teachers Dashboards</span></a>
                 <ul className={"nav nav-second-level collapse in"} style={{height: "0px"}}>
-                  <li className={this.activeRoute(location, "dashboard")}>
-                    <Link to="/dashboard" ><i className="fa fa-dashboard"></i> <span className="nav-label">Teachers daily flow</span></Link>
+                  <li className={this.activeRoute(location, "dashboard_flow")}>
+                    <Link to="/dashboard_flow" ><i className="fa fa-exchange"></i> <span className="nav-label">Daily Flow</span></Link>
+                  </li>
+                  <li className={this.activeRoute(location, "dashboard_shifts")}>
+                    <Link to="/dashboard_shifts" ><i className="fa fa-calendar"></i> <span className="nav-label">Monthly Shifts</span></Link>
                   </li>
                 </ul>
             </li>

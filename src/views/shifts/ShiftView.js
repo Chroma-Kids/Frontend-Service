@@ -5,7 +5,7 @@ import { ROUTES } from '../../index';
 import ActivityStream from '../../components/activitystream/ActivityStream'
 import _ from 'lodash';
 
-class Teacher extends PureComponent<Props, State> {
+class Shift extends PureComponent<Props, State> {
 
 
   renderTeachersTrajectories(trajectories){
@@ -389,4 +389,4 @@ class Teacher extends PureComponent<Props, State> {
   }
 }
 
-export default Teacher;
+export default Shift;

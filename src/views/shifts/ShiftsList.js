@@ -6,14 +6,15 @@ import Toolbar from '../../components/toolbar/Toolbar'
 import Popup from '../../components/popup/Popup'
 import { capitalize } from '../../helpers/Helpers'
 import List from '../../components/list/List'
-import ListItemShift from '../../components/list/listitem/ListItemShift'
+import ListItemShiftType from '../../components/list/listitem/ListItemShiftType'
+import ShiftsUI from '../../components/shiftsUI/ShiftsUI'
 import PropTypes from 'prop-types';
 
 const propTypes = {
-  shifts: PropTypes.object.isRequired
+  shiftTypes: PropTypes.object.isRequired
 };
 
-export default class ShiftsList extends Component {
+export default class ShiftList extends Component {
 
   constructor(props) {
     super(props);
@@ -36,19 +37,19 @@ export default class ShiftsList extends Component {
   }
 
   onSubmit(values){
-    this.props.createShift(values);
+    this.props.createShiftType(values);
     this.setState({
       showPopup: !this.state.showPopup
     });
-    this.props.dispatch(reset('NewShift'))
+    this.props.dispatch(reset('NewShiftType'))
   }
 
   render() {
 
-    const { handleSubmit, shifts } = this.props;
+    const { handleSubmit, shift } = this.props;
 
     return (
-      <div key="shiftsView">
+      <div key="shiftView">
         <Popup
           showhide={this.state.showPopup}
           title={"Create a new type of shift"}
@@ -79,23 +80,13 @@ export default class ShiftsList extends Component {
             </div>
         </Popup>
 
-        <div className="col-md-6">
-            <List
-              title={ "Types of Teachers Shifts" }
-              subtitle={ "When they arrive and leave" }
-              hideSearchToolbar={true}
-              {...this.props}
-              className={ "shifts" }
-              buttonToolbarText={"+ New Shift"}
-              buttonToolbar={this.toggleMenu.bind(this)}
-              list={shifts}
-               >
-             {_.map(shifts, (shift, key) =>
-                 <ListItemShift {...this.props} key={key} itemKey={key} shift={shift} editShift={this.toggleMenu.bind(this, shift)} />
-              )}
-            </List>
+        <Toolbar
+            title={"Monthly Shifts"}
+            breadcrumb={['Dashboard']}
+        />
 
-         </div>
+      <ShiftsUI {...this.props} />
+
       </div>
     );
   }
