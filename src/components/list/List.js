@@ -20,7 +20,7 @@ const List = (props) => {
     <section className={className}>
       <div className="ibox">
         { typeof title !== "undefined" && <div className="ibox-title">
-          <a onClick={buttonToolbar} className="pull-right m-t-n-xs btn btn-sm btn-primary"> { buttonToolbarText }</a>
+          <a onClick={buttonToolbar} className="pull-right m-t-n-xs btn btn-xs btn-primary"> { buttonToolbarText }</a>
           <h5>{title} <small>{subtitle}</small></h5>
         </div> }
         <div className="ibox-content">

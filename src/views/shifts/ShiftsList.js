@@ -86,7 +86,7 @@ export default class ShiftsList extends Component {
               hideSearchToolbar={true}
               {...this.props}
               className={ "shifts" }
-              buttonToolbarText={"New Shift"}
+              buttonToolbarText={"+ New Shift"}
               buttonToolbar={this.toggleMenu.bind(this)}
               list={shifts}
                >

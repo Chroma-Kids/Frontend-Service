@@ -15,7 +15,7 @@ class App extends React.Component {
     return (
       <div id="wrapper">
         <Progress/>
-        <Navigation location={this.props.location}/>
+        <Navigation location={this.props.location} />
         <div id="page-wrapper" className={wrapperClass}>
           <TopHeader/>
           {children}
