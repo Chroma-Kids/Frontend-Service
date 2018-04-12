@@ -5,18 +5,45 @@ import Week from './Week'
 import * as moment from 'moment';
 import _ from 'lodash';
 
+class TeachersWeeks extends Component {
+
+  handleClick = () => {
+    const { nowDayYear, dateDayYear, dateWeekDay, teacher, timestamp } = this.props;
+    this.props.onHeaderClick(dateDayYear, dateWeekDay, teacher, timestamp);
+  }
+
+  render(){
+
+    const { nowDayYear, dateDayYear, dateWeekDay, date, timestamp } = this.props;
+
+    return (
+      <td key={dateDayYear}
+          onClick={this.handleClick}
+
+          className={"fc-day-header fc-widget-header fc-sun "
+            + (nowDayYear == dateDayYear ? 'currentDay' : "" )
+            + ((dateWeekDay == 0) || (dateWeekDay == 6) ? 'weekend' : "" )}
+          >
+      </td>
+    )
+  }
+}
+
 class ShiftsUI extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { month: moment().add(1, "M") }
+    this.state = { month: moment() }
   }
-
 
   previous() {
    var month = this.state.month;
    month.add(-1, "M");
    this.setState({ month: month });
+  }
+
+  today() {
+   this.setState({ month: moment() });
   }
 
   next() {
@@ -25,60 +52,80 @@ class ShiftsUI extends Component {
    this.setState({ month: month });
   }
 
+  fillDay(dateDayYear, dateWeekDay, teacher, dayName) {
+    console.log(dateDayYear, dateWeekDay, teacher.name, dayName);
+  }
+
   renderMonthLabel() {
     return <span>{this.state.month.format(" MMM YYYY ")}</span>;
   }
 
-  renderDayNames() {
-    return(
-      <div className="week names">
-      <span className="day">Sun</span>
-      <span className="day">Mon</span>
-      <span className="day">Tue</span>
-      <span className="day">Wed</span>
-      <span className="day">Thu</span>
-       	<span className="day">Fri</span>
-       	<span className="day">Sat</span>
-    </div>);
-  }
-
-  renderHeaderWeeks() {
+  renderHeaderDayName() {
     var weeks = [],
       done = false,
-      date = this.state.month.clone().startOf("month").add("w" -1).day("Sunday"),
+      date = this.state.month.clone().startOf("month"),
       monthIndex = date.month(),
       count = 0;
 
-      console.log(date.toString());
-
     while (!done) {
-      weeks.push(<th className="fc-day-header fc-widget-header fc-sun">{date.format("DD")}</th>);
+      weeks.push(<th key={date.format("D")}
+          className={"fc-day-header fc-widget-header fc-sun "
+             + (moment().format("DDD") == date.format("DDD") ? 'currentDay' : "" )
+             + ((date.format("d") == 0) || (date.format("d") == 6) ? 'weekend' : "" )
+          }>
+          {date.format("dd")}</th>);
       date.add(1, "d");
       done = count++ > 2 && monthIndex !== date.month();
       monthIndex = date.month();
-      console.log(count, monthIndex);
     }
 
     return weeks;
   }
 
-  renderTeachersWeeks() {
-
-
+  renderHeaderDayNumber() {
     var weeks = [],
       done = false,
-      date = this.state.month.clone().startOf("month").add("w" -1).day("Sunday"),
+      date = this.state.month.clone().startOf("month"),
       monthIndex = date.month(),
       count = 0;
 
-      console.log(date.toString());
-
     while (!done) {
-      weeks.push(<td className="fc-day-header fc-widget-header fc-sun"> . </td>);
+      weeks.push(<th key={date.format("D")}
+
+            className={"fc-day-header fc-widget-header fc-sun "
+              + (moment().format("DDD") == date.format("DDD") ? 'currentDay' : "" )
+              + ((date.format("d") == 0) || (date.format("d") == 6) ? 'weekend' : "" )
+            }>{date.format("DD")}</th>);
       date.add(1, "d");
       done = count++ > 2 && monthIndex !== date.month();
       monthIndex = date.month();
-      console.log(count, monthIndex);
+    }
+
+    return weeks;
+  }
+
+  renderTeachersWeeks(teacher) {
+
+    var weeks = [],
+      done = false,
+      date = this.state.month.clone().startOf("month"),
+      monthIndex = date.month(),
+      count = 0;
+
+    while (!done) {
+      weeks.push(<TeachersWeeks
+          teacher={teacher}
+          timestamp={date.format("X")}
+          onHeaderClick={this.fillDay}
+          key={date.format("DDD")}
+          dayName={date.format("dd")}
+          dateDayYear={date.format("DDD")}
+          nowDayYear={moment().format("DDD")}
+          dateWeekDay={date.format("d")}
+         />);
+      date.add(1, "d");
+      done = count++ > 2 && monthIndex !== date.month();
+      monthIndex = date.month();
     }
 
     return weeks;
@@ -93,6 +140,7 @@ class ShiftsUI extends Component {
         <div className="ibox-content">
           <div className="shifts">
             <div className="header">
+              <button type="button" onClick={()  => this.today()} className="btn btn-white m-r"> Today</button>
               <button type="button" onClick={()  => this.previous()} className="btn btn-white"><i className="fa fa-chevron-left"></i></button>
               {this.renderMonthLabel()}
               <button type="button" onClick={() => this.next()} className="btn btn-white"><i className="fa fa-chevron-right"></i></button>
@@ -100,15 +148,18 @@ class ShiftsUI extends Component {
             <table className="teachersWeeks">
               <thead>
                 <tr>
-                  <th>Teacher</th>
-                  {this.renderHeaderWeeks()}
+                  <td rowSpan="2">Teachers</td>
+                  {this.renderHeaderDayNumber()}
+                </tr>
+                <tr>
+                    {this.renderHeaderDayName()}
                 </tr>
               </thead>
               <tbody>
                 {_.map(teachers, (teacher, key) =>
-                <tr>
-                  <td>{ teacher.name }</td>
-                  {this.renderTeachersWeeks()}
+                <tr key={key}>
+                  <th>{ teacher.name }</th>
+                  {this.renderTeachersWeeks(teacher)}
                 </tr>
                  )}
               </tbody>

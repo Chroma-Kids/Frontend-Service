@@ -8,11 +8,17 @@
       vertical-align: top;
       text-align: center;
     }
+    td.currentDay, th.currentDay{
+      background-color: $red;
+    }
+    td.weekend, th.weekend{
+      background-color: $gray;
+    }
   }
   .header {
     text-align: center;
     margin-bottom: 1em;
-    span{
+    span {
       width:100%;
       font-weight:bold;
       text-transform:uppercase;
