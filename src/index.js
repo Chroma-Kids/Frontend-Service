@@ -18,6 +18,7 @@ import 'react-select/dist/react-select.css';
 import 'font-awesome/css/font-awesome.min.css';
 
 import { DashboardViewContainer } from './redux/containers/dashboard/index';
+import { ShiftsListContainer } from './redux/containers/shifts/index';
 import { ConfigViewContainer } from './redux/containers/config/index';
 import { ClassroomsListContainer, ClassroomViewContainer, ClassroomEditContainer } from './redux/containers/classrooms/index';
 import { TeachersListContainer, TeacherViewContainer, TeacherEditContainer } from './redux/containers/teachers/index';
@@ -29,7 +30,8 @@ export const ROUTES = {
     REGISTER: '/register',
   },
   AUTHENTICATED: {
-    DASHBOARD: '/dashboard',
+    DASHBOARD: '/dashboard_flow',
+    SHIFTS: '/dashboard_shifts',
     CONFIG: '/config',
     TEACHERS: '/teachers',
     TEACHER: (teacherId) => `${ROUTES.AUTHENTICATED.TEACHERS}/${teacherId}`,
@@ -55,6 +57,7 @@ ReactDOM.render(
           <AuthenticatedRoutes>
             <App>
               <Route exact path={ROUTES.AUTHENTICATED.DASHBOARD} component={DashboardViewContainer}/>
+              <Route exact path={ROUTES.AUTHENTICATED.SHIFTS} component={ShiftsListContainer}/>
 
               <Route exact path={ROUTES.AUTHENTICATED.CONFIG} component={ConfigViewContainer}/>
 

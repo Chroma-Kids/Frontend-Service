@@ -35,7 +35,7 @@
     "jest": "20.0.4",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.5",
-    "moment": "^2.21.0",
+    "moment": "^2.22.0",
     "node-sass-chokidar": "^1.1.0",
     "object-assign": "4.1.1",
     "pace-js": "^1.0.2",
