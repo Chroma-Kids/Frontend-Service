@@ -6,6 +6,7 @@ import * as moment from 'moment';
 import _ from 'lodash';
 import Popup from '../popup/Popup'
 import Select from 'react-select';
+import { Link } from 'react-router-dom';
 
 class TeachersWeeks extends Component {
 
@@ -15,7 +16,6 @@ class TeachersWeeks extends Component {
   }
 
   render(){
-
     const { nowDayYear, dateDayYear, dateWeekDay, date, teacher, timestamp, teacherId, shifts, shiftTypes } = this.props;
 
     return (
@@ -248,7 +248,7 @@ class ShiftsUI extends Component {
 
                   {_.map(teachers, (teacher, key) =>
                     <tr key={key}>
-                      <th>{teacher.name}</th>
+                      <th><Link to={`/teachers/${key}`}>{teacher.name}</Link></th>
                     {this.renderTeacherMonth(teacher, key)}
                     </tr>
                    )}
