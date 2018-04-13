@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
-import { fetchShift, updateShift, deleteShift } from '../../actions/ShiftActions';
+import { updateShift, deleteShift } from '../../actions/ShiftActions';
 import ShiftForm from '../../../views/shifts/ShiftForm';
 
 export class ShiftEditContainer extends Component {
@@ -16,7 +16,7 @@ export class ShiftEditContainer extends Component {
     }
 
     componentDidMount() {
-        this.props.fetchShift(this.props.studentId);
+        // this.props.fetchShift(this.props.studentId);
     }
 
     render() {
@@ -39,7 +39,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 
 const mapDispatchToProps = (dispatch, state) => {
-    return bindActionCreators({updateShift, fetchShift, deleteShift}, dispatch);
+    return bindActionCreators({updateShift, deleteShift}, dispatch);
 
 }
 

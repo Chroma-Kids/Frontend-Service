@@ -1,5 +1,6 @@
 import { database } from '../../firebase'
 import * as types from './ActionTypes';
+import * as moment from 'moment';
 
 export const removeShiftsListener = () => {
   return dispatch => {
@@ -28,13 +29,13 @@ export const getShifts = () => {
   };
 }
 
-export const fetchShift = (uid) => {
+export const fetchTeacherShiftsOnThisDay = (teacher, date) => {
   return dispatch => {
     dispatch({
       type: types.FETCH_SHIFT_PENDING
     });
 
-    database.ref('/shifts/').child(uid).once('value', function (snapshot, error) {
+    database.ref('/teachers/').child(teacher).child('/shifts').child(date).once('value', function (snapshot, error) {
       if (error)
         dispatch({
           type: types.FETCH_SHIFT_REJECTED,
@@ -51,6 +52,8 @@ export const fetchShift = (uid) => {
 
 export const createShift = (shift) => {
 
+
+  let _teachers = database.ref('/teachers/');
   shift.created_at = new Date().getTime()/1000;
 
   return dispatch => {
@@ -58,17 +61,28 @@ export const createShift = (shift) => {
       type: types.CREATE_SHIFT_PENDING
     });
 
-    database.ref('/shifts/').push({ ...shift }, function(error) {
-      if (error)
+    const ref = database.ref('/shifts/').push({ ...shift }, function(error) {
+      if (error){
         dispatch({
           type: types.CREATE_SHIFT_REJECTED,
           payload: error
         });
-      else
+      }
+      else{
         dispatch({
           type: types.CREATE_SHIFT_FULFILLED
         });
-    })
+      }
+
+    });
+
+    // let da = moment(shift.timestamp, "MM-DD-YYYY");
+
+    shift.shift = ref.key;
+
+    _teachers.child(shift.teacher).child('shifts').child(shift.timestamp).set({...shift});
+
+
   };
 }
 

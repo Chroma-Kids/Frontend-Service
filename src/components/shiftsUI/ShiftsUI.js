@@ -4,26 +4,29 @@ import { withRouter } from 'react-router-dom';
 import Week from './Week'
 import * as moment from 'moment';
 import _ from 'lodash';
+import Popup from '../popup/Popup'
+import Select from 'react-select';
 
 class TeachersWeeks extends Component {
 
   handleClick = () => {
-    const { nowDayYear, dateDayYear, dateWeekDay, teacher, timestamp } = this.props;
-    this.props.onHeaderClick(dateDayYear, dateWeekDay, teacher, timestamp);
+    const { nowDayYear, dateDayYear, dateWeekDay, teacher, timestamp, teacherId } = this.props;
+    this.props.onHeaderClick(dateDayYear, dateWeekDay, teacher, timestamp, teacherId);
   }
 
   render(){
 
-    const { nowDayYear, dateDayYear, dateWeekDay, date, timestamp } = this.props;
+    const { nowDayYear, dateDayYear, dateWeekDay, date, teacher, timestamp, teacherId, shifts, shiftTypes } = this.props;
 
     return (
       <td key={dateDayYear}
-          onClick={this.handleClick}
+          onClick={((dateWeekDay == 0) || (dateWeekDay == 6) ? null : this.handleClick )}
 
-          className={"fc-day-header fc-widget-header fc-sun "
+          className={" "
             + (nowDayYear == dateDayYear ? 'currentDay' : "" )
             + ((dateWeekDay == 0) || (dateWeekDay == 6) ? 'weekend' : "" )}
           >
+          {(shifts && typeof shiftTypes !== "undefined" ? shiftTypes[shifts.shiftType].label.substring(0,1) : "")}
       </td>
     )
   }
@@ -33,7 +36,21 @@ class ShiftsUI extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { month: moment() }
+    this.state = {
+      showPopup: false,
+      selectedOption: '',
+      month: moment()
+    }
+  }
+
+  toggleMenu(dateDayYear, dateWeekDay, teacher, timestamp, teacherId){
+
+    this.setState({
+      showPopup: !this.state.showPopup,
+      timestamp: timestamp,
+      teacher: teacher,
+      teacherId: teacherId
+    });
   }
 
   previous() {
@@ -50,10 +67,6 @@ class ShiftsUI extends Component {
    var month = this.state.month;
    month.add(1, "M");
    this.setState({ month: month });
-  }
-
-  fillDay(dateDayYear, dateWeekDay, teacher, dayName) {
-    console.log(dateDayYear, dateWeekDay, teacher.name, dayName);
   }
 
   renderMonthLabel() {
@@ -104,7 +117,7 @@ class ShiftsUI extends Component {
     return weeks;
   }
 
-  renderTeachersWeeks(teacher) {
+  renderTeacherMonth(teacher, teacherId) {
 
     var weeks = [],
       done = false,
@@ -112,58 +125,136 @@ class ShiftsUI extends Component {
       monthIndex = date.month(),
       count = 0;
 
-    while (!done) {
+    for(let day = 1; day <= this.state.month.daysInMonth(); day++){
+
+      let array = [];
+      if(typeof teacher.shifts !== "undefined"){
+          for (let [key, value] of Object.entries(teacher.shifts)) {
+            array[key] = value;
+          }
+      }
+
       weeks.push(<TeachersWeeks
           teacher={teacher}
-          timestamp={date.format("X")}
-          onHeaderClick={this.fillDay}
+          teacherId={teacherId}
+          shifts={(typeof teacher.shifts !== "undefined" ? array[date.format("MMDDYYYY")] : null)}
+          timestamp={date.format("MMDDYYYY")}
+          onHeaderClick={this.toggleMenu.bind(this)}
           key={date.format("DDD")}
           dayName={date.format("dd")}
           dateDayYear={date.format("DDD")}
           nowDayYear={moment().format("DDD")}
           dateWeekDay={date.format("d")}
+          shiftTypes={this.props.shiftTypes}
          />);
-      date.add(1, "d");
-      done = count++ > 2 && monthIndex !== date.month();
-      monthIndex = date.month();
+
+       date.add(1, "d");
     }
 
+    // while (!done) {
+      // weeks.push(<TeachersWeeks
+      //     teacher={teacher}
+      //     teacherId={teacherId}
+      //     timestamp={date.format("X")}
+      //     onHeaderClick={this.toggleMenu.bind(this)}
+      //     key={date.format("DDD")}
+      //     dayName={date.format("dd")}
+      //     dateDayYear={date.format("DDD")}
+      //     nowDayYear={moment().format("DDD")}
+      //     dateWeekDay={date.format("d")}
+      //    />);
+    //   date.add(1, "d");
+    //   done = count++ > 2 && monthIndex !== date.month();
+    //   monthIndex = date.month();
+    // }
+    // console.log(weeks);
     return weeks;
+  }
+
+  handleChange = (selectedOption) => {
+    this.setState({ selectedOption });
+  }
+
+  onSubmit(values) {
+    const { selectedOption } = this.state;
+
+    if(selectedOption !== null){
+      // TODO: we should be able to embed shift as field form
+      values.shiftType = selectedOption.value;
+    }
+
+    values.teacher = this.state.teacherId;
+    values.timestamp = this.state.timestamp;
+
+    this.setState({
+      showPopup: !this.state.showPopup
+    });
+
+    this.props.onSubmit(values);
   }
 
   render() {
 
-    const { teachers } = this.props;
+    const { handleSubmit, teachers, shiftTypes } = this.props;
+    const { selectedOption } = this.state;
+
+    const value = selectedOption && selectedOption.value;
+
+    let shiftTypesOptions = null;
+
+    if(typeof shiftTypes !== "undefined"){
+      shiftTypesOptions = _.map(shiftTypes, (shiftType, key) => ({ value: key, label: shiftType.label }) );
+    }
 
     return (
-      <div className="ibox">
-        <div className="ibox-content">
-          <div className="shifts">
-            <div className="header">
-              <button type="button" onClick={()  => this.today()} className="btn btn-white m-r"> Today</button>
-              <button type="button" onClick={()  => this.previous()} className="btn btn-white"><i className="fa fa-chevron-left"></i></button>
-              {this.renderMonthLabel()}
-              <button type="button" onClick={() => this.next()} className="btn btn-white"><i className="fa fa-chevron-right"></i></button>
+      <div>
+        <Popup
+          showhide={this.state.showPopup}
+          title={"Assign shift to teacher"}
+          description={"Choose a shift to be assigned to the teacher"}
+          onSubmit={handleSubmit(this.onSubmit.bind(this))}
+          buttonClose={this.toggleMenu.bind(this)}
+           >
+            {(typeof shiftTypes !== "undefined" ?
+                  <Select
+                    name="shift"
+                    value={value}
+                    onChange={this.handleChange}
+                    options={shiftTypesOptions}
+                  />
+            :
+            <p>Loading select...</p>)}
+        </Popup>
+        <div className="ibox">
+          <div className="ibox-content">
+            <div className="shifts">
+              <div className="header">
+                <button type="button" onClick={()  => this.today()} className="btn btn-white m-r"> Today</button>
+                <button type="button" onClick={()  => this.previous()} className="btn btn-white"><i className="fa fa-chevron-left"></i></button>
+                {this.renderMonthLabel()}
+                <button type="button" onClick={() => this.next()} className="btn btn-white"><i className="fa fa-chevron-right"></i></button>
+              </div>
+              <table className="teachersWeeks">
+                <thead>
+                  <tr>
+                    <th className="align-middle" rowSpan="2">Teachers</th>
+                    {this.renderHeaderDayNumber()}
+                  </tr>
+                  <tr>
+                      {this.renderHeaderDayName()}
+                  </tr>
+                </thead>
+                <tbody>
+
+                  {_.map(teachers, (teacher, key) =>
+                    <tr key={key}>
+                      <th>{teacher.name}</th>
+                    {this.renderTeacherMonth(teacher, key)}
+                    </tr>
+                   )}
+                </tbody>
+              </table>
             </div>
-            <table className="teachersWeeks">
-              <thead>
-                <tr>
-                  <td rowSpan="2">Teachers</td>
-                  {this.renderHeaderDayNumber()}
-                </tr>
-                <tr>
-                    {this.renderHeaderDayName()}
-                </tr>
-              </thead>
-              <tbody>
-                {_.map(teachers, (teacher, key) =>
-                <tr key={key}>
-                  <th>{ teacher.name }</th>
-                  {this.renderTeachersWeeks(teacher)}
-                </tr>
-                 )}
-              </tbody>
-            </table>
           </div>
         </div>
       </div>

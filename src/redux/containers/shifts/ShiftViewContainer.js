@@ -2,13 +2,13 @@ import React, {Component} from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import { fetchShift } from '../../actions/ShiftActions';
+import {  } from '../../actions/ShiftActions';
 import ShiftView from '../../../views/shifts/ShiftView';
 
 export class ShiftViewContainer extends Component {
 
     componentDidMount(){
-      this.props.fetchShift(this.props.shiftId);
+      // this.props.fetchShift(this.props.shiftId);
     }
 
     render() {
@@ -28,7 +28,7 @@ const mapStateToProps = (state, ownProps)=> {
 }
 
 const mapDispatchToProps = (dispatch, state)=> {
-    return bindActionCreators({ fetchShift }, dispatch);
+    return bindActionCreators({  }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShiftViewContainer);
