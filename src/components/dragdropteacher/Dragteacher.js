@@ -49,6 +49,18 @@ class TeacherDrag extends Component {
 
     const opacity = isDragging ? 0.5 : 1;
 
+    let array = [];
+    if(typeof teacher.shifts !== "undefined"){
+        for (let [key, value] of Object.entries(teacher.shifts)) {
+          array[key] = value;
+        }
+    }
+
+    // TODO: to show the label for the corresponding date we need to replace
+    // date.format("MMDDYYYY") by the date on the calendar dashbaord (the one that
+    // miguel is doing)
+    // (typeof teacher.shifts !== "undefined" ? array[date.format("MMDDYYYY")] : null)
+
     return connectDragSource(
       <li style={{ opacity }} key={key} className="warning-element clear float-left" >
           <Link to={ROUTES.AUTHENTICATED.TEACHER(teacherId)}>{teacher.name}</Link>

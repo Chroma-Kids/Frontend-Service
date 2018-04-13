@@ -6,9 +6,13 @@ import DashboardView from '../../../views/dashboard/DashboardView';
 import { getTeachersNotAssigned, removeTeachersNotAssignedListener } from '../../actions/TeacherNotAssignedActions';
 import { getTeachers, removeTeachersListener, checkInTeacher, checkOutTeacher, moveTeacherToClassroom } from '../../actions/TeacherActions';
 import { getClassrooms, removeClassroomsListener } from '../../actions/ClassroomActions';
-import { getShiftTypes, removeShiftTypesListener } from '../../actions/ShiftActions';
+import { getShiftTypes, removeShiftTypesListener, fetchTeacherShiftsOnThisDay } from '../../actions/ShiftActions';
 
 export class DashboardViewContainer extends Component {
+
+    hasTeacherShiftsOnThisDay(teacher, date) {
+      this.props.fetchTeacherShiftsOnThisDay(teacher, date);
+    }
 
     componentDidMount(){
       this.props.getTeachersNotAssigned();
@@ -46,7 +50,7 @@ const mapStateToProps = (state, ownProps)=> {
 const mapDispatchToProps = (dispatch, state)=> {
     return bindActionCreators({ getTeachersNotAssigned, getTeachers, getClassrooms,
       checkInTeacher, checkOutTeacher, moveTeacherToClassroom,
-      getShiftTypes, removeShiftTypesListener,
+      getShiftTypes, removeShiftTypesListener, fetchTeacherShiftsOnThisDay,
     removeTeachersListener, removeClassroomsListener, removeTeachersNotAssignedListener }, dispatch);
 }
 
