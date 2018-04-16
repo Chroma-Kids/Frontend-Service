@@ -204,23 +204,42 @@ export const createShiftType = (shift) => {
   };
 }
 
-export const deleteShiftType = (uid) => {
+/*
+* Whenever we delete we must be sure that the shiftypes used are also removed:
+* 1) select all the shifts that use this shiftType
+* 2) iterate and first delete the shifts under teachers
+* 3) and also the shifts from the list of shifts themselve
+* 4) remove the shiftType from the list.
+**/
+export const deleteShiftType = (shiftTypeId) => {
   return dispatch => {
     dispatch({
       type: types.DELETE_SHIFTTYPE_PENDING
     });
-    database.ref('/shifttypes/').child(uid).remove()
-      .then(function() {
-        dispatch({
-          type: types.DELETE_SHIFTTYPE_FULFILLED
-        });
-      })
-      .catch(function(error) {
-        dispatch({
-          type: types.DELETE_SHIFTTYPE_REJECTED,
-          payload: error
-        });
+
+    database.ref('/shifts/').orderByChild("shiftType").equalTo(shiftTypeId).once('value', (val) => {
+
+      const shifts_entries = Object.entries(val.val()|| {});
+
+      shifts_entries.forEach((shiftArray) => {
+        let shift = shiftArray[1];
+        let shiftKey = shiftArray[0];
+        database.ref(`/teachers/${shift.teacher}/shifts/${shift.timestamp}`).remove();
+        database.ref('/shifts/').child(shiftKey).remove();
       });
+
+    }).then(() => {
+      database.ref('/shifttypes/').child(shiftTypeId).remove();
+      dispatch({
+        type: types.DELETE_SHIFTTYPE_FULFILLED,
+        payload: false
+      });
+    }).catch(function(error) {
+      dispatch({
+        type: types.DELETE_SHIFTTYPE_REJECTED,
+        payload: error
+      });
+    });
   };
 }
 
