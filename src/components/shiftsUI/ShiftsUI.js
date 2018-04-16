@@ -23,8 +23,8 @@ class TeachersWeeks extends Component {
           onClick={((dateWeekDay == 0) || (dateWeekDay == 6) ? null : this.handleClick )}
 
           className={" "
-            + (nowDayYear == dateDayYear ? 'currentDay' : "" )
-            + ((dateWeekDay == 0) || (dateWeekDay == 6) ? 'weekend' : "" )}
+            + (nowDayYear == dateDayYear ? ' currentDay' : "" )
+            + ((dateWeekDay == 0) || (dateWeekDay == 6) ? ' weekend' : "" )}
           >
           {(shifts && typeof shiftTypes !== "undefined" ? shiftTypes[shifts.shiftType].label.substring(0,1) : "")}
       </td>
@@ -83,8 +83,8 @@ class ShiftsUI extends Component {
     while (!done) {
       weeks.push(<th key={date.format("D")}
           className={"fc-day-header fc-widget-header fc-sun "
-             + (moment().format("DDD") == date.format("DDD") ? 'currentDay' : "" )
-             + ((date.format("d") == 0) || (date.format("d") == 6) ? 'weekend' : "" )
+             + (moment().format("DDD") == date.format("DDD") ? ' currentDay' : "" )
+             + ((date.format("d") == 0) || (date.format("d") == 6) ? ' weekend' : "" )
           }>
           {date.format("dd")}</th>);
       date.add(1, "d");
@@ -106,8 +106,8 @@ class ShiftsUI extends Component {
       weeks.push(<th key={date.format("D")}
 
             className={"fc-day-header fc-widget-header fc-sun "
-              + (moment().format("DDD") == date.format("DDD") ? 'currentDay' : "" )
-              + ((date.format("d") == 0) || (date.format("d") == 6) ? 'weekend' : "" )
+              + (moment().format("DDD") == date.format("DDD") ? ' currentDay' : "" )
+              + ((date.format("d") == 0) || (date.format("d") == 6) ? ' weekend' : "" )
             }>{date.format("DD")}</th>);
       date.add(1, "d");
       done = count++ > 2 && monthIndex !== date.month();
