@@ -30,6 +30,14 @@ class DashboardClassrooms extends React.Component {
       let ratio_real = classroom.num_teachers / classroom.num_students;
       let ratio_spare = ratio + 0.20;
 
+      console.log("Classroom: "+ classroom.name +
+      " Teachers: "+ classroom.num_teachers +
+      " Students: "+ classroom.num_students +
+      " Ratio: "+ ratio +
+      " Ratio real: "+ ratio_real +
+      " Ratio spare: "+ ratio_spare);
+      console.log("--------------------------");
+
       return (
         <div className="col-lg-3 p-r-none" key={key}>
           <div className="ibox clear">
