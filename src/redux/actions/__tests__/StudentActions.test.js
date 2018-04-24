@@ -18,7 +18,7 @@ beforeAll(() => {
 
 afterAll(async (done) => {
   delete global.testRef;
-  // await ref.remove();
+  await ref.remove();
   delete global.ref;
   done();
 });
