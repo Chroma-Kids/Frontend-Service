@@ -6,7 +6,7 @@ export const removeShiftsListener = () => {
   return dispatch => {
     dispatch({
       type: types.SHIFTS_CLEANED,
-      payload: database.ref('/shifts/').off()
+      payload: database().child('/shifts/').off()
     });
   }
 }
@@ -16,7 +16,7 @@ export const getShifts = () => {
     dispatch({
       type: types.FETCH_SHIFTS_PENDING
     });
-    database.ref('/shifts/').on('value', snapshot => {
+    database().child('/shifts/').on('value', snapshot => {
       dispatch({
         type: types.FETCH_SHIFTS_FULFILLED,
         payload: snapshot.val()
@@ -35,7 +35,7 @@ export const fetchTeacherShiftsOnThisDay = (teacher, date) => {
       type: types.FETCH_SHIFT_PENDING
     });
 
-    database.ref('/teachers/').child(teacher).child('/shifts').child(date).once('value', function (snapshot, error) {
+    database().child('/teachers/').child(teacher).child('/shifts').child(date).once('value', function (snapshot, error) {
       if (error)
         dispatch({
           type: types.FETCH_SHIFT_REJECTED,
@@ -53,7 +53,7 @@ export const fetchTeacherShiftsOnThisDay = (teacher, date) => {
 export const createShift = (shift) => {
 
 
-  let _teachers = database.ref('/teachers/');
+  let _teachers = database().child('/teachers/');
   shift.created_at = new Date().getTime()/1000;
 
   return dispatch => {
@@ -61,7 +61,7 @@ export const createShift = (shift) => {
       type: types.CREATE_SHIFT_PENDING
     });
 
-    const ref = database.ref('/shifts/').push({ ...shift }, function(error) {
+    const ref = database().child('/shifts/').push({ ...shift }, function(error) {
       if (error){
         dispatch({
           type: types.CREATE_SHIFT_REJECTED,
@@ -91,7 +91,7 @@ export const deleteShift = (uid) => {
     dispatch({
       type: types.DELETE_SHIFT_PENDING
     });
-    database.ref('/shifts/').child(uid).remove()
+    database().child('/shifts/').child(uid).remove()
       .then(function() {
         dispatch({
           type: types.DELETE_SHIFT_FULFILLED
@@ -115,7 +115,7 @@ export const updateShift = (shift, uid) => {
       type: types.SAVE_SHIFT_PENDING
     });
 
-    database.ref(`/shifts/${uid}`).set({...shift}, function (error) {
+    database().child(`/shifts/${uid}`).set({...shift}, function (error) {
       if (error)
         dispatch({
           type: types.SAVE_SHIFT_REJECTED,
@@ -137,7 +137,7 @@ export const removeShiftTypesListener = () => {
   return dispatch => {
     dispatch({
       type: types.SHIFTTYPES_CLEANED,
-      payload: database.ref('/shifttypes/').off()
+      payload: database().child('/shifttypes/').off()
     });
   }
 }
@@ -147,7 +147,7 @@ export const getShiftTypes = () => {
     dispatch({
       type: types.FETCH_SHIFTTYPES_PENDING
     });
-    database.ref('/shifttypes/').on('value', snapshot => {
+    database().child('/shifttypes/').on('value', snapshot => {
       dispatch({
         type: types.FETCH_SHIFTTYPES_FULFILLED,
         payload: snapshot.val()
@@ -166,7 +166,7 @@ export const fetchShiftType = (uid) => {
       type: types.FETCH_SHIFTTYPE_PENDING
     });
 
-    database.ref('/shifttypes/').child(uid).once('value', function (snapshot, error) {
+    database().child('/shifttypes/').child(uid).once('value', function (snapshot, error) {
       if (error)
         dispatch({
           type: types.FETCH_SHIFTTYPE_REJECTED,
@@ -190,7 +190,7 @@ export const createShiftType = (shift) => {
       type: types.CREATE_SHIFTTYPE_PENDING
     });
 
-    database.ref('/shifttypes/').push({ ...shift }, function(error) {
+    database().child('/shifttypes/').push({ ...shift }, function(error) {
       if (error)
         dispatch({
           type: types.CREATE_SHIFTTYPE_REJECTED,
@@ -217,19 +217,19 @@ export const deleteShiftType = (shiftTypeId) => {
       type: types.DELETE_SHIFTTYPE_PENDING
     });
 
-    database.ref('/shifts/').orderByChild("shiftType").equalTo(shiftTypeId).once('value', (val) => {
+    database().child('/shifts/').orderByChild("shiftType").equalTo(shiftTypeId).once('value', (val) => {
 
       const shifts_entries = Object.entries(val.val()|| {});
 
       shifts_entries.forEach((shiftArray) => {
         let shift = shiftArray[1];
         let shiftKey = shiftArray[0];
-        database.ref(`/teachers/${shift.teacher}/shifts/${shift.timestamp}`).remove();
-        database.ref('/shifts/').child(shiftKey).remove();
+        database().child(`/teachers/${shift.teacher}/shifts/${shift.timestamp}`).remove();
+        database().child('/shifts/').child(shiftKey).remove();
       });
 
     }).then(() => {
-      database.ref('/shifttypes/').child(shiftTypeId).remove();
+      database().child('/shifttypes/').child(shiftTypeId).remove();
       dispatch({
         type: types.DELETE_SHIFTTYPE_FULFILLED,
         payload: false
@@ -252,7 +252,7 @@ export const updateShiftType = (shift, uid) => {
       type: types.SAVE_SHIFTTYPE_PENDING
     });
 
-    database.ref(`/shifttypes/${uid}`).set({...shift}, function (error) {
+    database().child(`/shifttypes/${uid}`).set({...shift}, function (error) {
       if (error)
         dispatch({
           type: types.SAVE_SHIFTTYPE_REJECTED,

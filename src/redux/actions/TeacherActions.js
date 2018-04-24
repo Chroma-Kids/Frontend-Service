@@ -5,7 +5,7 @@ export const removeTeachersListener = () => {
   return dispatch => {
     dispatch({
       type: types.TEACHERS_CLEANED,
-      payload: database.ref('/teachers/').off()
+      payload: database().child('/teachers/').off()
     });
   }
 }
@@ -15,7 +15,7 @@ export const getTeachers = () => {
     dispatch({
       type: types.FETCH_TEACHERS_PENDING
     });
-    database.ref('/teachers/').on('value', snapshot => {
+    database().child('/teachers/').on('value', snapshot => {
       dispatch({
         type: types.FETCH_TEACHERS_FULFILLED,
         payload: snapshot.val()
@@ -36,7 +36,7 @@ export const getTeachers = () => {
 //       type: types.FETCH_TEACHER_TRAJECTORIES_PENDING
 //     });
 //
-//     database.ref(`/teachers/${uid}/trajectories`).once('value', snapshot => {
+//     database().child(`/teachers/${uid}/trajectories`).once('value', snapshot => {
 //
 //       const trajectories = Object.keys(snapshot.val() || {});
 //
@@ -54,7 +54,7 @@ export const getTeachers = () => {
 //
 //       // trajectories.forEach((key) => {
 //       //
-//       //   database.ref(`/trajectories/${key}`).once('value', snapshot => {
+//       //   database().child(`/trajectories/${key}`).once('value', snapshot => {
 //       //     console.log(snapshot.val());
 //       //
 //       //     const tra = Object.values(snapshot.val() || {});
@@ -66,14 +66,14 @@ export const getTeachers = () => {
 //       //   });
 //       // });
 //
-//       // database.ref(`/trajectories/${snapshot.key}`).once('value', snapshot => {
+//       // database().child(`/trajectories/${snapshot.key}`).once('value', snapshot => {
 //       //   let trajectory = snapshot.val();
 //       //   console.log(trajectory);
-//       //   // database.ref(`/classrooms/${snapshot.val().to}/name`).once('value', snapshot => {
+//       //   // database().child(`/classrooms/${snapshot.val().to}/name`).once('value', snapshot => {
 //       //   //   console.log(snapshot.val());
 //       //   //   trajectory.to = snapshot.val();
 //       //   // });
-//       //   // database.ref(`/classrooms/${snapshot.val().from}/name`).once('value', snapshot => {
+//       //   // database().child(`/classrooms/${snapshot.val().from}/name`).once('value', snapshot => {
 //       //   //   console.log(snapshot.val());
 //       //   //   trajectory.from = snapshot.val();
 //       //   // });
@@ -91,7 +91,7 @@ export const getTeachers = () => {
 //       //   payload: aux
 //       // });
 //       // Object.keys(snapshot.val()).map(key => {
-//       //   database.ref('/trajectories/').child(key).once('value', snapshot => {
+//       //   database().child('/trajectories/').child(key).once('value', snapshot => {
 //       //     console.log(snapshot.val())
 //       //     dispatch({
 //       //       type: types.FETCH_TEACHER_TRAJECTORIES_FULFILLED,
@@ -115,7 +115,7 @@ export const fetchTeacher = (uid) => {
       type: types.FETCH_TEACHER_PENDING
     });
 
-    database.ref('/teachers/').child(uid).once('value', function (snapshot, error) {
+    database().child('/teachers/').child(uid).once('value', function (snapshot, error) {
       if (error)
         dispatch({
           type: types.FETCH_TEACHER_REJECTED,
@@ -139,7 +139,7 @@ export const createTeacher = (teacher) => {
       type: types.CREATE_TEACHER_PENDING
     });
 
-    const ref = database.ref('/teachers/').push({ ...teacher }, function(error) {
+    const ref = database().child('/teachers/').push({ ...teacher }, function(error) {
       if (error)
         dispatch({
           type: types.CREATE_TEACHER_REJECTED,
@@ -150,7 +150,7 @@ export const createTeacher = (teacher) => {
           type: types.CREATE_TEACHER_FULFILLED
         });
     });
-    database.ref('/teachers-non-assigned/').child(ref.key).set(true);
+    database().child('/teachers-non-assigned/').child(ref.key).set(true);
   };
 }
 
@@ -163,7 +163,7 @@ export const updateTeacher = (teacher, uid) => {
       type: types.SAVE_TEACHER_PENDING
     });
 
-    database.ref(`/teachers/${uid}`).set({...teacher}, function (error) {
+    database().child(`/teachers/${uid}`).set({...teacher}, function (error) {
       if (error)
         dispatch({
           type: types.SAVE_TEACHER_REJECTED,
@@ -197,14 +197,14 @@ export const deleteTeacher = (id) => {
       dispatch({
         type: types.DELETE_TEACHER_FULFILLED,
         payload: (() => {
-          database.ref('/teachers-non-assigned/').child(id).remove();
-          database.ref(`/teachers/${id}/classrooms`).once('value', (snapshot) => {
+          database().child('/teachers-non-assigned/').child(id).remove();
+          database().child(`/teachers/${id}/classrooms`).once('value', (snapshot) => {
             const classrooms = Object.keys(snapshot.val() || {});
             classrooms.forEach((key) => {
-              database.ref('/classrooms/').child(key).child('teachers').child(id).remove();
+              database().child('/classrooms/').child(key).child('teachers').child(id).remove();
             });
           }).then(() => {
-            database.ref('/teachers/').child(id).remove();
+            database().child('/teachers/').child(id).remove();
             dispatch({
               type: types.DELETE_TEACHER_PENDING,
               payload: false
@@ -240,9 +240,9 @@ export const moveTeacherToClassroom = (teacher, from, to) => {
       type: types.MOVE_TEACHER_TO_CLASSROOM_PENDING
     });
 
-    let _classrooms = database.ref('/classrooms/');
-    let _teachers = database.ref('/teachers/');
-    let _teachers_not_assigned = database.ref('/teachers-non-assigned/');
+    let _classrooms = database().child('/classrooms/');
+    let _teachers = database().child('/teachers/');
+    let _teachers_not_assigned = database().child('/teachers-non-assigned/');
 
     if (typeof from !== "undefined" && typeof to !== "undefined") {
       // 1) from a classroom to another classroom
@@ -267,7 +267,7 @@ export const moveTeacherToClassroom = (teacher, from, to) => {
       // var Seconds_from_T1_to_T2 = dif / 1000;
       // var Seconds_Between_Dates = Math.abs(Seconds_from_T1_to_T2);
 
-      const ref = database.ref('/trajectories/').push({
+      const ref = database().child('/trajectories/').push({
         teacher: teacher,
         from: from,
         to: to,
@@ -282,7 +282,7 @@ export const moveTeacherToClassroom = (teacher, from, to) => {
 
       // Comming from a classroom we don't need to do anything about the timming spent teaching
       //
-      // database.ref('teachers/').child(teacher).child('status').set({
+      // database().child('teachers/').child(teacher).child('status').set({
       //   type: "classroom",
       //   time: new Date().getTime()/1000
       // });
@@ -302,7 +302,7 @@ export const moveTeacherToClassroom = (teacher, from, to) => {
       // 1) Start counting again
       // 2) taking into account the previous time
 
-      const ref = database.ref('/trajectories/').push({
+      const ref = database().child('/trajectories/').push({
         teacher: teacher,
         to: to,
         create_at: new Date().getTime()/1000
@@ -315,7 +315,7 @@ export const moveTeacherToClassroom = (teacher, from, to) => {
       });
     }
     else if(typeof from === "undefined" && typeof to === "undefined"){
-      // database.ref('teachers/').child(teacher).child('status').set({
+      // database().child('teachers/').child(teacher).child('status').set({
       //   where: "break",
       //   time: new Date().getTime()/1000
       // });
@@ -335,7 +335,7 @@ export const moveTeacherToClassroom = (teacher, from, to) => {
 
       _teachers.child(teacher).child('classrooms').child(from).remove();
 
-      const ref = database.ref('/trajectories/').push({
+      const ref = database().child('/trajectories/').push({
         teacher: teacher,
         from: from,
         create_at: new Date().getTime()/1000
@@ -359,7 +359,7 @@ export const checkInTeacher = (uid) => {
       type: types.TEACHER_CHECK_IN_PENDING
     });
 
-    database.ref(`/teachers/${uid}`).update({ checked_in: new Date().getTime()/1000 }, function (error) {
+    database().child(`/teachers/${uid}`).update({ checked_in: new Date().getTime()/1000 }, function (error) {
       if (error)
         dispatch({
           type: types.TEACHER_CHECK_IN_REJECTED,
@@ -380,7 +380,7 @@ export const checkOutTeacher = (uid) => {
       type: types.TEACHER_CHECK_OUT_PENDING
     });
 
-    database.ref(`/teachers/${uid}`).update({ checked_out: new Date().getTime()/1000 }, function (error) {
+    database().child(`/teachers/${uid}`).update({ checked_out: new Date().getTime()/1000 }, function (error) {
       if (error)
         dispatch({
           type: types.TEACHER_CHECK_OUT_REJECTED,

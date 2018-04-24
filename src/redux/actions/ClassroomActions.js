@@ -5,7 +5,7 @@ export const removeClassroomsListener = () => {
   return dispatch => {
     dispatch({
       type: types.CLASSROOMS_CLEANED,
-      payload: database.ref('/classrooms/').off()
+      payload: database().child('/classrooms/').off()
     });
   }
 }
@@ -14,7 +14,7 @@ export const removeClassroomListener = (uid) => {
   return dispatch => {
     dispatch({
       type: types.CLASSROOMS_CLEANED,
-      payload: database.ref('/classrooms/').child(uid).off()
+      payload: database().child('/classrooms/').child(uid).off()
     });
   }
 }
@@ -24,7 +24,7 @@ export const getClassrooms = () => {
     dispatch({
       type: types.FETCH_CLASSROOMS_PENDING
     });
-    database.ref('/classrooms/').on('value', snapshot => {
+    database().child('/classrooms/').on('value', snapshot => {
       dispatch({
         type: types.FETCH_CLASSROOMS_FULFILLED,
         payload: snapshot.val()
@@ -43,7 +43,7 @@ export const fetchClassroom = (uid) => {
       type: types.FETCH_CLASSROOM_PENDING
     });
 
-    database.ref('/classrooms/').child(uid).on('value', function (snapshot, error) {
+    database().child('/classrooms/').child(uid).on('value', function (snapshot, error) {
       if (error)
         dispatch({
           type: types.FETCH_CLASSROOM_REJECTED,
@@ -67,7 +67,7 @@ export const createClassroom = (classroom) => {
       type: types.CREATE_CLASSROOM_PENDING
     });
 
-    database.ref('/classrooms/').push({ ...classroom }, function(error) {
+    database().child('/classrooms/').push({ ...classroom }, function(error) {
       if (error)
         dispatch({
           type: types.CREATE_CLASSROOM_REJECTED,
@@ -90,7 +90,7 @@ export const updateClassroom = (classroom, uid) => {
       type: types.SAVE_CLASSROOM_PENDING
     });
 
-    database.ref(`/classrooms/${uid}`).set({...classroom}, function (error) {
+    database().child(`/classrooms/${uid}`).set({...classroom}, function (error) {
       if (error)
         dispatch({
           type: types.SAVE_CLASSROOM_REJECTED,
@@ -117,16 +117,16 @@ export const deleteClassroom = (classroomId) => {
       type: types.DELETE_CLASSROOM_PENDING
     });
 
-    database.ref(`/classrooms/${classroomId}/teachers`).once('value', (snapshot) => {
+    database().child(`/classrooms/${classroomId}/teachers`).once('value', (snapshot) => {
       const teachers = Object.keys(snapshot.val() || {});
       teachers.forEach((teacherId) => {
-        database.ref('/classrooms/').child(classroomId).child('teachers').child(teacherId).remove();
-        database.ref('/teachers-non-assigned/').child(teacherId).set(true);
+        database().child('/classrooms/').child(classroomId).child('teachers').child(teacherId).remove();
+        database().child('/teachers-non-assigned/').child(teacherId).set(true);
 
-        database.ref('/teachers/').child(teacherId).child('classrooms').child(classroomId).remove();
+        database().child('/teachers/').child(teacherId).child('classrooms').child(classroomId).remove();
       });
     }).then(() => {
-      database.ref('/classrooms/').child(classroomId).remove();
+      database().child('/classrooms/').child(classroomId).remove();
       dispatch({
         type: types.DELETE_CLASSROOM_FULFILLED,
         payload: false
@@ -157,7 +157,7 @@ export const addStudentToClassroom = (classroom, student) => {
     });
 
     // 1) add student to classroom
-    database.ref(`/classrooms/${classroom.id}`).child('students').child(student).set(true, function(error){
+    database().child(`/classrooms/${classroom.id}`).child('students').child(student).set(true, function(error){
       if (error) {
         dispatch({
           type: types.ADD_STUDENT_CLASSROOM_REJECTED,
@@ -165,10 +165,10 @@ export const addStudentToClassroom = (classroom, student) => {
         });
       }else {
         // 2) add classroom to student
-        database.ref('/students/').child(student).child('classrooms').child(classroom.id).set(true);
+        database().child('/students/').child(student).child('classrooms').child(classroom.id).set(true);
 
         // 3) update number of students in classroom
-        database.ref(`/classrooms/${classroom.id}`).child('num_students').transaction(function (current_value) {
+        database().child(`/classrooms/${classroom.id}`).child('num_students').transaction(function (current_value) {
           return (current_value || 0) + 1;
         });
 
@@ -198,7 +198,7 @@ export const deleteStudentFromClassroom = (classroom, student) => {
     });
 
     // 1) remove student from classroom
-    database.ref(`/classrooms/${classroom}`).child('students').child(student).remove(function(error){
+    database().child(`/classrooms/${classroom}`).child('students').child(student).remove(function(error){
       if (error) {
         dispatch({
           type: types.REMOVE_STUDENT_CLASSROOM_REJECTED,
@@ -206,10 +206,10 @@ export const deleteStudentFromClassroom = (classroom, student) => {
         });
       }else {
         // 2) remove classroom from student
-        database.ref('/students/').child(student).child('classrooms').child(classroom).remove();
+        database().child('/students/').child(student).child('classrooms').child(classroom).remove();
 
         // 3) update number of students in classroom
-        database.ref(`/classrooms/${classroom}`).child('num_students').transaction(function (current_value) {
+        database().child(`/classrooms/${classroom}`).child('num_students').transaction(function (current_value) {
           return (current_value || 0) - 1;
         });
 
