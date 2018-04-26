@@ -152,32 +152,26 @@ export const addStudentToClassroom = (classroom, student) => {
   // classroom.updated_at = new Date().getTime()/1000;
 
   return dispatch => {
-    dispatch({
-      type: types.ADD_STUDENT_CLASSROOM_PENDING
-    });
 
-    // 1) add student to classroom
-    database().child(`/classrooms/${classroom.id}`).child('students').child(student).set(true, function(error){
-      if (error) {
-        dispatch({
-          type: types.ADD_STUDENT_CLASSROOM_REJECTED,
-          payload: error.message
-        });
-      }else {
-        // 2) add classroom to student
-        database().child('/students/').child(student).child('classrooms').child(classroom.id).set(true);
+    dispatch({ type: types.ADD_STUDENT_CLASSROOM_PENDING });
 
-        // 3) update number of students in classroom
-        database().child(`/classrooms/${classroom.id}`).child('num_students').transaction(function (current_value) {
-          return (current_value || 0) + 1;
-        });
+    try {
+      // 1) add student to classroom
+      database().child('/classrooms').child(classroom).child('students').child(student).set(true);
 
-        dispatch({
-          type: types.ADD_STUDENT_CLASSROOM_FULFILLED,
-          payload: classroom
-        });
-      }
-    });
+      // 2) add classroom to student
+      database().child('/students').child(student).child('classrooms').child(classroom).set(true);
+
+      // 3) update number of students in classroom
+      database().child('/classrooms').child(classroom).child('num_students').transaction(function (current_value) {
+        return (current_value || 0) + 1;
+      });
+
+      dispatch({ type: types.ADD_STUDENT_CLASSROOM_FULFILLED });
+    }
+    catch(error) {
+      dispatch({ type: types.ADD_STUDENT_CLASSROOM_REJECTED });
+    }
   };
 }
 

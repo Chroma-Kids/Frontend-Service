@@ -32,7 +32,7 @@ class Classroom extends PureComponent<Props, State> {
 
     if(selectedOption !== null){
 
-      this.props.addStudentToClassroom(classroom, selectedOption.value);
+      this.props.addStudentToClassroom(classroomId, selectedOption.value);
       this.setState({
         showPopup: !this.state.showPopup
       });
