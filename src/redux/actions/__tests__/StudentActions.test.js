@@ -46,40 +46,11 @@ describe('Delete a student', () => {
   it('remove him/her from the list of students', async () => {
 
     await ref.set(exampleData);
-    const expected_value = {
-      "-L8me9SLVbZM7OZHqlu7" : {
-        "classrooms" : {
-          "-L8qcB1PlvlViNVjRP28" : true
-        },
-        "created_at" : 1.522342078676E9,
-        "name" : "Antonio",
-        "surname" : "Machado",
-        "updated_at" : 1.523389046409E9
-      },
-      "-L9bROFNpP4RgEP8YiAh" : {
-        "classrooms" : {
-          "-L8qcB1PlvlViNVjRP28" : true,
-          "-L9bR7ld-_m2IRA5V-jb" : true
-        },
-        "created_at" : 1.523227661384E9,
-        "name" : "Maira",
-        "surname" : "Kempes"
-      },
-      "-LA9moXsXvSHf3iNDR8Q" : {
-        "classrooms" : {
-          "-L8qcB1PlvlViNVjRP28" : true,
-          "-L9MdAxhmB7pXyXa7eQs" : true
-        },
-        "created_at" : 1.523820742902E9,
-        "name" : "Miguel",
-        "surname" : "De Unamuno"
-      }
-    };
 
     global.store.dispatch(deleteStudent("-L8mfM0RSKdKqwWB6qtz"));
 
-    const db = await ref.child('/students').once('value');
-    expect(db.val()).toEqual(expected_value);
+    const db = await ref.child('/students').child("-L8mfM0RSKdKqwWB6qtz").once('value');
+    expect(db.val()).toBeNull();
 
   })
 
