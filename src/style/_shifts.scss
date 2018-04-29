@@ -1,0 +1,47 @@
+.shifts {
+  .headerWeeks, .teachersWeeks {
+    position: relative;
+
+    width: 100%;
+    th, td{
+      border-style: solid;
+      border-width: 1px;
+      padding: 0;
+      vertical-align: top;
+      text-align: center;
+
+    }
+    td{
+      cursor: pointer;
+    }
+    td.currentDay, th.currentDay{
+      background-color: $red-ligth;
+    }
+    td.weekend, th.weekend{
+      background-color: $gray;
+      cursor: auto;
+    }
+    th.align-middle {
+      vertical-align: middle;
+    }
+    .floating{
+      position: absolute;
+      bottom: 0;
+      right: 0;
+
+      td{
+        width: 30px;
+      }
+    }
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 1em;
+    span {
+      width:100%;
+      font-weight:bold;
+      text-transform:uppercase;
+      color:inherit;
+    }
+  }
+}

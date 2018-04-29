@@ -5,7 +5,7 @@ export const removeTeachersNotAssignedListener = () => {
   return dispatch => {
     dispatch({
       type: types.TEACHERS_NOT_ASSIGNED_CLEANED,
-      payload: database.ref('/teachers-non-assigned/').off()
+      payload: database().child('/teachers-non-assigned/').off()
     });
   }
 }
@@ -15,7 +15,7 @@ export const getTeachersNotAssigned = () => {
     dispatch({
       type: types.TEACHER_NOT_ASSIGNED_PENDING
     });
-    database.ref('/teachers-non-assigned/').on('value', snapshot => {
+    database().child('/teachers-non-assigned/').on('value', snapshot => {
       dispatch({
         type: types.TEACHER_NOT_ASSIGNED_FULFILLED,
         payload: snapshot.val()

@@ -81,7 +81,11 @@ export default class Home extends Component {
                 </div>
             </div>
             :
-            <List {...this.props} className={ "teachers" } >
+            <List
+              {...this.props}
+              className={ "teachers" }
+              list={teachers}
+              >
              {_.map(teachers, (teacher, key) =>
                  <ListItemTeacher {...this.props} key={key} itemKey={key} teacher={teacher} />
               )}

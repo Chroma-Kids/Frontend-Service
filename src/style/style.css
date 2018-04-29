@@ -3457,19 +3457,17 @@ code {
   display: table; }
 
 .ibox-title {
-  -moz-border-bottom-colors: none;
-  -moz-border-left-colors: none;
-  -moz-border-right-colors: none;
-  -moz-border-top-colors: none;
-  background-color: #ffffff;
-  border-color: #e7eaec;
+  background-color: #293a5a;
+  -webkit-border-image: none;
+  -o-border-image: none;
   border-image: none;
   border-style: solid solid none;
-  border-width: 2px 0 0;
-  color: inherit;
+  border-width: 0px;
+  color: white;
   margin-bottom: 0;
   padding: 15px 15px 7px;
-  min-height: 48px; }
+  min-height: 42px;
+  border-radius: 7px 7px 0px 0px; }
 
 .ibox-content {
   background-color: #ffffff;
@@ -3478,7 +3476,8 @@ code {
   border-color: #e7eaec;
   border-image: none;
   border-style: solid solid none;
-  border-width: 1px 0; }
+  border-width: 1px 0;
+  border-radius: 0px 0px 7px 7px; }
 
 .ibox-footer {
   color: inherit;
@@ -4138,6 +4137,14 @@ body.mini-navbar.fixed-sidebar .logo-element {
 .fullscreen-video .animated {
   animation: none; }
 
+.stream-small {
+  margin: 10px 0; }
+
+.teachers-not-assigned .float-left {
+  float: left;
+  min-width: 20em;
+  margin-right: 1em !important; }
+
 /* SEARCH PAGE */
 .search-form {
   margin-top: 10px; }
@@ -4693,7 +4700,6 @@ dd.project-people {
 .project-list table tr td {
   border-top: none;
   border-bottom: 1px solid #e7eaec;
-  padding: 15px 10px;
   vertical-align: middle; }
 
 .project-manager .tag-list li a {
@@ -6186,6 +6192,40 @@ body.body-small .vote-icon {
   40% {
     opacity: 1; } }
 
+.shifts .headerWeeks, .shifts .teachersWeeks {
+  position: relative;
+  width: 100%; }
+  .shifts .headerWeeks th, .shifts .headerWeeks td, .shifts .teachersWeeks th, .shifts .teachersWeeks td {
+    border-style: solid;
+    border-width: 1px;
+    padding: 0;
+    vertical-align: top;
+    text-align: center; }
+  .shifts .headerWeeks td, .shifts .teachersWeeks td {
+    cursor: pointer; }
+  .shifts .headerWeeks td.currentDay, .shifts .headerWeeks th.currentDay, .shifts .teachersWeeks td.currentDay, .shifts .teachersWeeks th.currentDay {
+    background-color: #ffd7d7; }
+  .shifts .headerWeeks td.weekend, .shifts .headerWeeks th.weekend, .shifts .teachersWeeks td.weekend, .shifts .teachersWeeks th.weekend {
+    background-color: #f3f3f4;
+    cursor: auto; }
+  .shifts .headerWeeks th.align-middle, .shifts .teachersWeeks th.align-middle {
+    vertical-align: middle; }
+  .shifts .headerWeeks .floating, .shifts .teachersWeeks .floating {
+    position: absolute;
+    bottom: 0;
+    right: 0; }
+    .shifts .headerWeeks .floating td, .shifts .teachersWeeks .floating td {
+      width: 30px; }
+
+.shifts .header {
+  text-align: center;
+  margin-bottom: 1em; }
+  .shifts .header span {
+    width: 100%;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: inherit; }
+
 /*
  *
  *   INSPINIA Landing Page - Responsive Admin Theme
@@ -6682,9 +6722,6 @@ body.landing-page {
 
 .registerView h1, .registerView h2, .registerView h3, .registerView h4, .registerView h5, .registerView p, .registerView label {
   color: #FFF; }
-
-section.teachers {
-  display: flex; }
 
 section.teachersList {
   margin-top: 2em;

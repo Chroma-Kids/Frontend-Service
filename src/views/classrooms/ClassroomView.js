@@ -1,4 +1,3 @@
-// #region imports
 import React, { PureComponent } from 'react';
 import { Link } from 'react-router-dom';
 import { reset } from 'redux-form';
@@ -7,6 +6,7 @@ import TableResponsive from '../../components/tableresponsive/TableResponsive'
 import TableRowStudent from '../../components/tableresponsive/TableRowStudent'
 import Popup from '../../components/popup/Popup'
 import Select from 'react-select';
+import { ROUTES } from '../../index';
 
 class Classroom extends PureComponent<Props, State> {
 
@@ -26,12 +26,13 @@ class Classroom extends PureComponent<Props, State> {
 
   onSubmit(values){
     const { selectedOption } = this.state;
-    const { classroom, classroom_id } = this.props;
+    const { classroom, classroomId } = this.props;
 
-    classroom.id = classroom_id;
+    classroom.id = classroomId;
 
     if(selectedOption !== null){
-      this.props.addStudentToClassroom(classroom, selectedOption.value);
+
+      this.props.addStudentToClassroom(classroomId, selectedOption.value);
       this.setState({
         showPopup: !this.state.showPopup
       });
@@ -118,9 +119,10 @@ class Classroom extends PureComponent<Props, State> {
 
                                     <dd className="project-people">
 
-                                    {(typeof classroom.teachers !== "undefined" ?
+                                    {(typeof classroom.teachers !== "undefined" && typeof teachers !== "undefined" ?
                                       Object.keys(classroom.teachers).map(key => {
-                                        return <Link to={`/teacher/${key}`} key={key} ><img alt={teachers[key].name} className="img-circle" src={teachers[key].photoURL} /></Link>;
+                                        // TODO: Fails if teachers are not loaded
+                                        return <Link to={ROUTES.AUTHENTICATED.TEACHER(key)} key={key} ><img alt={teachers[key].name} className="img-circle" src={teachers[key].photoURL} /></Link>;
                                       })
                                       :
                                       <div className="alert alert-warning">
@@ -206,7 +208,6 @@ class Classroom extends PureComponent<Props, State> {
       )
     );
   }
-  // #endregion
 }
 
 export default Classroom;

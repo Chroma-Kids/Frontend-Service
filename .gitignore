@@ -28,3 +28,5 @@ package-lock.json
 
 # IntelliJ
 .idea/
+src/firebase/firebaseTest.js
+src/firebase/firebaseTestConfig.js

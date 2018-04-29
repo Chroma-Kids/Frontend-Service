@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Timestamp from 'react-timestamp'
+import { ROUTES } from '../../../index';
 
 const ListItemTeacher = (props) => {
 
@@ -9,32 +10,40 @@ const ListItemTeacher = (props) => {
   return (
     <tr key={itemKey}>
         <td className="project-status">
-            <span className="label label-primary">Active</span>
+          {
+            (typeof teacher.checked_in !== "undefined" && typeof teacher.checked_out === "undefined"  ? <span className="label label-success">IN</span> : null)}
+            {
+            (typeof teacher.checked_in !== "undefined" && typeof teacher.checked_out !== "undefined" ? <span className="label label-danger">OUT</span> : null)
+          }
         </td>
         <td className="project-title">
-            <Link to={`/teacher/${itemKey}`}>{teacher.name} {teacher.surname}</Link>
-            <br />
+            <Link to={ROUTES.AUTHENTICATED.TEACHER(itemKey)}>{teacher.name} {teacher.surname}</Link>
+        </td>
+        <td className="project-title">
             <small>Created <Timestamp time={teacher.created_at} format='ago' actualSeconds autoUpdate /></small>
             <br />
             {( teacher.updated_at != null ?
               <small>Updated <Timestamp time={teacher.updated_at} format='ago' actualSeconds autoUpdate /></small> : null  )}
         </td>
-        <td className="project-completion">
+        {/*<td className="project-completion">
             <small>Completion with: 28%</small>
             <div className="progress progress-mini">
                 <div  className="progress-bar"></div>
             </div>
-        </td>
+        </td>*/}
         <td className="project-people">
             <a href=""><img alt="cirsl" className="img-circle" src="img/a7.jpg"/></a>
             <a href=""><img alt="cirsl" className="img-circle" src="img/a6.jpg"/></a>
             <a href=""><img alt="cirsl" className="img-circle" src="img/a3.jpg"/></a>
         </td>
         <td className="project-actions">
-            <Link to={`/teacher/${itemKey}/edit`} className="btn btn-success btn-sm"><i className="fa fa-cross"></i> Edit </Link>
+          <div className="btn-group">
+            <Link to={ROUTES.AUTHENTICATED.TEACHER_EDIT(itemKey)} className="btn btn-white btn-sm"><i className="fa fa-edit"></i> Edit </Link>
             <button onClick={() => {
-              deleteTeacher(itemKey)
-            }} className="btn btn-danger btn-sm"><i className="fa fa-cross"></i> Delete </button>
+                deleteTeacher(itemKey)
+              }} className="btn btn-white btn-sm"><i className="fa fa-trash-o"></i> Delete
+            </button>
+          </div>
         </td>
     </tr>
   )

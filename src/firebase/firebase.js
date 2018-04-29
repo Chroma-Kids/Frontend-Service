@@ -13,7 +13,12 @@ if (!firebase.apps.length) {
     firebase.initializeApp(config);
 }
 
-const database = firebase.database();
+const database = () => {
+  if (global.testRef){
+    return firebase.database().ref(global.testRef);
+  }
+  return firebase.database().ref();
+};
 const auth = firebase.auth();
 const googleProvider = new firebase.auth.GoogleAuthProvider();
 const twitterProvider = new firebase.auth.TwitterAuthProvider();

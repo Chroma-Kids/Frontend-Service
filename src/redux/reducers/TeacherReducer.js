@@ -6,7 +6,14 @@ const initialState = {
 
 export default function (state = {}, action) {
   const { payload } = action;
+
   switch (action.type) {
+    // case types.FETCH_TEACHER_TRAJECTORIES_FULFILLED:
+    //   return {
+    //     ...state,
+    //     teacherTrajectories: payload
+    //     // teacherTrajectories: payload
+    //   }
     case types.FETCH_TEACHERS_FULFILLED:
       return {
         ...state,

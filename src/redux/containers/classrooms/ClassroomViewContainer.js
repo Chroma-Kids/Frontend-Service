@@ -3,17 +3,25 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
-import { getTeachers } from '../../actions/TeacherActions';
-import { getStudents } from '../../actions/StudentActions';
-import { fetchClassroom, addStudentToClassroom, deleteStudentFromClassroom } from '../../actions/ClassroomActions';
+import { getTeachers, removeTeachersListener } from '../../actions/TeacherActions';
+import { getStudents, removeStudentsListener } from '../../actions/StudentActions';
+import { fetchClassroom, addStudentToClassroom, deleteStudentFromClassroom, removeClassroomListener } from '../../actions/ClassroomActions';
 import ClassroomView from '../../../views/classrooms/ClassroomView';
 
 export class ClassroomViewContainer extends Component {
 
     componentDidMount(){
-      this.props.fetchClassroom(this.props.classroom_id);
+      this.props.fetchClassroom(this.props.classroomId);
+
+      // OPTIMIZE: we don't need to load them all
       this.props.getTeachers();
       this.props.getStudents();
+    }
+
+    componentWillUnmount(){
+      this.props.removeStudentsListener();
+      this.props.removeTeachersListener();
+      this.props.removeClassroomListener(this.props.classroomId);
     }
 
     render() {
@@ -28,14 +36,16 @@ export class ClassroomViewContainer extends Component {
 const mapStateToProps = (state, ownProps)=> {
     return {
         classroom: state.classrooms.currentClassroom,
-        classroom_id: ownProps.match.params.id,
+        classroomId: ownProps.match.params.classroomId,
         teachers: state.teachers.teachers,
         students: state.students.students
     }
 }
 
 const mapDispatchToProps = (dispatch, state)=> {
-    return bindActionCreators({ fetchClassroom, getTeachers, getStudents, addStudentToClassroom, deleteStudentFromClassroom }, dispatch);
+    return bindActionCreators({ fetchClassroom, getTeachers, getStudents,
+      removeStudentsListener, removeTeachersListener, removeClassroomListener,
+      addStudentToClassroom, deleteStudentFromClassroom }, dispatch);
 }
 
 let addStudentForm = reduxForm({

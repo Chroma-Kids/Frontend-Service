@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Timestamp from 'react-timestamp'
+import { ROUTES } from '../../../index';
 
 const ListItemClassroom = (props) => {
 
@@ -12,7 +13,7 @@ const ListItemClassroom = (props) => {
             <span className="label label-primary"> Ratio {classroom.ratio}</span>
         </td>
         <td className="project-title">
-            <Link to={`/classroom/${itemKey}`}>{classroom.name}</Link>
+            <Link to={ROUTES.AUTHENTICATED.CLASSROOM(itemKey)}>{classroom.name}</Link>
             <br />
             <small>{classroom.description}</small>
         </td>
@@ -34,10 +35,13 @@ const ListItemClassroom = (props) => {
             <a href=""><img alt="imagecircle" className="img-circle" src="img/a3.jpg"/></a>
         </td>
         <td className="project-actions">
-            <Link to={`/classroom/${itemKey}/edit`} className="btn btn-success btn-sm"><i className="fa fa-cross"></i> Edit </Link>
+          <div className="btn-group">
+
+            <Link to={ROUTES.AUTHENTICATED.CLASSROOM_EDIT(itemKey)} className="btn btn-white btn-sm"><i className="fa fa-cross"></i> Edit </Link>
             <button onClick={() => {
               deleteClassroom(itemKey)
-            }} className="btn btn-danger btn-sm"><i className="fa fa-cross"></i> Delete </button>
+            }} className="btn btn-white btn-sm"><i className="fa fa-trash-o"></i> Delete </button>
+          </div>
         </td>
     </tr>
   )

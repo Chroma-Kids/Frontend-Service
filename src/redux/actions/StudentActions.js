@@ -1,11 +1,12 @@
 import { database } from '../../firebase'
 import * as types from './ActionTypes';
 
+
 export const removeStudentsListener = () => {
   return dispatch => {
     dispatch({
       type: types.STUDENTS_CLEANED,
-      payload: database.ref('/students/').off()
+      payload: database().child('/students/').off()
     });
   }
 }
@@ -15,7 +16,7 @@ export const getStudents = () => {
     dispatch({
       type: types.FETCH_STUDENTS_PENDING
     });
-    database.ref('/students/').on('value', snapshot => {
+    database().child('/students/').on('value', snapshot => {
       dispatch({
         type: types.FETCH_STUDENTS_FULFILLED,
         payload: snapshot.val()
@@ -34,7 +35,7 @@ export const fetchStudent = (uid) => {
       type: types.FETCH_STUDENT_PENDING
     });
 
-    database.ref('/students/').child(uid).on('value', function (snapshot, error) {
+    database().child('/students/').child(uid).once('value', function (snapshot, error) {
       if (error)
         dispatch({
           type: types.FETCH_STUDENT_REJECTED,
@@ -58,7 +59,7 @@ export const createStudent = (student) => {
       type: types.CREATE_STUDENT_PENDING
     });
 
-    database.ref('/students/').push({ ...student }, function(error) {
+    database().child('/students/').push({ ...student }, function(error) {
       if (error)
         dispatch({
           type: types.CREATE_STUDENT_REJECTED,
@@ -74,21 +75,24 @@ export const createStudent = (student) => {
 
 export const deleteStudent = (uid) => {
   return dispatch => {
-    dispatch({
-      type: types.DELETE_STUDENT_PENDING
-    });
-    database.ref('/students/').child(uid).remove()
-      .then(function() {
-        dispatch({
-          type: types.DELETE_STUDENT_FULFILLED
-        });
-      })
-      .catch(function(error) {
-        dispatch({
-          type: types.DELETE_STUDENT_REJECTED,
-          payload: error
-        });
+    dispatch({ type: types.DELETE_STUDENT_PENDING });
+    database().child(`/students/${uid}/classrooms`).once('value', (snapshot) => {
+      const classrooms = Object.keys(snapshot.val() || {});
+      classrooms.forEach((key) => {
+        database().child('/classrooms/').child(key).child('students').child(uid).remove();
       });
+    }).then(() => {
+      database().child('/students/').child(uid).remove()
+        .then(function() {
+          dispatch({ type: types.DELETE_STUDENT_FULFILLED });
+        })
+        .catch(function(error) {
+          dispatch({
+            type: types.DELETE_STUDENT_REJECTED,
+            payload: error
+          });
+        });
+    });
   };
 }
 
@@ -101,7 +105,7 @@ export const updateStudent = (student, uid) => {
       type: types.SAVE_STUDENT_PENDING
     });
 
-    database.ref(`/students/${uid}`).set({...student}, function (error) {
+    database().child(`/students/${uid}`).set({...student}, function (error) {
       if (error)
         dispatch({
           type: types.SAVE_STUDENT_REJECTED,

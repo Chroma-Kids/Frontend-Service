@@ -1,21 +1,16 @@
 import { database, auth, googleProvider } from '../../firebase'
 import * as types from './ActionTypes';
 
-export function getUser() {
+export function getUser(redirect) {
   return dispatch => {
-    dispatch({
-      type: types.USER_STATUS,
-      payload: true
-    });
+    dispatch({ type: types.USER_STATUS });
     auth.onAuthStateChanged(user => {
       dispatch({
         type: types.GET_USER,
         payload: user
       });
-      dispatch({
-        type: types.USER_STATUS,
-        payload: false
-      });
+      dispatch({ type: types.USER_STATUS });
+      redirect();
     });
   };
 }
@@ -23,7 +18,7 @@ export function getUser() {
 export function createUser(uid, email, name){
   return {
     type: types.CREATE_USER,
-    payload: database.ref(`users/${uid}`).set({ name, email }),
+    payload: database().child(`users/${uid}`).set({ name, email }),
   };
 }
 
@@ -31,7 +26,7 @@ export function login(email, password) {
   return {
     type: types.LOGIN,
     payload: auth.signInWithEmailAndPassword(email, password).then(({ user }) => {
-      database.ref(`users/${user.uid}`).update({
+      database().child(`users/${user.uid}`).update({
         displayName: user.displayName,
         email: user.email,
         photoURL: user.photoURL,
@@ -59,7 +54,7 @@ export function googleLogin() {
   return {
     type: types.GOOGLE_LOGIN,
     payload: auth.signInWithPopup(googleProvider).then(({ user }) => {
-      database.ref(`users/${user.uid}`).update({
+      database().child(`users/${user.uid}`).update({
         displayName: user.displayName,
         email: user.email,
         photoURL: user.photoURL,

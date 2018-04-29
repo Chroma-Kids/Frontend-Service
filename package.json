@@ -14,10 +14,13 @@
     "bootstrap-css-only": "^4.0.0",
     "build-css": "^0.2.0",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
+    "chai": "^4.1.2",
+    "chai-spies": "^1.0.0",
     "chalk": "^1.1.3",
     "css-loader": "0.28.7",
     "dotenv": "4.0.0",
     "dotenv-expand": "4.2.0",
+    "enzyme": "^3.3.0",
     "eslint": "4.10.0",
     "eslint-config-react-app": "^2.1.0",
     "eslint-loader": "1.9.0",
@@ -28,12 +31,12 @@
     "extract-text-webpack-plugin": "3.0.2",
     "file-loader": "1.1.5",
     "firebase": "^4.11.0",
+    "font-awesome": "^4.7.0",
     "fs-extra": "3.0.1",
     "html-webpack-plugin": "2.29.0",
-    "jest": "20.0.4",
     "jwt-decode": "^2.2.0",
     "lodash": "^4.17.5",
-    "moment": "^2.21.0",
+    "moment": "^2.22.0",
     "node-sass-chokidar": "^1.1.0",
     "object-assign": "4.1.1",
     "pace-js": "^1.0.2",
@@ -60,6 +63,7 @@
     "redux-devtools-extension": "^2.13.2",
     "redux-form": "^7.3.0",
     "redux-logger": "^3.0.6",
+    "redux-mock-store": "^1.5.1",
     "redux-promise-middleware": "^5.0.0",
     "redux-thunk": "^2.2.0",
     "style-loader": "0.19.0",
@@ -118,5 +122,9 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "devDependencies": {
+    "firebase-mock": "^2.2.0",
+    "jest": "^20.0.4"
   }
 }

@@ -4,19 +4,25 @@ import { connect } from 'react-redux';
 import { reduxForm } from 'redux-form';
 
 import { fetchTeacher, updateTeacher, deleteTeacher } from '../../actions/TeacherActions';
+import { getShiftTypes, removeShiftTypesListener } from '../../actions/ShiftActions';
 import TeacherForm from '../../../views/teachers/TeacherForm';
 
 export class TeacherEditContainer extends Component {
+    componentDidMount() {
+        this.props.fetchTeacher(this.props.teacherId);
+        this.props.getShiftTypes();
+    }
+
+    componentWillUnmount(){
+      this.props.removeShiftTypesListener();
+    }
+
     onSubmit(teacher) {
-        this.props.updateTeacher(teacher, this.props.teacher_id);
+        this.props.updateTeacher(teacher, this.props.teacherId);
     }
 
     onDelete() {
-        this.props.deleteTeacher(this.props.teacher_id);
-    }
-
-    componentDidMount() {
-        this.props.fetchTeacher(this.props.teacher_id);
+        this.props.deleteTeacher(this.props.teacherId);
     }
 
     render() {
@@ -32,20 +38,22 @@ const mapStateToProps = (state, ownProps)=> {
     return {
         initialValues: state.teachers.currentTeacher,
         teacher: state.teachers.currentTeacher,
-        teacher_id: ownProps.match.params.id,
+        teacherId: ownProps.match.params.teacherId,
+        shiftTypes: state.shifts.shiftTypes,
         formType: 'edit',
         keyAwait: "updateTeacher"
     }
 }
 
 const mapDispatchToProps = (dispatch, state)=> {
-    return bindActionCreators({updateTeacher, fetchTeacher, deleteTeacher}, dispatch);
+    return bindActionCreators({updateTeacher, fetchTeacher, deleteTeacher,
+    getShiftTypes, removeShiftTypesListener}, dispatch);
 
 }
 
 const validate = (values) => {
     let errors = {};
-    fields.map((field) => {
+    fields.forEach((field) => {
         if (!values[field]) {
             errors[field] = `${field} is required`;
         }
@@ -53,7 +61,7 @@ const validate = (values) => {
     return errors;
 }
 
-const fields = ['name', 'surname'];
+const fields = ['name', 'surname', 'shift'];
 
 let editorForm = reduxForm({
     form: 'EditTeacher',

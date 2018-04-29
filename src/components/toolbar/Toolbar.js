@@ -14,7 +14,6 @@ const Toolbar = ({title, breadcrumb, button, buttonText, link, linkText}) => (
             return (
               <li key={val}>
                 <Link to={`/${makeItLower(key)}`}>
-                  <i className="fa fa-info" />
                   {key}
                 </Link>
               </li>
@@ -31,7 +30,6 @@ const Toolbar = ({title, breadcrumb, button, buttonText, link, linkText}) => (
         :
         <div className="title-action">
           <button className="btn btn-primary " onClick={button}>
-            <i className="fa fa-info" />
             + {buttonText}
           </button>
         </div>
@@ -41,7 +39,6 @@ const Toolbar = ({title, breadcrumb, button, buttonText, link, linkText}) => (
         :
         <div className="title-action">
           <Link className="btn btn-success " to={link}>
-            <i className="fa fa-info" />
             + {linkText}
           </Link>
         </div>
