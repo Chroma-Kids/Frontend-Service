@@ -1,13 +1,13 @@
-// #region imports
 import React, { PureComponent } from 'react';
 
 import Toolbar from '../../components/toolbar/Toolbar'
+import { ROUTES } from '../../index';
 
 class Teacher extends PureComponent<Props, State> {
 
   render() {
 
-    const { teacher, teacher_id } = this.props;
+    const { teacher, teacherId } = this.props;
 
     return (
       (!teacher ?
@@ -22,7 +22,7 @@ class Teacher extends PureComponent<Props, State> {
           <Toolbar
             title={`${teacher.name+" "+teacher.surname}`}
             breadcrumb={['Dashboard', 'Teachers']}
-            link={`/teacher/${teacher_id}/edit`}
+            link={ROUTES.AUTHENTICATED.TEACHER_EDIT(teacherId)}
             linkText={"Edit Teacher"} />
 
           <div className="wrapper wrapper-content animated fadeInRight">
@@ -434,7 +434,6 @@ class Teacher extends PureComponent<Props, State> {
       )
     );
   }
-  // #endregion
 }
 
 export default Teacher;

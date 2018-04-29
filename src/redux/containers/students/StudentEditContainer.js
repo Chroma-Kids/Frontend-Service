@@ -8,15 +8,15 @@ import StudentForm from '../../../views/students/StudentForm';
 
 export class StudentEditContainer extends Component {
     onSubmit(student) {
-        this.props.updateStudent(student, this.props.student_id);
+        this.props.updateStudent(student, this.props.studentId);
     }
 
     onDelete() {
-        this.props.deleteStudent(this.props.student_id);
+        this.props.deleteStudent(this.props.studentId);
     }
 
     componentDidMount() {
-        this.props.fetchStudent(this.props.student_id);
+        this.props.fetchStudent(this.props.studentId);
     }
 
     render() {
@@ -32,7 +32,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         initialValues: state.students.currentStudent,
         student: state.students.currentStudent,
-        student_id: ownProps.match.params.id,
+        studentId: ownProps.match.params.studentId,
         formType: 'edit',
         keyAwait: "updateStudent"
     }
@@ -45,10 +45,9 @@ const mapDispatchToProps = (dispatch, state) => {
 
 const validate = (values) => {
     let errors = {};
-    fields.map((field) => {
+    fields.forEach((field) => {
         if (!values[field]) {
             errors[field] = `${field} is required`;
-            return
         }
     });
     return errors;

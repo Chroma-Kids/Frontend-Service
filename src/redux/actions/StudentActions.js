@@ -34,7 +34,7 @@ export const fetchStudent = (uid) => {
       type: types.FETCH_STUDENT_PENDING
     });
 
-    database.ref('/students/').child(uid).on('value', function (snapshot, error) {
+    database.ref('/students/').child(uid).once('value', function (snapshot, error) {
       if (error)
         dispatch({
           type: types.FETCH_STUDENT_REJECTED,

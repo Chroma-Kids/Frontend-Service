@@ -8,7 +8,7 @@ import TeacherView from '../../../views/teachers/TeacherView';
 export class TeacherViewContainer extends Component {
 
     componentDidMount(){
-      this.props.fetchTeacher(this.props.teacher_id);
+      this.props.fetchTeacher(this.props.teacherId);
     }
 
     render() {
@@ -23,7 +23,7 @@ export class TeacherViewContainer extends Component {
 const mapStateToProps = (state, ownProps)=> {
     return {
         teacher: state.teachers.currentTeacher,
-        teacher_id: ownProps.match.params.id
+        teacherId: ownProps.match.params.teacherId
     }
 }
 
