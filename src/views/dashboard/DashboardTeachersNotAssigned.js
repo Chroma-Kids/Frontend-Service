@@ -1,8 +1,9 @@
 import React from 'react';
 import _ from 'lodash';
 
-import TeacherDrag from '../../components/dragdropteacher/Dragteacher'
-import ClassroomDrop from '../../components/dragdropteacher/Dropclassroom'
+import TeacherDrag from '../../components/dragdropteacher/Dragteacher';
+import ClassroomDrop from '../../components/dragdropteacher/Dropclassroom';
+import Calendar from '../../components/calendar/Calendar';
 
 class DashboardTeachersNotAssigned extends React.Component {
 
@@ -30,18 +31,23 @@ class DashboardTeachersNotAssigned extends React.Component {
 
     return (
       <div className="row">
-        <div className="col-lg-12 m-t">
+        <div className="col-lg-4 m-t">
+          <div className="ibox-content">
+            <Calendar/>
+          </div>
+        </div>
+        <div className="col-lg-8 m-t">
           <div className="ibox-content">
             <h3>Teachers having a break</h3>
             <ClassroomDrop className="alert alert-info m-n">
               {
                 (typeof teachers !== "undefined" &&
-                typeof teachersnotassigned !== "undefined" &&
-                teachersnotassigned != null ?
-                this.renderTeachersNotAssigned(teachersnotassigned)
-                :
-                <div className="alert alert-warning m-n">No teachers having a break.</div>
-              )}
+                 typeof teachersnotassigned !== "undefined" &&
+                 teachersnotassigned != null ?
+                 this.renderTeachersNotAssigned(teachersnotassigned)
+                                             :
+                 <div className="alert alert-warning m-n">No teachers having a break.</div>
+                )}
             </ClassroomDrop>
           </div>
         </div>
